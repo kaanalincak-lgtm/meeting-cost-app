@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,8 +11,10 @@
 
 :root{
   --bg:#0e0e18;--bg-warm:#13131f;--surface:#18182a;--surface-2:#1e1e32;
-  --coral:#ff6b5a;--coral-dim:#ff6b5a33;--sky:#5ac8ff;--sky-dim:#5ac8ff22;
-  --lime:#8aff5a;--rose:#ff5a8a;--gold:#ffd05a;
+  --coral:#ff6b5a;--coral-dim:#ff6b5a33;--coral-glow:rgba(255,107,90,.35);
+  --sky:#5ac8ff;--sky-dim:#5ac8ff22;--sky-glow:rgba(90,200,255,.3);
+  --lime:#8aff5a;--lime-glow:rgba(138,255,90,.25);
+  --rose:#ff5a8a;--gold:#ffd05a;
   --text:#e8e4f0;--text-2:#a8a4b8;--text-3:#5a5670;
   --border:#22223a;
   --shadow:0 2px 24px rgba(0,0,0,.25);
@@ -22,8 +23,10 @@
 
 [data-theme="light"]{
   --bg:#f6f3ee;--bg-warm:#f0ede6;--surface:#ffffff;--surface-2:#f0ede6;
-  --coral:#e04a38;--coral-dim:#e04a3815;--sky:#2a8ad4;--sky-dim:#2a8ad410;
-  --lime:#3a8a2a;--rose:#d42a6a;--gold:#b89020;
+  --coral:#e04a38;--coral-dim:#e04a3815;--coral-glow:rgba(224,74,56,.25);
+  --sky:#2a8ad4;--sky-dim:#2a8ad410;--sky-glow:rgba(42,138,212,.2);
+  --lime:#3a8a2a;--lime-glow:rgba(58,138,42,.2);
+  --rose:#d42a6a;--gold:#b89020;
   --text:#1a1a2e;--text-2:#5a5670;--text-3:#a8a4b8;
   --border:#e0ddd6;
   --shadow:0 2px 24px rgba(0,0,0,.08);
@@ -47,27 +50,40 @@ body{
 .title{font-family:'Permanent Marker',cursive;font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:400;letter-spacing:.02em;line-height:1.15;color:var(--coral)}
 .title .alt{color:var(--sky)}
 .subtitle{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--text-3);margin-top:.5rem}
-.header-controls{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:1.2rem}
+.header-controls{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:1.2rem;flex-wrap:wrap}
 
+/* ── Modern Pill Buttons (header controls) ────────── */
 .btn-pill{
   background:var(--surface);border:1px solid var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.72rem;padding:.4rem .75rem;cursor:pointer;
+  font-family:inherit;font-size:.72rem;padding:.45rem .85rem;cursor:pointer;
   display:flex;align-items:center;gap:.35rem;border-radius:100px;
-  transition:all .2s ease;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  position:relative;overflow:hidden;
 }
-.btn-pill:hover{border-color:var(--coral);color:var(--coral)}
+.btn-pill::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;
+  background:linear-gradient(135deg,transparent 40%,rgba(255,255,255,.06));
+  pointer-events:none;
+}
+.btn-pill:hover{
+  border-color:var(--coral);color:var(--coral);
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px var(--coral-glow);
+}
 .btn-pill .icon{font-size:.9rem}
 
 select.currency-select{
   background:var(--surface);border:1px solid var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.72rem;padding:.4rem .6rem;padding-right:1.8rem;
+  font-family:inherit;font-size:.72rem;padding:.45rem .6rem;padding-right:1.8rem;
   cursor:pointer;outline:none;border-radius:100px;
   appearance:none;-webkit-appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23a8a4b8'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:right .6rem center;
-  transition:all .2s ease;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
 }
-select.currency-select:focus{border-color:var(--sky)}
+select.currency-select:hover{border-color:var(--sky);transform:translateY(-1px)}
+select.currency-select:focus{border-color:var(--sky);box-shadow:0 0 0 3px var(--sky-dim)}
 
 .hero{text-align:center;margin-bottom:2.5rem;padding:2.5rem 2rem;background:var(--surface);border-radius:16px;position:relative;overflow:hidden}
 .hero::before{
@@ -98,10 +114,14 @@ select.currency-select:focus{border-color:var(--sky)}
 .duration-row{display:flex;gap:6px;flex-wrap:wrap}
 .duration-btn{
   background:transparent;border:1px solid var(--border);color:var(--text-2);
-  font-family:'Space Mono',monospace;font-size:.68rem;padding:.3rem .55rem;
-  cursor:pointer;border-radius:8px;transition:all .15s ease;
+  font-family:'Space Mono',monospace;font-size:.68rem;padding:.35rem .6rem;
+  cursor:pointer;border-radius:8px;transition:all .2s cubic-bezier(.4,0,.2,1);
 }
-.duration-btn:hover,.duration-btn.active{border-color:var(--coral);color:var(--coral);background:var(--coral-dim)}
+.duration-btn:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-dim);transform:translateY(-1px)}
+.duration-btn.active{
+  border-color:var(--coral);color:var(--coral);background:var(--coral-dim);
+  box-shadow:0 2px 12px var(--coral-glow);
+}
 .duration-custom{display:flex;align-items:center;gap:4px;margin-top:.6rem}
 .duration-custom input{
   width:70px;background:var(--bg);border:1px solid var(--border);color:var(--text);
@@ -109,7 +129,7 @@ select.currency-select:focus{border-color:var(--sky)}
   border-radius:6px;outline:none;text-align:center;-moz-appearance:textfield;
 }
 .duration-custom input::-webkit-inner-spin-button,.duration-custom input::-webkit-outer-spin-button{-webkit-appearance:none}
-.duration-custom input:focus{border-color:var(--sky)}
+.duration-custom input:focus{border-color:var(--sky);box-shadow:0 0 0 3px var(--sky-dim)}
 .duration-custom span{font-size:.65rem;color:var(--text-3)}
 
 .stats-mini{display:flex;flex-direction:column;gap:.5rem}
@@ -159,25 +179,47 @@ select.currency-select:focus{border-color:var(--sky)}
 .att-remove{
   background:transparent;border:none;color:var(--text-3);font-size:.85rem;
   width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;
-  cursor:pointer;border-radius:6px;flex-shrink:0;transition:all .15s;
+  cursor:pointer;border-radius:6px;flex-shrink:0;transition:all .2s cubic-bezier(.4,0,.2,1);
 }
-.att-remove:hover{color:var(--coral);background:var(--coral-dim)}
+.att-remove:hover{color:var(--coral);background:var(--coral-dim);transform:scale(1.1)}
 
+/* ── Modern Action Buttons ────────────────────────── */
 .att-actions{display:flex;gap:5px;margin-top:.6rem}
 .att-btn{
-  flex:1;background:transparent;border:1px dashed var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.7rem;padding:.5rem;cursor:pointer;border-radius:8px;transition:all .15s;
+  flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text-2);
+  font-family:inherit;font-size:.7rem;font-weight:500;padding:.6rem .5rem;cursor:pointer;
+  border-radius:10px;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;letter-spacing:.01em;
 }
-.att-btn:hover{border-color:var(--sky);color:var(--sky);border-style:solid}
-.att-btn.danger:hover{border-color:var(--coral);color:var(--coral)}
-.att-btn:disabled{opacity:.2;cursor:not-allowed;pointer-events:none}
+.att-btn::after{
+  content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;
+  background:var(--sky);transition:all .3s ease;transform:translateX(-50%);
+}
+.att-btn:hover{
+  border-color:var(--sky);color:var(--sky);
+  background:var(--sky-dim);transform:translateY(-1px);
+  box-shadow:0 4px 20px var(--sky-glow);
+}
+.att-btn:hover::after{width:60%}
+.att-btn.danger::after{background:var(--coral)}
+.att-btn.danger:hover{
+  border-color:var(--coral);color:var(--coral);
+  background:var(--coral-dim);
+  box-shadow:0 4px 20px var(--coral-glow);
+}
+.att-btn:disabled{opacity:.2;cursor:not-allowed;pointer-events:none;transform:none!important;box-shadow:none!important}
 
 .role-editor-toggle{
-  width:100%;background:transparent;border:1px solid var(--border);color:var(--text-3);
-  font-family:inherit;font-size:.6rem;padding:.4rem;margin-top:.5rem;cursor:pointer;
-  border-radius:8px;display:flex;align-items:center;justify-content:center;gap:.3rem;transition:all .15s;
+  width:100%;background:var(--bg);border:1px solid var(--border);color:var(--text-3);
+  font-family:inherit;font-size:.6rem;padding:.5rem;margin-top:.6rem;cursor:pointer;
+  border-radius:10px;display:flex;align-items:center;justify-content:center;gap:.3rem;
+  transition:all .25s cubic-bezier(.4,0,.2,1);
 }
-.role-editor-toggle:hover{border-color:var(--text-2);color:var(--text-2)}
+.role-editor-toggle:hover{
+  border-color:var(--text-2);color:var(--text-2);
+  transform:translateY(-1px);
+  box-shadow:0 2px 12px rgba(0,0,0,.15);
+}
 .role-editor-toggle .arrow{display:inline-block;transition:transform .2s}
 .role-editor-toggle.open .arrow{transform:rotate(180deg)}
 .role-editor{margin-top:.5rem;overflow:hidden;max-height:0;transition:max-height .3s ease}
@@ -192,20 +234,32 @@ select.currency-select:focus{border-color:var(--sky)}
 .role-editor-row .re-rate input{padding:.15rem .2rem;font-size:.6rem;text-align:right;border:1px solid transparent;background:transparent;color:var(--text);font-family:'Space Mono',monospace;width:100%;border-radius:3px;outline:none;-moz-appearance:textfield}
 .role-editor-row .re-rate input::-webkit-inner-spin-button,.role-editor-row .re-rate input::-webkit-outer-spin-button{-webkit-appearance:none}
 .role-editor-row .re-rate input:focus{border-color:var(--border);background:var(--surface)}
-.role-editor-row .re-del{background:transparent;border:none;color:var(--text-3);cursor:pointer;font-size:.7rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:3px}
-.role-editor-row .re-del:hover{color:var(--coral)}
+.role-editor-row .re-del{background:transparent;border:none;color:var(--text-3);cursor:pointer;font-size:.7rem;width:1.3rem;height:1.3rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:3px;transition:all .2s}
+.role-editor-row .re-del:hover{color:var(--coral);background:var(--coral-dim)}
 .role-editor-row.builtin .re-del{visibility:hidden}
-.add-role-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-3);font-family:inherit;font-size:.55rem;padding:.3rem;margin-top:3px;cursor:pointer;border-radius:6px}
-.add-role-btn:hover{border-color:var(--sky);color:var(--sky)}
-.reset-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--coral);font-family:inherit;font-size:.55rem;padding:.3rem;margin-top:3px;cursor:pointer;border-radius:6px}
-.reset-btn:hover{border-color:var(--coral);background:var(--coral-dim)}
+
+.add-role-btn{
+  width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-3);
+  font-family:inherit;font-size:.55rem;padding:.35rem;margin-top:3px;cursor:pointer;
+  border-radius:6px;transition:all .2s ease;
+}
+.add-role-btn:hover{border-color:var(--sky);color:var(--sky);border-style:solid}
+.reset-btn{
+  width:100%;background:transparent;border:1px dashed var(--border);color:var(--coral);
+  font-family:inherit;font-size:.55rem;padding:.35rem;margin-top:3px;cursor:pointer;
+  border-radius:6px;transition:all .2s ease;
+}
+.reset-btn:hover{border-color:var(--coral);background:var(--coral-dim);border-style:solid}
 
 .presets-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .preset-card{
   background:var(--bg);border:1px solid var(--border);padding:.55rem .5rem;
-  cursor:pointer;text-align:left;border-radius:8px;transition:all .15s;
+  cursor:pointer;text-align:left;border-radius:8px;transition:all .2s cubic-bezier(.4,0,.2,1);
 }
-.preset-card:hover{border-color:var(--coral);transform:translateY(-1px)}
+.preset-card:hover{
+  border-color:var(--coral);transform:translateY(-2px);
+  box-shadow:0 4px 16px var(--coral-glow);
+}
 .preset-card .pc-title{font-size:.65rem;font-weight:600;color:var(--text);margin-bottom:.1rem}
 .preset-card .pc-detail{font-size:.5rem;color:var(--text-3)}
 
@@ -222,9 +276,9 @@ select.currency-select:focus{border-color:var(--sky)}
 .opp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:5px}
 .opp-card{
   border:1px solid var(--border);padding:.7rem .5rem;text-align:center;
-  background:var(--bg);border-radius:8px;transition:all .15s;
+  background:var(--bg);border-radius:8px;transition:all .2s cubic-bezier(.4,0,.2,1);
 }
-.opp-card:hover{border-color:var(--sky);transform:translateY(-1px)}
+.opp-card:hover{border-color:var(--sky);transform:translateY(-2px);box-shadow:0 4px 16px var(--sky-glow)}
 .opp-card.danger{border-color:var(--coral-dim)}
 .opp-card.danger .opp-val{color:var(--coral)}
 .opp-card.big{grid-column:span 2}
@@ -260,53 +314,112 @@ select.currency-select:focus{border-color:var(--sky)}
 .email-tones{display:flex;gap:4px;margin-bottom:.6rem;flex-wrap:wrap}
 .email-tone{
   background:transparent;border:1px solid var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.6rem;padding:.25rem .5rem;cursor:pointer;
-  border-radius:100px;transition:all .15s;
+  font-family:inherit;font-size:.6rem;padding:.3rem .55rem;cursor:pointer;
+  border-radius:100px;transition:all .2s cubic-bezier(.4,0,.2,1);
 }
-.email-tone:hover,.email-tone.active{border-color:var(--sky);color:var(--sky);background:var(--sky-dim)}
+.email-tone:hover{border-color:var(--sky);color:var(--sky);background:var(--sky-dim);transform:translateY(-1px)}
+.email-tone.active{
+  border-color:var(--sky);color:var(--sky);background:var(--sky-dim);
+  box-shadow:0 2px 12px var(--sky-glow);
+}
 .email-preview{
   background:var(--bg);border:1px solid var(--border);padding:.7rem;
   font-size:.65rem;line-height:1.6;min-height:140px;max-height:280px;
   overflow-y:auto;white-space:pre-wrap;word-break:break-word;
   margin-bottom:.5rem;color:var(--text);border-radius:8px;
 }
-.email-actions{display:flex;gap:4px}
+
+/* ── Modern Email/Share Action Buttons ────────────── */
+.email-actions{display:flex;gap:6px}
 .email-act{
-  flex:1;background:transparent;border:1px solid var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.6rem;padding:.4rem;cursor:pointer;border-radius:6px;transition:all .15s;
+  flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text-2);
+  font-family:inherit;font-size:.65rem;font-weight:500;padding:.55rem .5rem;cursor:pointer;
+  border-radius:10px;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;letter-spacing:.01em;
 }
-.email-act:hover{border-color:var(--sky);color:var(--sky)}
-.email-act.plain:hover{border-color:var(--text-2);color:var(--text)}
+.email-act::after{
+  content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;
+  background:var(--sky);transition:all .3s ease;transform:translateX(-50%);
+}
+.email-act:hover{
+  border-color:var(--sky);color:var(--sky);
+  background:var(--sky-dim);transform:translateY(-1px);
+  box-shadow:0 4px 20px var(--sky-glow);
+}
+.email-act:hover::after{width:60%}
+.email-act.plain::after{background:var(--text-2)}
+.email-act.plain:hover{
+  border-color:var(--text-2);color:var(--text-2);background:transparent;
+  box-shadow:0 2px 12px rgba(0,0,0,.1);
+}
 
 .share-canvas-wrap{display:flex;justify-content:center;margin-bottom:.6rem;overflow:hidden;border-radius:8px}
 #shareCanvas{max-width:100%;height:auto}
-.share-actions{display:flex;gap:4px}
+.share-actions{display:flex;gap:6px}
 .share-act{
-  flex:1;background:transparent;border:1px solid var(--border);color:var(--text-2);
-  font-family:inherit;font-size:.6rem;padding:.4rem;cursor:pointer;border-radius:6px;transition:all .15s;
+  flex:1;background:var(--bg);border:1px solid var(--border);color:var(--text-2);
+  font-family:inherit;font-size:.65rem;font-weight:500;padding:.55rem .5rem;cursor:pointer;
+  border-radius:10px;transition:all .25s cubic-bezier(.4,0,.2,1);
+  position:relative;overflow:hidden;letter-spacing:.01em;
 }
-.share-act:hover{border-color:var(--lime);color:var(--lime)}
-.share-act.copy:hover{border-color:var(--sky);color:var(--sky)}
-.share-act.native:hover{border-color:var(--coral);color:var(--coral)}
+.share-act::after{
+  content:'';position:absolute;bottom:0;left:50%;width:0;height:2px;
+  transition:all .3s ease;transform:translateX(-50%);
+}
+.share-act:nth-child(1)::after{background:var(--lime)}
+.share-act:nth-child(2)::after{background:var(--sky)}
+.share-act:nth-child(3)::after{background:var(--coral)}
+.share-act:nth-child(1):hover{
+  border-color:var(--lime);color:var(--lime);
+  background:rgba(138,255,90,.08);transform:translateY(-1px);
+  box-shadow:0 4px 20px var(--lime-glow);
+}
+.share-act:nth-child(2):hover{
+  border-color:var(--sky);color:var(--sky);
+  background:var(--sky-dim);transform:translateY(-1px);
+  box-shadow:0 4px 20px var(--sky-glow);
+}
+.share-act:nth-child(3):hover{
+  border-color:var(--coral);color:var(--coral);
+  background:var(--coral-dim);transform:translateY(-1px);
+  box-shadow:0 4px 20px var(--coral-glow);
+}
+.share-act:hover::after{width:60%}
 
+/* ── Big CTA Button ──────────────────────────────── */
 .bottom-cta{text-align:center;margin-top:2.5rem}
 .bottom-cta button{
-  background:var(--coral);color:#fff;border:none;
+  background:linear-gradient(135deg,var(--coral) 0%,#ff8a6b 50%,var(--coral) 100%);
+  background-size:200% 200%;
+  color:#fff;border:none;
   font-family:'Space Mono',monospace;font-size:.82rem;font-weight:700;
-  padding:.75rem 2.2rem;cursor:pointer;text-transform:uppercase;letter-spacing:.1em;
-  border-radius:100px;transition:all .25s ease;box-shadow:0 4px 20px var(--coral-dim);
+  padding:.85rem 2.6rem;cursor:pointer;text-transform:uppercase;letter-spacing:.12em;
+  border-radius:100px;
+  transition:all .35s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 4px 24px var(--coral-glow), inset 0 1px 0 rgba(255,255,255,.15);
+  position:relative;overflow:hidden;
 }
-.bottom-cta button:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--coral-dim)}
-.bottom-cta button:active{transform:translateY(0)}
-.bottom-cta .cta-sub{font-size:.55rem;color:var(--text-3);margin-top:.5rem}
+.bottom-cta button::before{
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);
+  transition:left .5s ease;
+}
+.bottom-cta button:hover{
+  transform:translateY(-3px) scale(1.02);
+  box-shadow:0 8px 40px var(--coral-glow), 0 0 60px var(--coral-glow), inset 0 1px 0 rgba(255,255,255,.2);
+  background-position:100% 0;
+}
+.bottom-cta button:hover::before{left:100%}
+.bottom-cta button:active{transform:translateY(-1px) scale(1);box-shadow:0 2px 16px var(--coral-glow)}
+.bottom-cta .cta-sub{font-size:.55rem;color:var(--text-3);margin-top:.65rem;letter-spacing:.02em}
 
 .toast{
   position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);
   background:var(--surface);color:var(--text);border:1px solid var(--coral);
   font-family:'Space Mono',monospace;font-size:.72rem;font-weight:700;
-  padding:.55rem 1.4rem;border-radius:100px;letter-spacing:.04em;
+  padding:.6rem 1.6rem;border-radius:100px;letter-spacing:.04em;
   z-index:100;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .3s;
-  opacity:0;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-lg);
+  opacity:0;white-space:nowrap;pointer-events:none;box-shadow:var(--shadow-lg),0 0 20px var(--coral-glow);
 }
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
@@ -327,8 +440,8 @@ select.currency-select:focus{border-color:var(--sky)}
 
 <div class="app">
   <header class="header anim">
-    <div class="title">It Could've Been<br>an <span class="alt">Email!</span></div>
-    <p class="subtitle">the meeting cost calculator nobody asked for</p>
+    <div class="title" id="pageTitle">It Could've Been<br>an <span class="alt">Email!</span></div>
+    <p class="subtitle" id="pageSubtitle">the meeting cost calculator nobody asked for</p>
     <div class="header-controls">
       <select class="currency-select" id="currency" onchange="onCurrencyChange()">
         <option value="EUR">€ EUR</option>
@@ -341,20 +454,24 @@ select.currency-select:focus{border-color:var(--sky)}
       </select>
       <button class="btn-pill" onclick="toggleTheme()">
         <span class="icon" id="themeIcon">🌙</span>
-        <span id="themeLabel">Dark</span>
+        <span id="themeLabel" data-i18n="dark">Dark</span>
+      </button>
+      <button class="btn-pill" onclick="toggleLanguage()" id="langBtn">
+        <span class="icon">🇫🇷</span>
+        <span id="langLabel">FR</span>
       </button>
     </div>
   </header>
 
   <div class="hero anim">
-    <div class="hero-eyebrow" id="costEyebrow">this meeting is burning</div>
+    <div class="hero-eyebrow" id="costEyebrow"></div>
     <div class="hero-cost" id="totalCost">€0.00</div>
-    <div class="hero-sub" id="perSec">€0.00 per second of collective suffering</div>
+    <div class="hero-sub" id="perSec"></div>
   </div>
 
   <div class="inputs-bar anim">
     <div class="input-block">
-      <div class="input-block-label">Duration</div>
+      <div class="input-block-label" data-i18n="duration">Duration</div>
       <div class="duration-row">
         <button class="duration-btn" onclick="setDuration(15)">15m</button>
         <button class="duration-btn" onclick="setDuration(30)">30m</button>
@@ -365,23 +482,23 @@ select.currency-select:focus{border-color:var(--sky)}
       </div>
       <div class="duration-custom">
         <input type="number" id="duration" value="60" min="1" max="1440" oninput="onDurationChange()">
-        <span>min</span>
+        <span data-i18n="minutes_abbr">min</span>
       </div>
     </div>
     <div class="input-block">
-      <div class="input-block-label">Quick Stats</div>
+      <div class="input-block-label" data-i18n="quick_stats">Quick Stats</div>
       <div class="stats-mini">
-        <div class="stat-row"><span class="stat-label">Victims</span><span class="stat-val" id="stCount">0</span></div>
-        <div class="stat-row"><span class="stat-label">Avg Rate</span><span class="stat-val" id="stAvg">€0/hr</span></div>
-        <div class="stat-row"><span class="stat-label">Per Person</span><span class="stat-val" id="stPerPerson">€0</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="victims">Victims</span><span class="stat-val" id="stCount">0</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="avg_rate">Avg Rate</span><span class="stat-val" id="stAvg">€0/hr</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="per_person">Per Person</span><span class="stat-val" id="stPerPerson">€0</span></div>
       </div>
     </div>
     <div class="input-block">
-      <div class="input-block-label">Verdict</div>
+      <div class="input-block-label" data-i18n="verdict">Verdict</div>
       <div class="stats-mini">
-        <div class="stat-row"><span class="stat-label">Should You Go?</span><span class="stat-val" id="stScore">—</span></div>
-        <div class="stat-row"><span class="stat-label">Could Be Email?</span><span class="stat-val" id="stEmail">—</span></div>
-        <div class="stat-row"><span class="stat-label">Yearly (weekly)</span><span class="stat-val" id="stYearly">€0</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="should_you_go">Should You Go?</span><span class="stat-val" id="stScore">—</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="could_be_email">Could Be Email?</span><span class="stat-val" id="stEmail">—</span></div>
+        <div class="stat-row"><span class="stat-label" data-i18n="yearly_weekly">Yearly (weekly)</span><span class="stat-val" id="stYearly">€0</span></div>
       </div>
     </div>
   </div>
@@ -389,112 +506,353 @@ select.currency-select:focus{border-color:var(--sky)}
   <div class="grid">
     <div class="card attendees-section anim">
       <div class="attendees-header">
-        <div class="card-head">Who's Trapped in This Meeting?</div>
-        <div class="att-count"><strong id="attCountNum">0</strong> victims</div>
+        <div class="card-head" data-i18n="who_trapped">Who's Trapped in This Meeting?</div>
+        <div class="att-count"><strong id="attCountNum">0</strong> <span data-i18n="victims_lower">victims</span></div>
       </div>
       <div class="attendees-list" id="attendeesList"></div>
       <div class="att-actions">
-        <button class="att-btn" onclick="addAttendee()">+ Add Victim</button>
-        <button class="att-btn danger" id="clearBtn" onclick="clearAllAttendees()" disabled>✕ Set Them Free</button>
+        <button class="att-btn" onclick="addAttendee()" data-i18n="add_victim">+ Add Victim</button>
+        <button class="att-btn danger" id="clearBtn" onclick="clearAllAttendees()" disabled data-i18n="set_free">✕ Set Them Free</button>
       </div>
       <button class="role-editor-toggle" id="roleEditorToggle" onclick="toggleRoleEditor()">
-        <span class="arrow">▾</span> Edit Role Presets
+        <span class="arrow">▾</span> <span data-i18n="edit_roles">Edit Role Presets</span>
       </button>
       <div class="role-editor" id="roleEditor">
         <div class="role-editor-inner" id="roleEditorInner"></div>
-        <button class="add-role-btn" onclick="addCustomRole()">+ Add Custom Role</button>
-        <button class="reset-btn" onclick="resetToDefaults()">↺ Reset All Presets to Defaults</button>
+        <button class="add-role-btn" onclick="addCustomRole()" data-i18n="add_custom_role">+ Add Custom Role</button>
+        <button class="reset-btn" onclick="resetToDefaults()" data-i18n="reset_presets">↺ Reset All Presets to Defaults</button>
       </div>
     </div>
 
     <div class="card anim">
-      <div class="card-head">Classic Offenders</div>
+      <div class="card-head" data-i18n="classic_offenders">Classic Offenders</div>
       <div class="presets-grid">
-        <div class="preset-card" onclick="loadPreset('standup')"><div class="pc-title">Daily Standup</div><div class="pc-detail">8 devs · 15m</div></div>
-        <div class="preset-card" onclick="loadPreset('allhands')"><div class="pc-title">All-Hands</div><div class="pc-detail">25 people · 1h</div></div>
-        <div class="preset-card" onclick="loadPreset('brainstorm')"><div class="pc-title">"Quick" Brainstorm</div><div class="pc-detail">5 people · 1.5h</div></div>
-        <div class="preset-card" onclick="loadPreset('board')"><div class="pc-title">Board Meeting</div><div class="pc-detail">8 execs · 2h</div></div>
-        <div class="preset-card" onclick="loadPreset('onboarding')"><div class="pc-title">Onboarding</div><div class="pc-detail">3 people · 1h</div></div>
-        <div class="preset-card" onclick="loadPreset('review')"><div class="pc-title">Code Review</div><div class="pc-detail">4 engineers · 45m</div></div>
+        <div class="preset-card" onclick="loadPreset('standup')"><div class="pc-title" data-i18n="preset_standup">Daily Standup</div><div class="pc-detail">8 devs · 15m</div></div>
+        <div class="preset-card" onclick="loadPreset('allhands')"><div class="pc-title" data-i18n="preset_allhands">All-Hands</div><div class="pc-detail">25 people · 1h</div></div>
+        <div class="preset-card" onclick="loadPreset('brainstorm')"><div class="pc-title" data-i18n="preset_brainstorm">"Quick" Brainstorm</div><div class="pc-detail">5 people · 1.5h</div></div>
+        <div class="preset-card" onclick="loadPreset('board')"><div class="pc-title" data-i18n="preset_board">Board Meeting</div><div class="pc-detail">8 execs · 2h</div></div>
+        <div class="preset-card" onclick="loadPreset('onboarding')"><div class="pc-title" data-i18n="preset_onboarding">Onboarding</div><div class="pc-detail">3 people · 1h</div></div>
+        <div class="preset-card" onclick="loadPreset('review')"><div class="pc-title" data-i18n="preset_review">Code Review</div><div class="pc-detail">4 engineers · 45m</div></div>
       </div>
     </div>
 
     <div class="card anim">
-      <div class="card-head">Should You Even Go?</div>
+      <div class="card-head" data-i18n="should_go_title">Should You Even Go?</div>
       <div class="iq-row">
         <div></div>
         <div class="iq-score g" id="effScore">—</div>
       </div>
       <div class="iq-bar-track"><div class="iq-bar-fill" id="effBar" style="width:0%;background:var(--text-3)"></div></div>
-      <div class="iq-text" id="effText">add people above to witness the carnage</div>
+      <div class="iq-text" id="effText"></div>
     </div>
 
     <div class="card anim">
-      <div class="card-head">The Damage Report</div>
+      <div class="card-head" data-i18n="damage_report">The Damage Report</div>
       <div class="breakdown-lines">
-        <div class="bd-line"><span class="bd-label">Duration</span><span class="bd-val" id="bkDuration">60 min</span></div>
-        <div class="bd-line"><span class="bd-label">Victims</span><span class="bd-val" id="bkAttendees">0</span></div>
-        <div class="bd-line"><span class="bd-label">Person-minutes wasted</span><span class="bd-val" id="bkPersonMin">0</span></div>
-        <div class="bd-line"><span class="bd-label">Average burn rate</span><span class="bd-val hot" id="bkAvgRate">€0/hr</span></div>
-        <div class="bd-line"><span class="bd-label">Per minute</span><span class="bd-val" id="bkPerMin">€0</span></div>
-        <div class="bd-line"><span class="bd-label">Per person</span><span class="bd-val" id="bkPerPerson">€0</span></div>
-        <div class="bd-line total"><span class="bd-label">Total Damage</span><span class="bd-val" id="bkTotal">€0.00</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_duration">Duration</span><span class="bd-val" id="bkDuration">60 min</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_victims">Victims</span><span class="bd-val" id="bkAttendees">0</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_person_min">Person-minutes wasted</span><span class="bd-val" id="bkPersonMin">0</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_avg_rate">Average burn rate</span><span class="bd-val hot" id="bkAvgRate">€0/hr</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_per_min">Per minute</span><span class="bd-val" id="bkPerMin">€0</span></div>
+        <div class="bd-line"><span class="bd-label" data-i18n="bk_per_person">Per person</span><span class="bd-val" id="bkPerPerson">€0</span></div>
+        <div class="bd-line total"><span class="bd-label" data-i18n="total_damage">Total Damage</span><span class="bd-val" id="bkTotal">€0.00</span></div>
       </div>
     </div>
 
     <div class="card full anim" id="oppCard" style="display:none">
-      <div class="card-head">⚠ This Could Have Bought</div>
+      <div class="card-head" data-i18n="could_have_bought">⚠ This Could Have Bought</div>
       <div class="opp-grid" id="oppGrid"></div>
       <div class="recurring" id="recurringBanner" style="display:none">
-        <div class="recurring-label">if this nightmare repeats weekly</div>
+        <div class="recurring-label" data-i18n="recurring_label">if this nightmare repeats weekly</div>
         <div class="recurring-amount" id="recurringAmount">€0</div>
         <div class="recurring-sub" id="recurringSub">52 meetings. every single week. forever.</div>
       </div>
     </div>
 
     <div class="card anim" id="carbonSection">
-      <div class="card-head">Carbon Guilt</div>
+      <div class="card-head" data-i18n="carbon_guilt">Carbon Guilt</div>
       <div class="carbon-grid" id="carbonStats"></div>
-      <div class="carbon-note">estimates based on EU averages · video: ~0.5 kg CO₂/hr/person · commute: ~8.4 kg CO₂</div>
+      <div class="carbon-note" data-i18n="carbon_note">estimates based on EU averages · video: ~0.5 kg CO₂/hr/person · commute: ~8.4 kg CO₂</div>
     </div>
 
     <div class="card anim">
-      <div class="card-head">Draft the Email</div>
+      <div class="card-head" data-i18n="draft_email">Draft the Email</div>
       <div class="email-tones">
-        <button class="email-tone active" onclick="generateEmail('passive-aggressive',this)">Passive-Aggressive</button>
-        <button class="email-tone" onclick="generateEmail('formal',this)">Formal</button>
-        <button class="email-tone" onclick="generateEmail('funny',this)">Funny</button>
-        <button class="email-tone" onclick="generateEmail('data',this)">Just Data</button>
+        <button class="email-tone active" onclick="generateEmail('passive-aggressive',this)" data-i18n="tone_passive">Passive-Aggressive</button>
+        <button class="email-tone" onclick="generateEmail('formal',this)" data-i18n="tone_formal">Formal</button>
+        <button class="email-tone" onclick="generateEmail('funny',this)" data-i18n="tone_funny">Funny</button>
+        <button class="email-tone" onclick="generateEmail('data',this)" data-i18n="tone_data">Just Data</button>
       </div>
-      <div class="email-preview" id="emailPreview">pick a tone above and i'll write you the most guilt-inducing email your colleagues have ever seen</div>
+      <div class="email-preview" id="emailPreview" data-i18n="email_placeholder">pick a tone above and i'll write you the most guilt-inducing email your colleagues have ever seen</div>
       <div class="email-actions">
-        <button class="email-act" onclick="copyEmail()">Copy Email</button>
-        <button class="email-act plain" onclick="copyEmailPlain()">Copy Body Only</button>
+        <button class="email-act" onclick="copyEmail()" data-i18n="copy_email">Copy Email</button>
+        <button class="email-act plain" onclick="copyEmailPlain()" data-i18n="copy_body">Copy Body Only</button>
       </div>
     </div>
 
     <div class="card full anim">
-      <div class="card-head">Share the Shame</div>
+      <div class="card-head" data-i18n="share_shame">Share the Shame</div>
       <div class="share-canvas-wrap">
         <canvas id="shareCanvas" width="600" height="750"></canvas>
       </div>
       <div class="share-actions">
-        <button class="share-act" onclick="downloadShareImage()">Download</button>
-        <button class="share-act copy" onclick="copyShareImage()">Copy Image</button>
-        <button class="share-act native" id="nativeShareBtn" onclick="nativeShare()" style="display:none">Share...</button>
+        <button class="share-act" onclick="downloadShareImage()" data-i18n="download">Download</button>
+        <button class="share-act copy" onclick="copyShareImage()" data-i18n="copy_image">Copy Image</button>
+        <button class="share-act native" id="nativeShareBtn" onclick="nativeShare()" style="display:none" data-i18n="share_btn">Share...</button>
       </div>
     </div>
   </div>
 
   <div class="bottom-cta anim">
-    <button onclick="copyReport()">Copy the Receipt</button>
-    <div class="cta-sub">bring this to the next retro and watch people squirm</div>
+    <button onclick="copyReport()" data-i18n="copy_receipt">Copy the Receipt</button>
+    <div class="cta-sub" data-i18n="cta_sub">bring this to the next retro and watch people squirm</div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
+// ── Translations ─────────────────────────────────────────
+const I18N = {
+  en: {
+    title_main: "It Could've Been<br>an <span class=\"alt\">Email!</span>",
+    subtitle: "the meeting cost calculator nobody asked for",
+    dark: "Dark", light: "Light",
+    duration: "Duration", minutes_abbr: "min",
+    quick_stats: "Quick Stats", verdict: "Verdict",
+    victims: "Victims", avg_rate: "Avg Rate", per_person: "Per Person",
+    should_you_go: "Should You Go?", could_be_email: "Could Be Email?", yearly_weekly: "Yearly (weekly)",
+    who_trapped: "Who's Trapped in This Meeting?", victims_lower: "victims",
+    add_victim: "+ Add Victim", set_free: "✕ Set Them Free",
+    edit_roles: "Edit Role Presets", add_custom_role: "+ Add Custom Role", reset_presets: "↺ Reset All Presets to Defaults",
+    classic_offenders: "Classic Offenders",
+    preset_standup: "Daily Standup", preset_allhands: "All-Hands", preset_brainstorm: '"Quick" Brainstorm',
+    preset_board: "Board Meeting", preset_onboarding: "Onboarding", preset_review: "Code Review",
+    should_go_title: "Should You Even Go?",
+    damage_report: "The Damage Report",
+    bk_duration: "Duration", bk_victims: "Victims", bk_person_min: "Person-minutes wasted",
+    bk_avg_rate: "Average burn rate", bk_per_min: "Per minute", bk_per_person: "Per person", total_damage: "Total Damage",
+    could_have_bought: "⚠ This Could Have Bought",
+    recurring_label: "if this nightmare repeats weekly",
+    carbon_guilt: "Carbon Guilt",
+    carbon_note: "estimates based on EU averages · video: ~0.5 kg CO₂/hr/person · commute: ~8.4 kg CO₂",
+    draft_email: "Draft the Email",
+    tone_passive: "Passive-Aggressive", tone_formal: "Formal", tone_funny: "Funny", tone_data: "Just Data",
+    email_placeholder: "pick a tone above and i'll write you the most guilt-inducing email your colleagues have ever seen",
+    copy_email: "Copy Email", copy_body: "Copy Body Only",
+    share_shame: "Share the Shame", download: "Download", copy_image: "Copy Image", share_btn: "Share...",
+    copy_receipt: "Copy the Receipt", cta_sub: "bring this to the next retro and watch people squirm",
+    empty_state: "no victims yet — add someone and watch the money burn 🔥",
+    eff_empty: "add people above to witness the carnage",
+    eff_empty_2: "waiting for victims... i mean, attendees",
+    eff_empty_3: "nobody here yet. blissful silence.",
+    cost_burn: "this meeting is burning", cost_cry: "your budget is crying", cost_fire: "money on fire right now",
+    cost_damage: "the damage so far", cost_vapor: "opportunities vaporized", cost_salary: "your salary at work",
+    cost_waste: "peak productivity waste", cost_devastation: "financial devastation in progress",
+    per_sec_suffix: "per second of collective suffering",
+    toast_reset: "reset to factory defaults",
+    toast_tone_first: "pick a tone first",
+    toast_email_copied: "email copied — go spread the truth",
+    toast_could_not_copy: "could not copy",
+    toast_body_copied: "body copied",
+    toast_image_dl: "image downloaded — use it wisely",
+    toast_image_copied: "image copied — paste it everywhere",
+    toast_not_available: "not available",
+    toast_cancelled: "cancelled",
+    toast_shame: "receipt copied — go shame that meeting",
+    recurring_sub: "that's {weekly}/week × 52 = {yearly}/year. still worth it?",
+    empty_attendee: "no victims yet — add someone and watch the money burn 🔥",
+    name_placeholder: "name",
+    email_no_attendees: "add some attendees first, then i'll write you a masterpiece of passive aggression",
+    share_subtitle: "the meeting cost nobody asked for",
+    share_total_damage: "TOTAL DAMAGE",
+    share_could_bought: "THIS COULD HAVE BOUGHT",
+    share_coffees: "coffees", share_lunches: "lunches", share_therapy: "therapy",
+    share_carbon: "CARBON GUILT", share_carbon_sub: "if everyone commuted ({count} people)",
+    share_footer: "generated by It Could've Been an Email!",
+    copy_receipt_title: "IT COULD'VE BEEN AN EMAIL",
+    receipt_duration: "Duration", receipt_victims: "Victims", receipt_avg_rate: "Avg rate",
+    receipt_total: "Total damage", receipt_who: "Who was there:", receipt_could_bought: "What this could've bought:",
+    receipt_coffees: "fancy coffees", receipt_lunches: "team lunches", receipt_therapy: "therapy sessions",
+    receipt_yearly: "Yearly (if weekly)", receipt_generated: '— Generated by "It Could\'ve Been an Email!"',
+    unnamed: "(unnamed)",
+    iq_g_1: "actually decent. maybe this one's justified?",
+    iq_g_2: "not terrible. the bar is low but you cleared it.",
+    iq_g_3: "a rare meeting worth having. cherish it.",
+    iq_y_1: "could be an email. you know it, i know it.",
+    iq_y_2: "this is a maybe. can it be a Slack thread?",
+    iq_y_3: "borderline. cut some people or shorten it.",
+    iq_y_4: "the vibes are off. restructure or cancel.",
+    iq_r_1: "this is a crime against productivity.",
+    iq_r_2: "abort mission. send a message instead.",
+    iq_r_3: "your future self is screaming right now.",
+    iq_r_4: "this meeting should be illegal in 47 countries.",
+    verdict_definitely: "definitely", verdict_probably: "probably", verdict_maybe_not: "maybe not",
+    email_ps_1: "P.S. The irony of writing a long email to avoid meetings is not lost on me.",
+    email_ps_2: "P.S. If we did this weekly, that's {cost}/year. Just something to cry about.",
+    email_ps_3: "P.S. I calculated this while pretending to listen. Multitasking!",
+    email_ps_4: "P.S. This email took me 5 minutes and €0. Still cheaper than the meeting.",
+    email_ps_5: "P.S. Forward this to anyone who schedules 'quick syncs'.",
+    email_ps_6: "P.S. My therapist said I should express my meeting frustrations. Here we are.",
+    email_pa_subject: "Re: Quick sync — totally not a waste of time",
+    email_pa_intro: "Hi team,\n\nJust wanted to share some fun facts about our {duration}-minute meeting today.\n\nWith {count} people at an average rate of {avgRate}, this little gathering cost us {total}.\n\nTo put that in perspective:\n",
+    email_pa_coffees: "• We could have bought {n} fancy coffees\n",
+    email_pa_lunches: "• We could have treated {n} people to lunch\n",
+    email_pa_therapy: "• We could have paid for {n} therapy sessions (which we'll need after this meeting schedule)\n",
+    email_pa_close: "\nI'm not saying we shouldn't meet, but maybe... a Slack message? A Loom video? A carrier pigeon?\n\nBest regards,\n[Your name]\n\n",
+    email_formal_subject: "Meeting Cost Analysis — {duration} min, {count} attendees",
+    email_formal_body: "Dear Team,\n\nPlease find below the cost analysis for our recent meeting:\n\nMEETING SUMMARY\nDuration: {duration} minutes\nAttendees: {count}\nAverage hourly rate: {avgRate}\nEstimated total cost: {total}\n\n",
+    email_formal_breakdown: "ATTENDEE BREAKDOWN\n",
+    email_formal_line: "{num}. {name} — {role} — {rate}\n",
+    email_formal_projection: "\nANNUAL PROJECTION (if weekly)\nTotal: {yearly}\n\nRECOMMENDATION\nReview whether recurring meetings of this duration are necessary.\n\nRegards,\n[Your name]",
+    email_funny_subject: "🚨 CRIME REPORT: Our meeting cost {total}",
+    email_funny_body: "Ladies, gentlemen, and people clearly on mute,\n\nI regret to inform you that our {duration}-minute meeting has been classified as a Level 4 Financial Incident.\n\nTHE EVIDENCE:\n• {count} people × {duration} min = {personMin} person-minutes of... something\n• Total cost: {total}\n• Per minute: {perMin} (yes, every 60 seconds)\n\nWHAT WE COULD'VE BOUGHT:\n",
+    email_funny_coffees: "• {n} coffees ({months} months of daily caffeine)\n",
+    email_funny_lunches: "• {n} team lunches (better bonding than slides)\n",
+    email_funny_therapy: "• {n} therapy sessions (for meeting-induced trauma)\n",
+    email_funny_close: "\nRECOMMENDED ACTIONS:\n1. Question every calendar invite like it owes you money\n2. If it can be a message, make it a message\n3. If it can be nothing, perfection achieved\n\nYours in financial devastation,\n[Your name]\n\n",
+    email_data_subject: "Meeting Cost Data — {total}",
+    email_data_body: "MEETING COST REPORT\n{line}\n\nDuration:        {duration} minutes\nAttendees:       {count}\nPerson-minutes:  {personMin}\nAvg rate:        {avgRate}\nTotal cost:      {total}\nCost/minute:     {perMin}\nCost/person:     {perPerson}\n\nATTENDEES:\n",
+    email_data_line: "{num}. {name}  {role}  {rate}\n",
+    email_data_projections: "\nPROJECTIONS:\nWeekly:   {total} × 52  = {yearly}\nMonthly:  {total} × 12  = {monthly}\nAnnually: {total} × 260 = {annually}",
+    opp_months_junior: "months of a junior dev", opp_sub_junior: "at $55/hr full-time",
+    opp_macbooks: "MacBook Pros", opp_sub_macbooks: "$2,499 each",
+    opp_monitors: "4K monitors", opp_sub_monitors: "$450 each",
+    opp_lunches: "team lunches", opp_sub_lunches: "$18/person",
+    opp_aws: "months of cloud hosting", opp_sub_aws: "AWS infrastructure",
+    opp_saas: "months of SaaS tools", opp_sub_saas: "Slack, Figma, GitHub",
+    opp_office: "days of office rent", opp_sub_office: "rent, utilities, snacks",
+    opp_retreat: "company retreat days", opp_sub_retreat: "$300/person offsite",
+    opp_coffee: "fancy coffees", opp_sub_coffee: "$6.50 each",
+    opp_charity: "charity meals funded", opp_sub_charity: "$3.50/meal",
+    opp_spotify: "years of Spotify Premium", opp_sub_spotify: "$10/month",
+    opp_therapy: "therapy sessions", opp_sub_therapy: "you probably need these",
+    carbon_video_label: "CO₂ if video call", carbon_commute_label: "CO₂ if in-person",
+    carbon_trees_label: "trees to offset", carbon_flights_label: "short flights worth",
+    carbon_driving_label: "equivalent driving", carbon_steak_label: "steak dinners CO₂",
+  },
+  fr: {
+    title_main: "Ça aurait pu être<br>un <span class=\"alt\">Email!</span>",
+    subtitle: "le calculateur de coût de réunion que personne n'a demandé",
+    dark: "Sombre", light: "Clair",
+    duration: "Durée", minutes_abbr: "min",
+    quick_stats: "Stats rapides", verdict: "Verdict",
+    victims: "Victimes", avg_rate: "Taux moyen", per_person: "Par personne",
+    should_you_go: "Vous devriez y aller?", could_be_email: "Ça pourrait être un email?", yearly_weekly: "Annuel (hebdo)",
+    who_trapped: "Qui est piégé dans cette réunion?", victims_lower: "victimes",
+    add_victim: "+ Ajouter une victime", set_free: "✕ Les libérer",
+    edit_roles: "Modifier les rôles", add_custom_role: "+ Ajouter un rôle personnalisé", reset_presets: "↺ Réinitialiser les rôles par défaut",
+    classic_offenders: "Les grands classiques",
+    preset_standup: "Daily Standup", preset_allhands: "Réunion générale", preset_brainstorm: "Brainstorming « rapide »",
+    preset_board: "Conseil d'administration", preset_onboarding: "Intégration", preset_review: "Revue de code",
+    should_go_title: "Devriez-vous vraiment y aller?",
+    damage_report: "Le rapport de dégâts",
+    bk_duration: "Durée", bk_victims: "Victimes", bk_person_min: "Personne-minutes perdues",
+    bk_avg_rate: "Taux de combustion moyen", bk_per_min: "Par minute", bk_per_person: "Par personne", total_damage: "Dégâts totaux",
+    could_have_bought: "⚠ Ça aurait pu acheter",
+    recurring_label: "si ce cauchemar se répète chaque semaine",
+    carbon_guilt: "Culpabilité carbone",
+    carbon_note: "estimations basées sur les moyennes UE · vidéo : ~0,5 kg CO₂/pers/h · trajet : ~8,4 kg CO₂",
+    draft_email: "Rédiger l'email",
+    tone_passive: "Passif-agressif", tone_formal: "Formel", tone_funny: "Drôle", tone_data: "Juste des données",
+    email_placeholder: "choisis un ton ci-dessus et je t'écrirai l'email le plus culpabilisant que tes collègues aient jamais vu",
+    copy_email: "Copier l'email", copy_body: "Copier le corps",
+    share_shame: "Partager la honte", download: "Télécharger", copy_image: "Copier l'image", share_btn: "Partager...",
+    copy_receipt: "Copier le reçu", cta_sub: "amène ça à la prochaine rétro et regarde les gens grincer des dents",
+    empty_state: "pas encore de victimes — ajoute quelqu'un et regarde l'argent brûler 🔥",
+    eff_empty: "ajoute des gens ci-dessus pour assister au carnage",
+    eff_empty_2: "en attente de victimes... je veux dire, de participants",
+    eff_empty_3: "personne pour l'instant. un silence magnifique.",
+    cost_burn: "cette réunion brûle", cost_cry: "ton budget pleure", cost_fire: "l'argent part en flammes",
+    cost_damage: "les dégâts jusqu'ici", cost_vapor: "opportunités évaporées", cost_salary: "ton salaire au travail",
+    cost_waste: "gaspillage productif de haut niveau", cost_devastation: "dévastation financière en cours",
+    per_sec_suffix: "par seconde de souffrance collective",
+    toast_reset: "réinitialisé aux valeurs d'usine",
+    toast_tone_first: "choisis d'abord un ton",
+    toast_email_copied: "email copié — va répandre la vérité",
+    toast_could_not_copy: "impossible de copier",
+    toast_body_copied: "corps copié",
+    toast_image_dl: "image téléchargée — utilise-la sagement",
+    toast_image_copied: "image copiée — colle-la partout",
+    toast_not_available: "non disponible",
+    toast_cancelled: "annulé",
+    toast_shame: "reçu copié — va humilier cette réunion",
+    recurring_sub: "soit {weekly}/semaine × 52 = {yearly}/an. ça en vaut toujours la peine?",
+    empty_attendee: "pas encore de victimes — ajoute quelqu'un et regarde l'argent brûler 🔥",
+    name_placeholder: "nom",
+    email_no_attendees: "ajoute d'abord des participants, puis je t'écrirai un chef-d'œuvre de passif-agressivité",
+    share_subtitle: "le coût de réunion que personne n'a demandé",
+    share_total_damage: "DÉGÂTS TOTAUX",
+    share_could_bought: "ÇA AURAIT PU ACHETER",
+    share_coffees: "cafés", share_lunches: "déjeuners", share_therapy: "séances de thérapie",
+    share_carbon: "CULPABILITÉ CARBONE", share_carbon_sub: "si tout le monde faisait le trajet ({count} pers.)",
+    share_footer: "généré par Ça aurait pu être un Email!",
+    copy_receipt_title: "ÇA AURAIT PU ÊTRE UN EMAIL",
+    receipt_duration: "Durée", receipt_victims: "Victimes", receipt_avg_rate: "Taux moyen",
+    receipt_total: "Dégâts totaux", receipt_who: "Participants :", receipt_could_bought: "Ce que ça aurait pu acheter :",
+    receipt_coffees: "cafés de luxe", receipt_lunches: "déjeuners d'équipe", receipt_therapy: "séances de thérapie",
+    receipt_yearly: "Annuel (si hebdo)", receipt_generated: '— Généré par "Ça aurait pu être un Email!"',
+    unnamed: "(sans nom)",
+    iq_g_1: "plutôt correct. peut-être que celle-ci est justifiée?",
+    iq_g_2: "pas terrible. le niveau est bas mais tu l'as atteint.",
+    iq_g_3: "une rare réunion qui en vaut la peine. savoure-la.",
+    iq_y_1: "ça pourrait être un email. tu le sais, je le sais.",
+    iq_y_2: "c'est un peut-être. ça peut être un fil Slack?",
+    iq_y_3: "limite. réduis le nombre de gens ou la durée.",
+    iq_y_4: "l'ambiance est pourrie. restructure ou annule.",
+    iq_r_1: "c'est un crime contre la productivité.",
+    iq_r_2: "mission avortée. envoie un message à la place.",
+    iq_r_3: "ton futur toi est en train de hurler.",
+    iq_r_4: "cette réunion devrait être illégale dans 47 pays.",
+    verdict_definitely: "certainement", verdict_probably: "probablement", verdict_maybe_not: "peut-être pas",
+    email_ps_1: "P.S. L'ironie d'écrire un long email pour éviter les réunions ne m'échappe pas.",
+    email_ps_2: "P.S. Si on faisait ça chaque semaine, ça ferait {cost}/an. Juste pour pleurer un peu.",
+    email_ps_3: "P.S. J'ai calculé ça en faisant semblant d'écouter. Multitâche!",
+    email_ps_4: "P.S. Cet email m'a pris 5 minutes et 0 €. Toujours moins cher que la réunion.",
+    email_ps_5: "P.S. Transfère ça à quiconque planifie des « petites syncs ».",
+    email_ps_6: "P.S. Mon thérapeute m'a dit d'exprimer mes frustrations de réunions. Les voici.",
+    email_pa_subject: "Re : Petite sync — absolument pas une perte de temps",
+    email_pa_intro: "Bonjour l'équipe,\n\nJe voulais juste partager quelques faits amusants sur notre réunion d'aujourd'hui de {duration} minutes.\n\nAvec {count} personnes à un taux moyen de {avgRate}, cette petite rencontre nous a coûté {total}.\n\nPour remettre les choses en perspective :\n",
+    email_pa_coffees: "• On aurait pu acheter {n} cafés de luxe\n",
+    email_pa_lunches: "• On aurait pu offrir le déjeuner à {n} personnes\n",
+    email_pa_therapy: "• On aurait pu payer {n} séances de thérapie (dont on aura besoin après ce planning de réunions)\n",
+    email_pa_close: "\nJe ne dis pas qu'on ne devrait pas se réunir, mais peut-être... un message Slack? Une vidéo Loom? Un pigeon voyageur?\n\nCordialement,\n[Votre nom]\n\n",
+    email_formal_subject: "Analyse du coût de la réunion — {duration} min, {count} participants",
+    email_formal_body: "Chère équipe,\n\nVeuillez trouver ci-dessous l'analyse du coût de notre réunion récente :\n\nRÉSUMÉ DE LA RÉUNION\nDurée : {duration} minutes\nParticipants : {count}\nTaux horaire moyen : {avgRate}\nCoût total estimé : {total}\n\n",
+    email_formal_breakdown: "DÉTAIL DES PARTICIPANTS\n",
+    email_formal_line: "{num}. {name} — {role} — {rate}\n",
+    email_formal_projection: "\nPROJECTION ANNUELLE (si hebdomadaire)\nTotal : {yearly}\n\nRECOMMANDATION\nExaminez si les réunions récurrentes de cette durée sont nécessaires.\n\nCordialement,\n[Votre nom]",
+    email_funny_subject: "🚨 RAPPORT DE CRIME : Notre réunion a coûté {total}",
+    email_funny_body: "Mesdames, messieurs, et ceux clairement en sourdine,\n\nJe regrette de vous informer que notre réunion de {duration} minutes a été classée comme un Incident Financier de Niveau 4.\n\nLES PREUVES :\n• {count} personnes × {duration} min = {personMin} personne-minutes de... quelque chose\n• Coût total : {total}\n• Par minute : {perMin} (oui, toutes les 60 secondes)\n\nCE QU'ON AURAIT PU ACHETER :\n",
+    email_funny_coffees: "• {n} cafés ({months} mois de caféine quotidienne)\n",
+    email_funny_lunches: "• {n} déjeuners d'équipe (meilleure cohésion que les slides)\n",
+    email_funny_therapy: "• {n} séances de thérapie (pour le trauma des réunions)\n",
+    email_funny_close: "\nACTIONS RECOMMANDÉES :\n1. Questionne chaque invitation comme si elle te devait de l'argent\n2. Si ça peut être un message, fais-en un message\n3. Si ça peut être rien, perfection atteinte\n\nÀ toi dans la dévastation financière,\n[Votre nom]\n\n",
+    email_data_subject: "Données de coût de réunion — {total}",
+    email_data_body: "RAPPORT DE COÛT DE RÉUNION\n{line}\n\nDurée :         {duration} minutes\nParticipants :  {count}\nPers.-minutes : {personMin}\nTaux moyen :    {avgRate}\nCoût total :    {total}\nCoût/minute :   {perMin}\nCoût/pers. :    {perPerson}\n\nPARTICIPANTS :\n",
+    email_data_line: "{num}. {name}  {role}  {rate}\n",
+    email_data_projections: "\nPROJECTIONS :\nHebdo :   {total} × 52  = {yearly}\nMensuel : {total} × 12  = {monthly}\nAnnuel :  {total} × 260 = {annually}",
+    opp_months_junior: "mois de développeur junior", opp_sub_junior: "à 55 $/h à plein temps",
+    opp_macbooks: "MacBook Pro", opp_sub_macbooks: "2 499 $ pièce",
+    opp_monitors: "moniteurs 4K", opp_sub_monitors: "450 $ pièce",
+    opp_lunches: "déjeuners d'équipe", opp_sub_lunches: "18 $/personne",
+    opp_aws: "mois d'hébergement cloud", opp_sub_aws: "infrastructure AWS",
+    opp_saas: "mois d'outils SaaS", opp_sub_saas: "Slack, Figma, GitHub",
+    opp_office: "jours de loyer bureau", opp_sub_office: "loyer, électricité, snacks",
+    opp_retreat: "jours de séminaire d'entreprise", opp_sub_retreat: "300 $/personne en séminaire",
+    opp_coffee: "cafés de luxe", opp_sub_coffee: "6,50 $ pièce",
+    opp_charity: "repas caritatifs financés", opp_sub_charity: "3,50 $/repas",
+    opp_spotify: "ans de Spotify Premium", opp_sub_spotify: "10 $/mois",
+    opp_therapy: "séances de thérapie", opp_sub_therapy: "tu en as probablement besoin",
+    carbon_video_label: "CO₂ si appel vidéo", carbon_commute_label: "CO₂ si en personne",
+    carbon_trees_label: "arbres pour compenser", carbon_flights_label: "vols courts équivalents",
+    carbon_driving_label: "conduite équivalente", carbon_steak_label: "dîners steak en CO₂",
+  }
+};
+
+let currentLang = 'en';
+const tr = (key) => (I18N[currentLang] && I18N[currentLang][key]) || (I18N.en[key]) || key;
+
 // ── Theme ────────────────────────────────────────────────
 let isDark = false;
 
@@ -510,36 +868,41 @@ const CURRENCY_DATA = {
 };
 
 const DEFAULT_ROLES_USD = [
-  {id:'intern',name:'Intern (free labor)',rateUSD:25,builtin:true},
-  {id:'junior',name:'Junior (0-2 yrs)',rateUSD:55,builtin:true},
-  {id:'mid',name:'Mid-Level (2-5 yrs)',rateUSD:85,builtin:true},
-  {id:'senior',name:'Senior (5-8 yrs)',rateUSD:120,builtin:true},
-  {id:'staff',name:'Staff / Principal',rateUSD:160,builtin:true},
-  {id:'eng_manager',name:'Eng Manager',rateUSD:155,builtin:true},
-  {id:'designer',name:'Designer',rateUSD:95,builtin:true},
-  {id:'product',name:'Product Manager',rateUSD:110,builtin:true},
-  {id:'data',name:'Data Scientist',rateUSD:115,builtin:true},
-  {id:'devops',name:'DevOps / SRE',rateUSD:125,builtin:true},
-  {id:'director',name:'Director',rateUSD:200,builtin:true},
-  {id:'vp',name:'VP',rateUSD:275,builtin:true},
-  {id:'c_suite',name:'C-Suite (money printer)',rateUSD:450,builtin:true},
-  {id:'legal',name:'Legal (sue you later)',rateUSD:300,builtin:true},
-  {id:'consultant',name:'External Consultant',rateUSD:250,builtin:true},
-  {id:'freelancer',name:'Freelancer / Contractor',rateUSD:100,builtin:true},
-  {id:'sales',name:'Sales (commission hunter)',rateUSD:90,builtin:true},
-  {id:'marketing',name:'Marketing',rateUSD:80,builtin:true},
-  {id:'hr',name:'HR / People Ops',rateUSD:75,builtin:true},
-  {id:'support',name:'Customer Support',rateUSD:50,builtin:true},
+  {id:'intern',name:'Intern (free labor)',nameFr:'Stagiaire (travail gratuit)',rateUSD:25,builtin:true},
+  {id:'junior',name:'Junior (0-2 yrs)',nameFr:'Junior (0-2 ans)',rateUSD:55,builtin:true},
+  {id:'mid',name:'Mid-Level (2-5 yrs)',nameFr:'Intermédiaire (2-5 ans)',rateUSD:85,builtin:true},
+  {id:'senior',name:'Senior (5-8 yrs)',nameFr:'Senior (5-8 ans)',rateUSD:120,builtin:true},
+  {id:'staff',name:'Staff / Principal',nameFr:'Staff / Principal',rateUSD:160,builtin:true},
+  {id:'eng_manager',name:'Eng Manager',nameFr:'Manager Tech',rateUSD:155,builtin:true},
+  {id:'designer',name:'Designer',nameFr:'Designer',rateUSD:95,builtin:true},
+  {id:'product',name:'Product Manager',nameFr:'Product Manager',rateUSD:110,builtin:true},
+  {id:'data',name:'Data Scientist',nameFr:'Data Scientist',rateUSD:115,builtin:true},
+  {id:'devops',name:'DevOps / SRE',nameFr:'DevOps / SRE',rateUSD:125,builtin:true},
+  {id:'director',name:'Director',nameFr:'Directeur',rateUSD:200,builtin:true},
+  {id:'vp',name:'VP',nameFr:'VP',rateUSD:275,builtin:true},
+  {id:'c_suite',name:'C-Suite (money printer)',nameFr:'Direction (machine à billets)',rateUSD:450,builtin:true},
+  {id:'legal',name:'Legal (sue you later)',nameFr:'Juridique (plainte plus tard)',rateUSD:300,builtin:true},
+  {id:'consultant',name:'External Consultant',nameFr:'Consultant externe',rateUSD:250,builtin:true},
+  {id:'freelancer',name:'Freelancer / Contractor',nameFr:'Freelance / Contractuel',rateUSD:100,builtin:true},
+  {id:'sales',name:'Sales (commission hunter)',nameFr:'Commercial (chasseur de commissions)',rateUSD:90,builtin:true},
+  {id:'marketing',name:'Marketing',nameFr:'Marketing',rateUSD:80,builtin:true},
+  {id:'hr',name:'HR / People Ops',nameFr:'RH / People Ops',rateUSD:75,builtin:true},
+  {id:'support',name:'Customer Support',nameFr:'Support client',rateUSD:50,builtin:true},
 ];
+
+function getRoleDisplayName(r) {
+  if (currentLang === 'fr' && r.nameFr) return r.nameFr;
+  return r.name;
+}
 
 let roles = DEFAULT_ROLES_USD.map(r => ({...r}));
 let currentCurrency = 'EUR';
 
-// ── Persistence (localStorage) ───────────────────────────
 const STORAGE_KEYS = {
   ROLES: 'mca_roles',
   CURRENCY: 'mca_currency',
-  THEME: 'mca_theme'
+  THEME: 'mca_theme',
+  LANG: 'mca_lang'
 };
 
 function loadSavedData() {
@@ -560,14 +923,14 @@ function loadSavedData() {
       document.documentElement.setAttribute('data-theme', 'dark');
       document.body.setAttribute('data-theme', 'dark');
       document.getElementById('themeIcon').textContent = '☀️';
-      document.getElementById('themeLabel').textContent = 'Light';
     } else {
       isDark = false;
       document.documentElement.setAttribute('data-theme', 'light');
       document.body.setAttribute('data-theme', 'light');
       document.getElementById('themeIcon').textContent = '🌙';
-      document.getElementById('themeLabel').textContent = 'Dark';
     }
+    const savedLang = localStorage.getItem(STORAGE_KEYS.LANG);
+    if (savedLang === 'fr') currentLang = 'fr';
   } catch (e) { console.warn('Could not load saved data', e); }
 }
 
@@ -580,21 +943,26 @@ function saveCurrency() {
 function saveTheme() {
   try { localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light'); } catch(e){}
 }
+function saveLang() {
+  try { localStorage.setItem(STORAGE_KEYS.LANG, currentLang); } catch(e){}
+}
 
 function resetToDefaults() {
   localStorage.removeItem(STORAGE_KEYS.ROLES);
   localStorage.removeItem(STORAGE_KEYS.CURRENCY);
   localStorage.removeItem(STORAGE_KEYS.THEME);
+  localStorage.removeItem(STORAGE_KEYS.LANG);
   roles = DEFAULT_ROLES_USD.map(r => ({...r}));
   currentCurrency = 'EUR';
   document.getElementById('currency').value = 'EUR';
+  currentLang = 'en';
   isDark = false;
   document.documentElement.setAttribute('data-theme', 'light');
   document.body.setAttribute('data-theme', 'light');
   document.getElementById('themeIcon').textContent = '🌙';
-  document.getElementById('themeLabel').textContent = 'Dark';
+  applyTranslations();
   renderRoleEditor(); renderAttendees(); recalculate();
-  showToast('reset to factory defaults');
+  showToast(tr('toast_reset'));
 }
 
 function getCurrency() { return CURRENCY_DATA[currentCurrency] || CURRENCY_DATA.USD; }
@@ -621,16 +989,36 @@ function toggleTheme() {
   document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
   document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
-  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
   saveTheme();
+  applyTranslations();
   drawShareCard();
 }
 
-// ── State ────────────────────────────────────────────────
+function toggleLanguage() {
+  currentLang = currentLang === 'en' ? 'fr' : 'en';
+  saveLang();
+  applyTranslations();
+  renderRoleEditor();
+  renderAttendees();
+  recalculate();
+}
+
+function applyTranslations() {
+  document.getElementById('pageTitle').innerHTML = tr('title_main');
+  document.getElementById('pageSubtitle').textContent = tr('subtitle');
+  document.getElementById('themeLabel').textContent = isDark ? tr('light') : tr('dark');
+  document.getElementById('langLabel').textContent = currentLang === 'en' ? 'FR' : 'EN';
+  document.getElementById('langBtn').querySelector('.icon').textContent = currentLang === 'en' ? '🇫🇷' : '🇬🇧';
+
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (tr(key)) el.textContent = tr(key);
+  });
+}
+
 let customIdCounter = 0, duration = 60, attendees = [], attendeeIdCounter = 0;
 function getRoleMap() { const m = {}; roles.forEach(r => m[r.id] = r); return m; }
 
-// ── Roles ────────────────────────────────────────────────
 function toggleRoleEditor() {
   document.getElementById('roleEditor').classList.toggle('open');
   document.getElementById('roleEditorToggle').classList.toggle('open');
@@ -640,7 +1028,7 @@ function renderRoleEditor() {
   const dec = getCurrency().decimals !== undefined ? getCurrency().decimals : 0;
   document.getElementById('roleEditorInner').innerHTML = roles.map((r, i) =>
     `<div class="role-editor-row ${r.builtin ? 'builtin' : ''}">
-      <div class="re-name"><input type="text" value="${r.name}" onchange="updateRoleName(${i},this.value)"></div>
+      <div class="re-name"><input type="text" value="${getRoleDisplayName(r)}" onchange="updateRoleName(${i},this.value)"></div>
       <div class="re-rate"><input type="number" value="${usdToLocal(r.rateUSD).toFixed(dec)}" min="0" step="5" onchange="updateRoleRate(${i},this.value)"></div>
       <button class="re-del" onclick="deleteRole(${i})">×</button>
     </div>`
@@ -648,7 +1036,9 @@ function renderRoleEditor() {
 }
 function updateRoleName(i, name) {
   if (i >= 0 && i < roles.length) {
-    roles[i].name = name.trim() || roles[i].name;
+    const trimmed = name.trim() || roles[i].name;
+    if (currentLang === 'fr') roles[i].nameFr = trimmed;
+    else roles[i].name = trimmed;
     saveRoles();
     renderAttendees(); renderRoleEditor();
   }
@@ -669,24 +1059,34 @@ function deleteRole(i) {
   renderRoleEditor(); renderAttendees(); recalculate();
 }
 function addCustomRole() {
-  roles.push({ id: 'custom_' + (++customIdCounter), name: 'New Role', rateUSD: localToUSD(75), builtin: false });
+  const newRole = { id: 'custom_' + (++customIdCounter), rateUSD: localToUSD(75), builtin: false };
+  newRole.name = currentLang === 'fr' ? 'Nouveau rôle' : 'New Role';
+  newRole.nameFr = 'Nouveau rôle';
+  roles.push(newRole);
   saveRoles();
   renderRoleEditor();
 }
 
-// ── Attendees ────────────────────────────────────────────
-const FUNNY_NAMES = [
+const FUNNY_NAMES_EN = [
   'Bob from Accounting','Karen from HR','Mysterious Dave','Camera-Off Guy',
   'Eating Lunch Girl','Mute Button Steve','Background Noise Phil','Always Late Sara',
   'Over-Committer Alex','Just Here For Snacks','Asks Obvious Q Todd','Falls Asleep Mike',
   'Slides Karen','Writes Nothing Jen','Dial-In Dan','Synergy Sam','Circle-Back Carrie',
 ];
+const FUNNY_NAMES_FR = [
+  'Bob de la Compta','Karen des RH','Dave le Mystérieux','Gars Caméra Éteinte',
+  'Fille qui Mange','Steve Bouton Muet','Phil Bruit de Fond','Sara Toujours en Retard',
+  'Alex Sur-Dévoué','Venu Pour les Snacks','Todd Questions Évidentes','Mike qui S\'endort',
+  'Karen des Slides','Jen qui Écrit Rien','Dan en Appel','Sam Synergie','Carrie On Reboucle',
+];
+function getFunnyNames() { return currentLang === 'fr' ? FUNNY_NAMES_FR : FUNNY_NAMES_EN; }
 function addAttendee(name = '', role = 'mid', rateUSD = null) {
   const id = ++attendeeIdCounter;
   const p = getRoleMap()[role] || getRoleMap()['mid'];
+  const names = getFunnyNames();
   attendees.push({
     id,
-    name: name || FUNNY_NAMES[Math.floor(Math.random() * FUNNY_NAMES.length)],
+    name: name || names[Math.floor(Math.random() * names.length)],
     role,
     rateUSD: rateUSD !== null ? rateUSD : (p ? p.rateUSD : localToUSD(75)),
     customRate: role === 'custom'
@@ -701,7 +1101,7 @@ function renderAttendees() {
   const rm = getRoleMap();
   const dec = getCurrency().decimals !== undefined ? getCurrency().decimals : 0;
   if (!attendees.length) {
-    list.innerHTML = '<div class="empty-state">no victims yet — add someone and watch the money burn 🔥</div>';
+    list.innerHTML = `<div class="empty-state">${tr('empty_state')}</div>`;
     document.getElementById('clearBtn').disabled = true;
     document.getElementById('attCountNum').textContent = '0';
     return;
@@ -709,11 +1109,11 @@ function renderAttendees() {
   document.getElementById('clearBtn').disabled = false;
   document.getElementById('attCountNum').textContent = attendees.length;
   list.innerHTML = attendees.map((a, i) => {
-    const opts = roles.map(r => `<option value="${r.id}" ${a.role === r.id ? 'selected' : ''}>${r.name} (${getCurrency().symbol}${usdToLocal(r.rateUSD).toFixed(dec)}/hr)</option>`).join('');
+    const opts = roles.map(r => `<option value="${r.id}" ${a.role === r.id ? 'selected' : ''}>${getRoleDisplayName(r)} (${getCurrency().symbol}${usdToLocal(r.rateUSD).toFixed(dec)}/hr)</option>`).join('');
     const isCustom = a.role === 'custom' || !rm[a.role];
     return `<div class="attendee-row">
       <span class="att-num">${String(i + 1).padStart(2, '0')}</span>
-      <div class="att-name"><input type="text" placeholder="name" value="${a.name}" oninput="updateAttendee(${a.id},'name',this.value)"></div>
+      <div class="att-name"><input type="text" placeholder="${tr('name_placeholder')}" value="${a.name}" oninput="updateAttendee(${a.id},'name',this.value)"></div>
       <div class="att-role"><select onchange="onRoleChange(${a.id},this.value)">${opts}</select></div>
       <div class="att-rate"><input type="number" value="${usdToLocal(a.rateUSD).toFixed(dec)}" min="0" step="5" oninput="updateAttendee(${a.id},'rate',this.value)" ${isCustom ? '' : 'readonly'}></div>
       <button class="att-remove" onclick="removeAttendee(${a.id})">×</button>
@@ -734,31 +1134,29 @@ function updateAttendee(id, field, val) {
   recalculate();
 }
 
-// ── Duration ─────────────────────────────────────────────
 function setDuration(m) {
   duration = m; document.getElementById('duration').value = m;
   document.querySelectorAll('.duration-btn').forEach(b => {
-    const t = b.textContent;
-    b.classList.toggle('active', (t === '15m' && m === 15) || (t === '30m' && m === 30) || (t === '1h' && m === 60) || (t === '1.5h' && m === 90) || (t === '2h' && m === 120) || (t === '3h' && m === 180));
+    const bt = b.textContent;
+    b.classList.toggle('active', (bt === '15m' && m === 15) || (bt === '30m' && m === 30) || (bt === '1h' && m === 60) || (bt === '1.5h' && m === 90) || (bt === '2h' && m === 120) || (bt === '3h' && m === 180));
   });
   recalculate();
 }
 function onDurationChange() { const v = parseInt(document.getElementById('duration').value); if (v > 0) { duration = v; document.querySelectorAll('.duration-btn').forEach(b => b.classList.remove('active')); recalculate(); } }
 
-// ── Opportunity Costs ────────────────────────────────────
 const OPP_ITEMS = [
-  { id: 'junior_monthly', icon: '🧑‍💻', label: 'months of a junior dev', unitCostUSD: 55 * 160, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'at $55/hr full-time', danger: 1, big: true },
-  { id: 'macbooks', icon: '💻', label: 'MacBook Pros', unitCostUSD: 2499, format: n => n < .5 ? '0' : n.toFixed(0), sublabel: () => '$2,499 each', danger: 5 },
-  { id: 'monitors', icon: '🖥️', label: '4K monitors', unitCostUSD: 450, format: n => n.toFixed(0), sublabel: () => '$450 each', danger: 10 },
-  { id: 'team_lunches', icon: '🍕', label: 'team lunches', unitCostUSD: 18, format: n => n.toFixed(0), sublabel: () => '$18/person', danger: 50 },
-  { id: 'aws_monthly', icon: '☁️', label: 'months of cloud hosting', unitCostUSD: 5000, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'AWS infrastructure', danger: 1 },
-  { id: 'saas_licenses', icon: '📦', label: 'months of SaaS tools', unitCostUSD: 375, format: n => n.toFixed(1), sublabel: () => 'Slack, Figma, GitHub', danger: 6 },
-  { id: 'office_days', icon: '🏢', label: 'days of office rent', unitCostUSD: 150, format: n => n.toFixed(0), sublabel: () => 'rent, utilities, snacks', danger: 20 },
-  { id: 'retreat', icon: '🏖️', label: 'company retreat days', unitCostUSD: 300, format: n => n.toFixed(0), sublabel: () => '$300/person offsite', danger: 15 },
-  { id: 'coffee', icon: '☕', label: 'fancy coffees', unitCostUSD: 6.5, format: n => n.toFixed(0), sublabel: () => '$6.50 each', danger: 100 },
-  { id: 'charity', icon: '❤️', label: 'charity meals funded', unitCostUSD: 3.5, format: n => n.toFixed(0), sublabel: () => '$3.50/meal', danger: 200 },
-  { id: 'spotify', icon: '🎵', label: 'years of Spotify Premium', unitCostUSD: 120, format: n => n.toFixed(1), sublabel: () => '$10/month', danger: 10 },
-  { id: 'therapy', icon: '🧠', label: 'therapy sessions', unitCostUSD: 150, format: n => n.toFixed(0), sublabel: () => 'you probably need these', danger: 5 },
+  { id: 'junior_monthly', icon: '🧑‍💻', labelKey: 'opp_months_junior', subKey: 'opp_sub_junior', unitCostUSD: 55 * 160, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + (currentLang === 'fr' ? ' jours' : ' days'), danger: 1, big: true },
+  { id: 'macbooks', icon: '💻', labelKey: 'opp_macbooks', subKey: 'opp_sub_macbooks', unitCostUSD: 2499, format: n => n < .5 ? '0' : n.toFixed(0), danger: 5 },
+  { id: 'monitors', icon: '🖥️', labelKey: 'opp_monitors', subKey: 'opp_sub_monitors', unitCostUSD: 450, format: n => n.toFixed(0), danger: 10 },
+  { id: 'team_lunches', icon: '🍕', labelKey: 'opp_lunches', subKey: 'opp_sub_lunches', unitCostUSD: 18, format: n => n.toFixed(0), danger: 50 },
+  { id: 'aws_monthly', icon: '☁️', labelKey: 'opp_aws', subKey: 'opp_sub_aws', unitCostUSD: 5000, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + (currentLang === 'fr' ? ' jours' : ' days'), danger: 1 },
+  { id: 'saas_licenses', icon: '📦', labelKey: 'opp_saas', subKey: 'opp_sub_saas', unitCostUSD: 375, format: n => n.toFixed(1), danger: 6 },
+  { id: 'office_days', icon: '🏢', labelKey: 'opp_office', subKey: 'opp_sub_office', unitCostUSD: 150, format: n => n.toFixed(0), danger: 20 },
+  { id: 'retreat', icon: '🏖️', labelKey: 'opp_retreat', subKey: 'opp_sub_retreat', unitCostUSD: 300, format: n => n.toFixed(0), danger: 15 },
+  { id: 'coffee', icon: '☕', labelKey: 'opp_coffee', subKey: 'opp_sub_coffee', unitCostUSD: 6.5, format: n => n.toFixed(0), danger: 100 },
+  { id: 'charity', icon: '❤️', labelKey: 'opp_charity', subKey: 'opp_sub_charity', unitCostUSD: 3.5, format: n => n.toFixed(0), danger: 200 },
+  { id: 'spotify', icon: '🎵', labelKey: 'opp_spotify', subKey: 'opp_sub_spotify', unitCostUSD: 120, format: n => n.toFixed(1), danger: 10 },
+  { id: 'therapy', icon: '🧠', labelKey: 'opp_therapy', subKey: 'opp_sub_therapy', unitCostUSD: 150, format: n => n.toFixed(0), danger: 5 },
 ];
 function updateOpportunityCost(totalCostUSD) {
   const card = document.getElementById('oppCard');
@@ -773,7 +1171,7 @@ function updateOpportunityCost(totalCostUSD) {
   grid.innerHTML = items.map(id => {
     const item = OPP_ITEMS.find(o => o.id === id); if (!item) return '';
     const qty = totalCostUSD / item.unitCostUSD;
-    return `<div class="opp-card ${qty >= item.danger ? 'danger' : ''} ${item.big ? 'big' : ''}"><span class="opp-icon">${item.icon}</span><div class="opp-val">${item.format(qty)}</div><div class="opp-label">${item.label}</div><div class="opp-sub">${item.sublabel(qty)}</div></div>`;
+    return `<div class="opp-card ${qty >= item.danger ? 'danger' : ''} ${item.big ? 'big' : ''}"><span class="opp-icon">${item.icon}</span><div class="opp-val">${item.format(qty)}</div><div class="opp-label">${tr(item.labelKey)}</div><div class="opp-sub">${tr(item.subKey)}</div></div>`;
   }).join('');
 }
 function updateRecurring(totalCostUSD) {
@@ -781,10 +1179,10 @@ function updateRecurring(totalCostUSD) {
   if (totalCostUSD < 20 || !attendees.length) { banner.style.display = 'none'; return; }
   banner.style.display = '';
   document.getElementById('recurringAmount').textContent = fmt(totalCostUSD * 52);
-  document.getElementById('recurringSub').textContent = `that's ${fmt(totalCostUSD)}/week × 52 = ${fmt(totalCostUSD * 52)}/year. still worth it?`;
+  const sub = tr('recurring_sub').replace('{weekly}', fmt(totalCostUSD)).replace('{yearly}', fmt(totalCostUSD * 52));
+  document.getElementById('recurringSub').textContent = sub;
 }
 
-// ── Carbon ───────────────────────────────────────────────
 function updateCarbon() {
   const count = attendees.length, hours = duration / 60;
   const section = document.getElementById('carbonSection');
@@ -793,56 +1191,41 @@ function updateCarbon() {
   const videoCO2 = count * hours * 0.5, commuteCO2 = count * 8.4;
   const treesNeeded = (commuteCO2 / 21.7).toFixed(1), drivingKm = (commuteCO2 / 0.21).toFixed(0), steakDinners = (commuteCO2 / 6.6).toFixed(0), flights = (commuteCO2 / 255).toFixed(2);
   document.getElementById('carbonStats').innerHTML = `
-    <div class="carbon-item"><span class="ci-icon">📹</span><div class="ci-val">${videoCO2.toFixed(1)} kg</div><div class="ci-label">CO₂ if video call</div></div>
-    <div class="carbon-item warn"><span class="ci-icon">🚗</span><div class="ci-val">${commuteCO2.toFixed(1)} kg</div><div class="ci-label">CO₂ if in-person</div></div>
-    <div class="carbon-item"><span class="ci-icon">🌳</span><div class="ci-val">${treesNeeded}</div><div class="ci-label">trees to offset</div></div>
-    <div class="carbon-item"><span class="ci-icon">✈️</span><div class="ci-val">${flights}</div><div class="ci-label">short flights worth</div></div>
-    <div class="carbon-item"><span class="ci-icon">🛣️</span><div class="ci-val">${Number(drivingKm).toLocaleString()} km</div><div class="ci-label">equivalent driving</div></div>
-    <div class="carbon-item warn"><span class="ci-icon">🥩</span><div class="ci-val">${steakDinners}</div><div class="ci-label">steak dinners CO₂</div></div>
+    <div class="carbon-item"><span class="ci-icon">📹</span><div class="ci-val">${videoCO2.toFixed(1)} kg</div><div class="ci-label">${tr('carbon_video_label')}</div></div>
+    <div class="carbon-item warn"><span class="ci-icon">🚗</span><div class="ci-val">${commuteCO2.toFixed(1)} kg</div><div class="ci-label">${tr('carbon_commute_label')}</div></div>
+    <div class="carbon-item"><span class="ci-icon">🌳</span><div class="ci-val">${treesNeeded}</div><div class="ci-label">${tr('carbon_trees_label')}</div></div>
+    <div class="carbon-item"><span class="ci-icon">✈️</span><div class="ci-val">${flights}</div><div class="ci-label">${tr('carbon_flights_label')}</div></div>
+    <div class="carbon-item"><span class="ci-icon">🛣️</span><div class="ci-val">${Number(drivingKm).toLocaleString()} km</div><div class="ci-label">${tr('carbon_driving_label')}</div></div>
+    <div class="carbon-item warn"><span class="ci-icon">🥩</span><div class="ci-val">${steakDinners}</div><div class="ci-label">${tr('carbon_steak_label')}</div></div>
   `;
 }
 
-// ── Meeting IQ ───────────────────────────────────────────
-const IQ_MSG = {
-  g: ["actually decent. maybe this one's justified?","not terrible. the bar is low but you cleared it.","a rare meeting worth having. cherish it."],
-  y: ["could be an email. you know it, i know it.","this is a maybe. can it be a Slack thread?","borderline. cut some people or shorten it.","the vibes are off. restructure or cancel."],
-  r: ["this is a crime against productivity.","abort mission. send a message instead.","your future self is screaming right now.","this meeting should be illegal in 47 countries."],
-  empty: ["add people above to witness the carnage","waiting for victims... i mean, attendees","nobody here yet. blissful silence."],
-};
 function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function updateEfficiency(count, mins) {
   let s = 100;
   if (count > 3) s -= (count - 3) * 4;
   if (mins > 30) s -= (mins - 30) * .3;
   s = Math.max(0, Math.min(100, Math.round(s)));
-  const el = document.getElementById('effScore'), bar = document.getElementById('effBar'), text = document.getElementById('effText');
+  const el = document.getElementById('effScore'), bar = document.getElementById('effBar'), textEl = document.getElementById('effText');
   el.textContent = count === 0 ? '—' : s;
   bar.style.width = (count === 0 ? 0 : s) + '%';
   let color, cls, msg;
-  if (count === 0) { color = 'var(--text-3)'; cls = 'g'; msg = pickRandom(IQ_MSG.empty); }
-  else if (s >= 70) { color = 'var(--lime)'; cls = 'g'; msg = pickRandom(IQ_MSG.g); }
-  else if (s >= 40) { color = 'var(--gold)'; cls = 'y'; msg = pickRandom(IQ_MSG.y); }
-  else { color = 'var(--coral)'; cls = 'r'; msg = pickRandom(IQ_MSG.r); }
+  if (count === 0) { color = 'var(--text-3)'; cls = 'g'; msg = pickRandom([tr('eff_empty'), tr('eff_empty_2'), tr('eff_empty_3')]); }
+  else if (s >= 70) { color = 'var(--lime)'; cls = 'g'; msg = pickRandom([tr('iq_g_1'), tr('iq_g_2'), tr('iq_g_3')]); }
+  else if (s >= 40) { color = 'var(--gold)'; cls = 'y'; msg = pickRandom([tr('iq_y_1'), tr('iq_y_2'), tr('iq_y_3'), tr('iq_y_4')]); }
+  else { color = 'var(--coral)'; cls = 'r'; msg = pickRandom([tr('iq_r_1'), tr('iq_r_2'), tr('iq_r_3'), tr('iq_r_4')]); }
   el.className = 'iq-score ' + cls;
   bar.style.background = color;
-  text.textContent = msg;
+  textEl.textContent = msg;
   const scoreEl = document.getElementById('stScore');
   scoreEl.textContent = count === 0 ? '—' : s + '/100';
   scoreEl.style.color = color;
-  document.getElementById('stEmail').textContent = count === 0 ? '—' : (s < 40 ? 'definitely' : s < 70 ? 'probably' : 'maybe not');
+  document.getElementById('stEmail').textContent = count === 0 ? '—' : (s < 40 ? tr('verdict_definitely') : s < 70 ? tr('verdict_probably') : tr('verdict_maybe_not'));
   document.getElementById('stEmail').style.color = s < 40 ? 'var(--coral)' : s < 70 ? 'var(--gold)' : 'var(--lime)';
 }
 
-// ── Email Generator ──────────────────────────────────────
 let currentEmailTone = 'passive-aggressive';
-const FUNNY_PS = [
-  "P.S. The irony of writing a long email to avoid meetings is not lost on me.",
-  "P.S. If we did this weekly, that's $COST/year. Just something to cry about.",
-  "P.S. I calculated this while pretending to listen. Multitasking!",
-  "P.S. This email took me 5 minutes and $0. Still cheaper than the meeting.",
-  "P.S. Forward this to anyone who schedules 'quick syncs'.",
-  "P.S. My therapist said I should express my meeting frustrations. Here we are.",
-];
+const FUNNY_PS_KEYS = ['email_ps_1','email_ps_2','email_ps_3','email_ps_4','email_ps_5','email_ps_6'];
 function generateEmail(tone, btnEl) {
   currentEmailTone = tone;
   document.querySelectorAll('.email-tone').forEach(b => b.classList.remove('active'));
@@ -852,53 +1235,58 @@ function generateEmail(tone, btnEl) {
   const arUSD = attendees.length > 0 ? trUSD / attendees.length : 0;
   const rm = getRoleMap();
   const count = attendees.length;
-  if (!count) { document.getElementById('emailPreview').textContent = "add some attendees first, then i'll write you a masterpiece of passive aggression"; return; }
+  if (!count) { document.getElementById('emailPreview').textContent = tr('email_no_attendees'); return; }
   const yearly = fmt(tcUSD * 52), coffees = Math.floor(tcUSD / 6.5), lunches = Math.floor(tcUSD / 18), therapy = Math.floor(tcUSD / 150);
-  const ps = pickRandom(FUNNY_PS).replace('$COST', yearly);
+  const psKey = pickRandom(FUNNY_PS_KEYS);
+  const ps = tr(psKey).replace('{cost}', yearly);
   let subject, body;
   if (tone === 'passive-aggressive') {
-    subject = `Re: Quick sync — totally not a waste of time`;
-    body = `Hi team,\n\nJust wanted to share some fun facts about our ${duration}-minute meeting today.\n\nWith ${count} people at an average rate of ${fmtRate(arUSD)}, this little gathering cost us ${fmt(tcUSD)}.\n\nTo put that in perspective:\n`;
-    if (coffees > 0) body += `• We could have bought ${coffees} fancy coffees\n`;
-    if (lunches > 0) body += `• We could have treated ${lunches} people to lunch\n`;
-    if (therapy > 0) body += `• We could have paid for ${therapy} therapy sessions (which we'll need after this meeting schedule)\n`;
-    body += `\nI'm not saying we shouldn't meet, but maybe... a Slack message? A Loom video? A carrier pigeon?\n\nBest regards,\n[Your name]\n\n${ps}`;
+    subject = tr('email_pa_subject');
+    body = tr('email_pa_intro').replace('{duration}', duration).replace('{count}', count).replace('{avgRate}', fmtRate(arUSD)).replace('{total}', fmt(tcUSD));
+    if (coffees > 0) body += tr('email_pa_coffees').replace('{n}', coffees);
+    if (lunches > 0) body += tr('email_pa_lunches').replace('{n}', lunches);
+    if (therapy > 0) body += tr('email_pa_therapy').replace('{n}', therapy);
+    body += tr('email_pa_close') + ps;
   } else if (tone === 'formal') {
-    subject = `Meeting Cost Analysis — ${duration} min, ${count} attendees`;
-    body = `Dear Team,\n\nPlease find below the cost analysis for our recent meeting:\n\nMEETING SUMMARY\nDuration: ${duration} minutes\nAttendees: ${count}\nAverage hourly rate: ${fmtRate(arUSD)}\nEstimated total cost: ${fmt(tcUSD)}\n\n`;
-    if (count <= 12) { body += `ATTENDEE BREAKDOWN\n`; attendees.forEach((a, i) => { const role = rm[a.role] || { name: a.role }; body += `${i + 1}. ${a.name || 'Unnamed'} — ${role.name} — ${fmtRate(a.rateUSD)}\n`; }); body += `\n`; }
-    body += `ANNUAL PROJECTION (if weekly)\nTotal: ${yearly}\n\nRECOMMENDATION\nReview whether recurring meetings of this duration are necessary.\n\nRegards,\n[Your name]`;
+    subject = tr('email_formal_subject').replace('{duration}', duration).replace('{count}', count);
+    body = tr('email_formal_body').replace('{duration}', duration).replace('{count}', count).replace('{avgRate}', fmtRate(arUSD)).replace('{total}', fmt(tcUSD));
+    if (count <= 12) {
+      body += tr('email_formal_breakdown');
+      attendees.forEach((a, i) => { const role = rm[a.role] || { name: a.role }; body += tr('email_formal_line').replace('{num}', i + 1).replace('{name}', a.name || tr('unnamed')).replace('{role}', getRoleDisplayName(role)).replace('{rate}', fmtRate(a.rateUSD)); });
+      body += '\n';
+    }
+    body += tr('email_formal_projection').replace('{yearly}', yearly);
   } else if (tone === 'funny') {
-    subject = `🚨 CRIME REPORT: Our meeting cost ${fmt(tcUSD)}`;
-    body = `Ladies, gentlemen, and people clearly on mute,\n\nI regret to inform you that our ${duration}-minute meeting has been classified as a Level 4 Financial Incident.\n\nTHE EVIDENCE:\n• ${count} people × ${duration} min = ${count * duration} person-minutes of... something\n• Total cost: ${fmt(tcUSD)}\n• Per minute: ${fmt(trUSD / 60)} (yes, every 60 seconds)\n\nWHAT WE COULD'VE BOUGHT:\n`;
-    if (coffees > 0) body += `• ${coffees} coffees (${Math.floor(coffees/30)} months of daily caffeine)\n`;
-    if (lunches > 0) body += `• ${lunches} team lunches (better bonding than slides)\n`;
-    if (therapy > 0) body += `• ${therapy} therapy sessions (for meeting-induced trauma)\n`;
-    body += `\nRECOMMENDED ACTIONS:\n1. Question every calendar invite like it owes you money\n2. If it can be a message, make it a message\n3. If it can be nothing, perfection achieved\n\nYours in financial devastation,\n[Your name]\n\n${ps}`;
+    subject = tr('email_funny_subject').replace('{total}', fmt(tcUSD));
+    body = tr('email_funny_body').replace('{duration}', duration).replace('{count}', count).replace('{personMin}', (count * duration).toLocaleString()).replace('{total}', fmt(tcUSD)).replace('{perMin}', fmt(trUSD / 60));
+    if (coffees > 0) body += tr('email_funny_coffees').replace('{n}', coffees).replace('{months}', Math.floor(coffees/30));
+    if (lunches > 0) body += tr('email_funny_lunches').replace('{n}', lunches);
+    if (therapy > 0) body += tr('email_funny_therapy').replace('{n}', therapy);
+    body += tr('email_funny_close') + ps;
   } else if (tone === 'data') {
-    subject = `Meeting Cost Data — ${fmt(tcUSD)}`;
-    body = `MEETING COST REPORT\n${'═'.repeat(36)}\n\nDuration:        ${duration} minutes\nAttendees:       ${count}\nPerson-minutes:  ${(count * duration).toLocaleString()}\nAvg rate:        ${fmtRate(arUSD)}\nTotal cost:      ${fmt(tcUSD)}\nCost/minute:     ${fmt(trUSD / 60)}\nCost/person:     ${count > 0 ? fmt(tcUSD / count) : 'N/A'}\n\nATTENDEES:\n`;
-    attendees.forEach((a, i) => { const role = rm[a.role] || { name: a.role }; body += `${String(i + 1).padStart(2, ' ')}. ${(a.name || 'Unnamed').padEnd(22)} ${role.name.padEnd(22)} ${fmtRate(a.rateUSD)}\n`; });
-    body += `\nPROJECTIONS:\nWeekly:   ${fmt(tcUSD)} × 52  = ${fmt(tcUSD * 52)}\nMonthly:  ${fmt(tcUSD)} × 12  = ${fmt(tcUSD * 12)}\nAnnually: ${fmt(tcUSD)} × 260 = ${fmt(tcUSD * 260)}`;
+    subject = tr('email_data_subject').replace('{total}', fmt(tcUSD));
+    const line = '═'.repeat(36);
+    body = tr('email_data_body').replace('{line}', line).replace('{duration}', duration).replace('{count}', count).replace('{personMin}', (count * duration).toLocaleString()).replace('{avgRate}', fmtRate(arUSD)).replace('{total}', fmt(tcUSD)).replace('{perMin}', fmt(trUSD / 60)).replace('{perPerson}', count > 0 ? fmt(tcUSD / count) : 'N/A');
+    attendees.forEach((a, i) => { const role = rm[a.role] || { name: a.role }; body += tr('email_data_line').replace('{num}', String(i + 1).padStart(2, ' ')).replace('{name}', (a.name || tr('unnamed')).padEnd(22)).replace('{role}', getRoleDisplayName(role).padEnd(22)).replace('{rate}', fmtRate(a.rateUSD)); });
+    body += tr('email_data_projections').replace('{total}', fmt(tcUSD)).replace('{yearly}', fmt(tcUSD * 52)).replace('{monthly}', fmt(tcUSD * 12)).replace('{annually}', fmt(tcUSD * 260));
   }
   document.getElementById('emailPreview').textContent = `Subject: ${subject}\n\n${body}`;
 }
 function copyEmail() {
   const text = document.getElementById('emailPreview').textContent;
-  if (!text.startsWith('Subject:')) { showToast('pick a tone first'); return; }
-  navigator.clipboard.writeText(text).then(() => showToast('email copied — go spread the truth')).catch(() => showToast('could not copy'));
+  if (!text.startsWith('Subject:')) { showToast(tr('toast_tone_first')); return; }
+  navigator.clipboard.writeText(text).then(() => showToast(tr('toast_email_copied'))).catch(() => showToast(tr('toast_could_not_copy')));
 }
 function copyEmailPlain() {
   const text = document.getElementById('emailPreview').textContent;
-  if (!text.startsWith('Subject:')) { showToast('pick a tone first'); return; }
+  if (!text.startsWith('Subject:')) { showToast(tr('toast_tone_first')); return; }
   const parts = text.split('\n\n'); parts.shift();
-  navigator.clipboard.writeText(parts.join('\n\n')).then(() => showToast('body copied')).catch(() => showToast('could not copy'));
+  navigator.clipboard.writeText(parts.join('\n\n')).then(() => showToast(tr('toast_body_copied'))).catch(() => showToast(tr('toast_could_not_copy')));
 }
 
-// ── Share Image ──────────────────────────────────────────
 function drawShareCard() {
   const canvas = document.getElementById('shareCanvas'), ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height, d = isDark;
-  const bg = d ? '#0e0e18' : '#f6f3ee', surface = d ? '#18182a' : '#ffffff', border = d ? '#22223a' : '#e0ddd6';
+  const bg = d ? '#0e0e18' : '#f6f3ee', border = d ? '#22223a' : '#e0ddd6';
   const t1 = d ? '#e8e4f0' : '#1a1a2e', t2 = d ? '#a8a4b8' : '#5a5670', t3 = d ? '#5a5670' : '#a8a4b8';
   const coral = '#ff6b5a', sky = d ? '#5ac8ff' : '#2a8ad4', green = d ? '#8aff5a' : '#3a8a2a', red = '#ff5a8a';
   ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
@@ -907,15 +1295,17 @@ function drawShareCard() {
   grad.addColorStop(1, 'transparent');
   ctx.fillStyle = grad; ctx.fillRect(0, 0, w, 200);
   ctx.strokeStyle = border; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect(20, 20, w-40, h-40, 12); ctx.stroke();
+  const titleText1 = currentLang === 'fr' ? "ÇA AURAIT PU ÊTRE" : "IT COULD'VE BEEN";
+  const titleText2 = currentLang === 'fr' ? "UN EMAIL!" : "AN EMAIL!";
   ctx.fillStyle = coral; ctx.font = 'bold 28px "Space Mono", monospace'; ctx.textAlign = 'center';
-  ctx.fillText("IT COULD'VE BEEN", w/2, 72); ctx.fillText('AN EMAIL!', w/2, 106);
+  ctx.fillText(titleText1, w/2, 72); ctx.fillText(titleText2, w/2, 106);
   ctx.fillStyle = t2; ctx.font = '11px "Hanken Grotesk", sans-serif';
-  ctx.fillText('the meeting cost nobody asked for', w/2, 130);
+  ctx.fillText(tr('share_subtitle'), w/2, 130);
   ctx.strokeStyle = border; ctx.beginPath(); ctx.moveTo(60, 155); ctx.lineTo(w-60, 155); ctx.stroke();
   const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0), tcUSD = trUSD * (duration / 60), count = attendees.length, arUSD = count > 0 ? trUSD / count : 0;
   ctx.fillStyle = coral; ctx.font = 'bold 56px "Space Mono", monospace'; ctx.fillText(fmt(tcUSD), w/2, 225);
-  ctx.fillStyle = t2; ctx.font = '12px "Hanken Grotesk", sans-serif'; ctx.fillText('TOTAL DAMAGE', w/2, 250);
-  const stats = [['Duration', `${duration} min`],['Victims', `${count}`],['Avg Rate', `${fmtRate(arUSD)}`],['Burn Rate', `${fmt(trUSD/60)}/min`],['Person-Min', `${(count*duration).toLocaleString()}`],['Yearly', fmt(tcUSD*52)]];
+  ctx.fillStyle = t2; ctx.font = '12px "Hanken Grotesk", sans-serif'; ctx.fillText(tr('share_total_damage'), w/2, 250);
+  const stats = [[tr('bk_duration'), `${duration} min`],[tr('bk_victims'), `${count}`],['Avg Rate', `${fmtRate(arUSD)}`],['Burn Rate', `${fmt(trUSD/60)}/min`],['Person-Min', `${(count*duration).toLocaleString()}`],['Yearly', fmt(tcUSD*52)]];
   ctx.textAlign = 'left'; let y = 280; const col1 = 60, col2 = w/2+20, rowH = 36;
   stats.forEach((s, i) => {
     const col = i < 3 ? col1 : col2, row = i < 3 ? i : i - 3, sy = y + row * rowH;
@@ -924,8 +1314,8 @@ function drawShareCard() {
   });
   ctx.strokeStyle = border; ctx.beginPath(); ctx.moveTo(60, y+3*rowH+6); ctx.lineTo(w-60, y+3*rowH+6); ctx.stroke();
   const coffees = Math.floor(tcUSD/6.5), lunches = Math.floor(tcUSD/18), therapy = Math.floor(tcUSD/150);
-  const oppY = y+3*rowH+28; ctx.fillStyle = red; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText('THIS COULD HAVE BOUGHT', w/2, oppY);
-  const opps = [{ label: '☕ coffees', val: String(coffees) }, { label: '🍕 lunches', val: String(lunches) }, { label: '🧠 therapy', val: String(therapy) }];
+  const oppY = y+3*rowH+28; ctx.fillStyle = red; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText(tr('share_could_bought'), w/2, oppY);
+  const opps = [{ label: '☕ ' + tr('share_coffees'), val: String(coffees) }, { label: '🍕 ' + tr('share_lunches'), val: String(lunches) }, { label: '🧠 ' + tr('share_therapy'), val: String(therapy) }];
   const oppW = (w-120)/3;
   opps.forEach((o, i) => {
     const ox = 60 + i * oppW;
@@ -933,18 +1323,17 @@ function drawShareCard() {
     ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.fillText(o.label, ox+oppW/2, oppY+60);
   });
   const commuteCO2 = count * 8.4, carbonY = oppY + 88;
-  ctx.fillStyle = green; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText('CARBON GUILT', w/2, carbonY);
+  ctx.fillStyle = green; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText(tr('share_carbon'), w/2, carbonY);
   ctx.font = 'bold 24px "Space Mono", monospace'; ctx.fillText(`${commuteCO2.toFixed(1)} kg CO₂`, w/2, carbonY+28);
-  ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.fillText(`if everyone commuted (${count} people)`, w/2, carbonY+46);
+  ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.fillText(tr('share_carbon_sub').replace('{count}', count), w/2, carbonY+46);
   ctx.fillStyle = t3; ctx.font = '9px "Hanken Grotesk", sans-serif'; ctx.textAlign = 'center';
-  ctx.fillText("generated by It Could've Been an Email!", w/2, h-35);
+  ctx.fillText(tr('share_footer'), w/2, h-35);
 }
-function downloadShareImage() { drawShareCard(); const l = document.createElement('a'); l.download = 'meeting-cost-shame.png'; l.href = document.getElementById('shareCanvas').toDataURL('image/png'); l.click(); showToast('image downloaded — use it wisely'); }
-async function copyShareImage() { drawShareCard(); try { const b = await new Promise(r => document.getElementById('shareCanvas').toBlob(r, 'image/png')); await navigator.clipboard.write([new ClipboardItem({'image/png':b})]); showToast('image copied — paste it everywhere'); } catch(e) { showToast('could not copy — try download'); } }
-async function nativeShare() { drawShareCard(); try { const b = await new Promise(r => document.getElementById('shareCanvas').toBlob(r, 'image/png')); const f = new File([b], 'meeting-cost.png', {type:'image/png'}); if (navigator.canShare && navigator.canShare({files:[f]})) { await navigator.share({files:[f], title:'Meeting Cost', text:`This meeting cost ${fmt(attendees.reduce((s,a)=>s+a.rateUSD,0)*(duration/60))}!`}); } else showToast('not available'); } catch(e) { if (e.name!=='AbortError') showToast('cancelled'); } }
+function downloadShareImage() { drawShareCard(); const l = document.createElement('a'); l.download = 'meeting-cost-shame.png'; l.href = document.getElementById('shareCanvas').toDataURL('image/png'); l.click(); showToast(tr('toast_image_dl')); }
+async function copyShareImage() { drawShareCard(); try { const b = await new Promise(r => document.getElementById('shareCanvas').toBlob(r, 'image/png')); await navigator.clipboard.write([new ClipboardItem({'image/png':b})]); showToast(tr('toast_image_copied')); } catch(e) { showToast(tr('toast_could_not_copy')); } }
+async function nativeShare() { drawShareCard(); try { const b = await new Promise(r => document.getElementById('shareCanvas').toBlob(r, 'image/png')); const f = new File([b], 'meeting-cost.png', {type:'image/png'}); if (navigator.canShare && navigator.canShare({files:[f]})) { await navigator.share({files:[f], title:'Meeting Cost', text:`This meeting cost ${fmt(attendees.reduce((s,a)=>s+a.rateUSD,0)*(duration/60))}!`}); } else showToast(tr('toast_not_available')); } catch(e) { if (e.name!=='AbortError') showToast(tr('toast_cancelled')); } }
 
-// ── Recalculate ──────────────────────────────────────────
-const COST_EYEBROWS = ['this meeting is burning','your budget is crying','money on fire right now','the damage so far','opportunities vaporized','your salary at work','peak productivity waste','financial devastation in progress'];
+const COST_EYEBROW_KEYS = ['cost_burn','cost_cry','cost_fire','cost_damage','cost_vapor','cost_salary','cost_waste','cost_devastation'];
 function recalculate() {
   const hours = duration / 60, count = attendees.length;
   const totalRateUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
@@ -955,8 +1344,8 @@ function recalculate() {
   heroCost.classList.remove('cost-pulse');
   void heroCost.offsetWidth;
   heroCost.classList.add('cost-pulse');
-  document.getElementById('costEyebrow').textContent = pickRandom(COST_EYEBROWS);
-  document.getElementById('perSec').textContent = fmt(totalRateUSD / 3600) + ' per second of collective suffering';
+  document.getElementById('costEyebrow').textContent = tr(pickRandom(COST_EYEBROW_KEYS));
+  document.getElementById('perSec').textContent = fmt(totalRateUSD / 3600) + ' ' + tr('per_sec_suffix');
   document.getElementById('stCount').textContent = count;
   document.getElementById('stAvg').textContent = fmtRate(avgRateUSD);
   document.getElementById('stPerPerson').textContent = count > 0 ? fmt(totalCostUSD / count) : '—';
@@ -976,7 +1365,6 @@ function recalculate() {
   drawShareCard();
 }
 
-// ── Presets ──────────────────────────────────────────────
 function loadPreset(key) {
   const p = {
     standup: { dur: 15, people: [{ n: 'Alice', r: 'senior' }, { n: 'Bob', r: 'mid' }, { n: 'Carol', r: 'mid' }, { n: 'Dave', r: 'senior' }, { n: 'Eve', r: 'junior' }, { n: 'Frank', r: 'mid' }, { n: 'Grace', r: 'eng_manager' }, { n: 'Hank', r: 'designer' }] },
@@ -998,29 +1386,33 @@ function loadPreset(key) {
   renderAttendees(); recalculate();
 }
 
-// ── Copy Receipt ─────────────────────────────────────────
 function copyReport() {
   const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0), tcUSD = trUSD * (duration / 60), arUSD = attendees.length > 0 ? trUSD / attendees.length : 0, rm = getRoleMap();
-  let r = `━━━ IT COULD'VE BEEN AN EMAIL ━━━\n\nDuration: ${duration} min\nVictims: ${attendees.length}\nAvg rate: ${fmtRate(arUSD)}\nTotal damage: ${fmt(tcUSD)}\n\n`;
-  if (attendees.length) { r += `Who was there:\n`; attendees.forEach((a, i) => { const rn = (rm[a.role] || {}).name || a.role; r += `  ${String(i+1).padStart(2,'0')}. ${a.name||'(unnamed)'} — ${rn} — ${fmtRate(a.rateUSD)}\n`; }); }
-  r += `\nWhat this could've bought:\n`;
+  let r = `━━━ ${tr('copy_receipt_title')} ━━━\n\n`;
+  r += `${tr('receipt_duration')}: ${duration} min\n`;
+  r += `${tr('receipt_victims')}: ${attendees.length}\n`;
+  r += `${tr('receipt_avg_rate')}: ${fmtRate(arUSD)}\n`;
+  r += `${tr('receipt_total')}: ${fmt(tcUSD)}\n\n`;
+  if (attendees.length) {
+    r += `${tr('receipt_who')}\n`;
+    attendees.forEach((a, i) => { const rn = getRoleDisplayName(rm[a.role] || { name: a.role }); r += `  ${String(i+1).padStart(2,'0')}. ${a.name||tr('unnamed')} — ${rn} — ${fmtRate(a.rateUSD)}\n`; });
+  }
+  r += `\n${tr('receipt_could_bought')}\n`;
   const coffees = Math.floor(tcUSD/6.5), lunches = Math.floor(tcUSD/18), therapy = Math.floor(tcUSD/150);
-  if (coffees > 0) r += `  ☕ ${coffees} fancy coffees\n`;
-  if (lunches > 0) r += `  🍕 ${lunches} team lunches\n`;
-  if (therapy > 0) r += `  🧠 ${therapy} therapy sessions\n`;
-  r += `\nYearly (if weekly): ${fmt(tcUSD * 52)}\n\n— Generated by "It Could've Been an Email!"`;
-  navigator.clipboard.writeText(r).then(() => showToast('receipt copied — go shame that meeting')).catch(() => showToast('could not copy'));
+  if (coffees > 0) r += `  ☕ ${coffees} ${tr('receipt_coffees')}\n`;
+  if (lunches > 0) r += `  🍕 ${lunches} ${tr('receipt_lunches')}\n`;
+  if (therapy > 0) r += `  🧠 ${therapy} ${tr('receipt_therapy')}\n`;
+  r += `\n${tr('receipt_yearly')}: ${fmt(tcUSD * 52)}\n\n${tr('receipt_generated')}`;
+  navigator.clipboard.writeText(r).then(() => showToast(tr('toast_shame'))).catch(() => showToast(tr('toast_could_not_copy')));
 }
 
-// ── Toast ────────────────────────────────────────────────
 function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
 
-// ── Init ─────────────────────────────────────────────────
 if (navigator.share) document.getElementById('nativeShareBtn').style.display = '';
 loadSavedData();
+applyTranslations();
 renderAttendees();
 recalculate();
 </script>
 </body>
 </html>
-```
