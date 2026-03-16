@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,11 +39,9 @@ body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* ── App Shell ── */
 .app{max-width:1060px;margin:0 auto;padding:2.5rem 2rem 5rem}
 @media(max-width:600px){.app{padding:1.5rem 1rem 4rem}}
 
-/* ── Header ── */
 .header{text-align:center;margin-bottom:3rem}
 .header-brand{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-bottom:.6rem}
 .title{font-family:'Permanent Marker',cursive;font-size:clamp(1.6rem,4.5vw,2.8rem);font-weight:400;letter-spacing:.02em;line-height:1.15;color:var(--coral)}
@@ -70,7 +69,6 @@ select.currency-select{
 }
 select.currency-select:focus{border-color:var(--sky)}
 
-/* ── Hero Cost ── */
 .hero{text-align:center;margin-bottom:2.5rem;padding:2.5rem 2rem;background:var(--surface);border-radius:16px;position:relative;overflow:hidden}
 .hero::before{
   content:'';position:absolute;inset:0;
@@ -86,7 +84,6 @@ select.currency-select:focus{border-color:var(--sky)}
 }
 .hero-sub{font-size:.68rem;color:var(--text-3);position:relative}
 
-/* ── Inputs Bar ── */
 .inputs-bar{
   display:flex;gap:0;margin-bottom:2rem;
   background:var(--surface);border-radius:12px;overflow:hidden;
@@ -120,17 +117,14 @@ select.currency-select:focus{border-color:var(--sky)}
 .stat-label{font-size:.65rem;color:var(--text-3)}
 .stat-val{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;color:var(--text)}
 
-/* ── Main Grid ── */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
 @media(max-width:800px){.grid{grid-template-columns:1fr}}
 
-/* ── Card ── */
 .card{background:var(--surface);border-radius:12px;padding:1.5rem;border:1px solid var(--border);transition:border-color .2s}
 .card:hover{border-color:var(--border)}
 .card-head{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--sky);margin-bottom:1rem;font-weight:700}
 .card.full{grid-column:1/-1}
 
-/* ── Attendees ── */
 .attendees-section{grid-column:1/-1}
 .attendees-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
 .attendees-header .card-head{margin:0}
@@ -203,8 +197,9 @@ select.currency-select:focus{border-color:var(--sky)}
 .role-editor-row.builtin .re-del{visibility:hidden}
 .add-role-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-3);font-family:inherit;font-size:.55rem;padding:.3rem;margin-top:3px;cursor:pointer;border-radius:6px}
 .add-role-btn:hover{border-color:var(--sky);color:var(--sky)}
+.reset-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--coral);font-family:inherit;font-size:.55rem;padding:.3rem;margin-top:3px;cursor:pointer;border-radius:6px}
+.reset-btn:hover{border-color:var(--coral);background:var(--coral-dim)}
 
-/* ── Presets Grid ── */
 .presets-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}
 .preset-card{
   background:var(--bg);border:1px solid var(--border);padding:.55rem .5rem;
@@ -214,7 +209,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .preset-card .pc-title{font-size:.65rem;font-weight:600;color:var(--text);margin-bottom:.1rem}
 .preset-card .pc-detail{font-size:.5rem;color:var(--text-3)}
 
-/* ── Breakdown ── */
 .breakdown-lines{}
 .bd-line{display:flex;justify-content:space-between;align-items:baseline;padding:.4rem 0;border-bottom:1px solid var(--border)}
 .bd-line:last-child{border-bottom:none}
@@ -225,7 +219,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .bd-line.total .bd-label{color:var(--text);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.6rem}
 .bd-line.total .bd-val{font-size:1rem;color:var(--coral)}
 
-/* ── Opportunity Grid ── */
 .opp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:5px}
 .opp-card{
   border:1px solid var(--border);padding:.7rem .5rem;text-align:center;
@@ -241,7 +234,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .opp-label{font-size:.55rem;color:var(--text-2);line-height:1.3}
 .opp-sub{font-size:.45rem;color:var(--text-3);font-style:italic;margin-top:.15rem}
 
-/* ── Recurring ── */
 .recurring{
   text-align:center;padding:1.2rem;background:var(--bg);border:1px solid var(--coral-dim);
   border-radius:10px;margin-top:1rem;
@@ -250,7 +242,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .recurring-amount{font-family:'Space Mono',monospace;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--coral);margin-bottom:.2rem}
 .recurring-sub{font-size:.58rem;color:var(--text-3)}
 
-/* ── Meeting IQ ── */
 .iq-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
 .iq-score{font-family:'Space Mono',monospace;font-size:1.4rem;font-weight:700}
 .iq-score.g{color:var(--lime)}.iq-score.y{color:var(--gold)}.iq-score.r{color:var(--coral)}
@@ -258,7 +249,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .iq-bar-fill{height:100%;border-radius:3px;transition:width .4s ease,background .3s}
 .iq-text{font-size:.65rem;color:var(--text-2);line-height:1.5}
 
-/* ── Carbon ── */
 .carbon-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:.6rem}
 .carbon-item{border:1px solid var(--border);padding:.55rem;text-align:center;background:var(--bg);border-radius:8px}
 .carbon-item .ci-icon{font-size:1rem;margin-bottom:.15rem;display:block}
@@ -267,7 +257,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .carbon-item.warn .ci-val{color:var(--coral)}
 .carbon-note{font-size:.45rem;color:var(--text-3);margin-top:.5rem;text-align:center;line-height:1.4}
 
-/* ── Email ── */
 .email-tones{display:flex;gap:4px;margin-bottom:.6rem;flex-wrap:wrap}
 .email-tone{
   background:transparent;border:1px solid var(--border);color:var(--text-2);
@@ -289,7 +278,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .email-act:hover{border-color:var(--sky);color:var(--sky)}
 .email-act.plain:hover{border-color:var(--text-2);color:var(--text)}
 
-/* ── Share Card ── */
 .share-canvas-wrap{display:flex;justify-content:center;margin-bottom:.6rem;overflow:hidden;border-radius:8px}
 #shareCanvas{max-width:100%;height:auto}
 .share-actions{display:flex;gap:4px}
@@ -301,7 +289,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .share-act.copy:hover{border-color:var(--sky);color:var(--sky)}
 .share-act.native:hover{border-color:var(--coral);color:var(--coral)}
 
-/* ── Bottom CTA ── */
 .bottom-cta{text-align:center;margin-top:2.5rem}
 .bottom-cta button{
   background:var(--coral);color:#fff;border:none;
@@ -313,7 +300,6 @@ select.currency-select:focus{border-color:var(--sky)}
 .bottom-cta button:active{transform:translateY(0)}
 .bottom-cta .cta-sub{font-size:.55rem;color:var(--text-3);margin-top:.5rem}
 
-/* ── Toast ── */
 .toast{
   position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);
   background:var(--surface);color:var(--text);border:1px solid var(--coral);
@@ -326,7 +312,6 @@ select.currency-select:focus{border-color:var(--sky)}
 
 .empty-state{text-align:center;padding:1.5rem 1rem;color:var(--text-3);font-size:.68rem}
 
-/* ── Animations ── */
 @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .anim{animation:fadeUp .35s ease forwards;opacity:0}
 .anim:nth-child(2){animation-delay:.05s}
@@ -338,7 +323,7 @@ select.currency-select:focus{border-color:var(--sky)}
 .cost-pulse{animation:pulse .4s ease}
 </style>
 </head>
-<body>
+<body data-theme="light">
 
 <div class="app">
   <header class="header anim">
@@ -355,20 +340,18 @@ select.currency-select:focus{border-color:var(--sky)}
         <option value="AUD">A$ AUD</option>
       </select>
       <button class="btn-pill" onclick="toggleTheme()">
-        <span class="icon" id="themeIcon">☀️</span>
-        <span id="themeLabel">Light</span>
+        <span class="icon" id="themeIcon">🌙</span>
+        <span id="themeLabel">Dark</span>
       </button>
     </div>
   </header>
 
-  <!-- Hero Cost -->
   <div class="hero anim">
     <div class="hero-eyebrow" id="costEyebrow">this meeting is burning</div>
     <div class="hero-cost" id="totalCost">€0.00</div>
     <div class="hero-sub" id="perSec">€0.00 per second of collective suffering</div>
   </div>
 
-  <!-- Inputs Bar -->
   <div class="inputs-bar anim">
     <div class="input-block">
       <div class="input-block-label">Duration</div>
@@ -403,9 +386,7 @@ select.currency-select:focus{border-color:var(--sky)}
     </div>
   </div>
 
-  <!-- Main Grid -->
   <div class="grid">
-    <!-- Attendees -->
     <div class="card attendees-section anim">
       <div class="attendees-header">
         <div class="card-head">Who's Trapped in This Meeting?</div>
@@ -422,10 +403,10 @@ select.currency-select:focus{border-color:var(--sky)}
       <div class="role-editor" id="roleEditor">
         <div class="role-editor-inner" id="roleEditorInner"></div>
         <button class="add-role-btn" onclick="addCustomRole()">+ Add Custom Role</button>
+        <button class="reset-btn" onclick="resetToDefaults()">↺ Reset All Presets to Defaults</button>
       </div>
     </div>
 
-    <!-- Presets -->
     <div class="card anim">
       <div class="card-head">Classic Offenders</div>
       <div class="presets-grid">
@@ -438,7 +419,6 @@ select.currency-select:focus{border-color:var(--sky)}
       </div>
     </div>
 
-    <!-- Meeting IQ -->
     <div class="card anim">
       <div class="card-head">Should You Even Go?</div>
       <div class="iq-row">
@@ -449,7 +429,6 @@ select.currency-select:focus{border-color:var(--sky)}
       <div class="iq-text" id="effText">add people above to witness the carnage</div>
     </div>
 
-    <!-- Breakdown -->
     <div class="card anim">
       <div class="card-head">The Damage Report</div>
       <div class="breakdown-lines">
@@ -463,7 +442,6 @@ select.currency-select:focus{border-color:var(--sky)}
       </div>
     </div>
 
-    <!-- Opportunity Costs -->
     <div class="card full anim" id="oppCard" style="display:none">
       <div class="card-head">⚠ This Could Have Bought</div>
       <div class="opp-grid" id="oppGrid"></div>
@@ -474,14 +452,12 @@ select.currency-select:focus{border-color:var(--sky)}
       </div>
     </div>
 
-    <!-- Carbon -->
     <div class="card anim" id="carbonSection">
       <div class="card-head">Carbon Guilt</div>
       <div class="carbon-grid" id="carbonStats"></div>
       <div class="carbon-note">estimates based on EU averages · video: ~0.5 kg CO₂/hr/person · commute: ~8.4 kg CO₂</div>
     </div>
 
-    <!-- Email -->
     <div class="card anim">
       <div class="card-head">Draft the Email</div>
       <div class="email-tones">
@@ -497,7 +473,6 @@ select.currency-select:focus{border-color:var(--sky)}
       </div>
     </div>
 
-    <!-- Share Card -->
     <div class="card full anim">
       <div class="card-head">Share the Shame</div>
       <div class="share-canvas-wrap">
@@ -521,14 +496,7 @@ select.currency-select:focus{border-color:var(--sky)}
 
 <script>
 // ── Theme ────────────────────────────────────────────────
-let isDark = true;
-function toggleTheme() {
-  isDark = !isDark;
-  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
-  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
-  drawShareCard();
-}
+let isDark = false;
 
 // ── Currency ─────────────────────────────────────────────
 const CURRENCY_DATA = {
@@ -540,6 +508,7 @@ const CURRENCY_DATA = {
   CAD: { symbol: 'CA$',rate: 1.36, locale: 'en-CA' },
   AUD: { symbol: 'A$', rate: 1.53, locale: 'en-AU' },
 };
+
 const DEFAULT_ROLES_USD = [
   {id:'intern',name:'Intern (free labor)',rateUSD:25,builtin:true},
   {id:'junior',name:'Junior (0-2 yrs)',rateUSD:55,builtin:true},
@@ -562,8 +531,72 @@ const DEFAULT_ROLES_USD = [
   {id:'hr',name:'HR / People Ops',rateUSD:75,builtin:true},
   {id:'support',name:'Customer Support',rateUSD:50,builtin:true},
 ];
+
 let roles = DEFAULT_ROLES_USD.map(r => ({...r}));
 let currentCurrency = 'EUR';
+
+// ── Persistence (localStorage) ───────────────────────────
+const STORAGE_KEYS = {
+  ROLES: 'mca_roles',
+  CURRENCY: 'mca_currency',
+  THEME: 'mca_theme'
+};
+
+function loadSavedData() {
+  try {
+    const savedRoles = localStorage.getItem(STORAGE_KEYS.ROLES);
+    if (savedRoles) {
+      const parsed = JSON.parse(savedRoles);
+      if (Array.isArray(parsed) && parsed.length > 0) roles = parsed;
+    }
+    const savedCurrency = localStorage.getItem(STORAGE_KEYS.CURRENCY);
+    if (savedCurrency && CURRENCY_DATA[savedCurrency]) {
+      currentCurrency = savedCurrency;
+      document.getElementById('currency').value = savedCurrency;
+    }
+    const savedTheme = localStorage.getItem(STORAGE_KEYS.THEME);
+    if (savedTheme === 'dark') {
+      isDark = true;
+      document.documentElement.setAttribute('data-theme', 'dark');
+      document.body.setAttribute('data-theme', 'dark');
+      document.getElementById('themeIcon').textContent = '☀️';
+      document.getElementById('themeLabel').textContent = 'Light';
+    } else {
+      isDark = false;
+      document.documentElement.setAttribute('data-theme', 'light');
+      document.body.setAttribute('data-theme', 'light');
+      document.getElementById('themeIcon').textContent = '🌙';
+      document.getElementById('themeLabel').textContent = 'Dark';
+    }
+  } catch (e) { console.warn('Could not load saved data', e); }
+}
+
+function saveRoles() {
+  try { localStorage.setItem(STORAGE_KEYS.ROLES, JSON.stringify(roles)); } catch(e){}
+}
+function saveCurrency() {
+  try { localStorage.setItem(STORAGE_KEYS.CURRENCY, currentCurrency); } catch(e){}
+}
+function saveTheme() {
+  try { localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light'); } catch(e){}
+}
+
+function resetToDefaults() {
+  localStorage.removeItem(STORAGE_KEYS.ROLES);
+  localStorage.removeItem(STORAGE_KEYS.CURRENCY);
+  localStorage.removeItem(STORAGE_KEYS.THEME);
+  roles = DEFAULT_ROLES_USD.map(r => ({...r}));
+  currentCurrency = 'EUR';
+  document.getElementById('currency').value = 'EUR';
+  isDark = false;
+  document.documentElement.setAttribute('data-theme', 'light');
+  document.body.setAttribute('data-theme', 'light');
+  document.getElementById('themeIcon').textContent = '🌙';
+  document.getElementById('themeLabel').textContent = 'Dark';
+  renderRoleEditor(); renderAttendees(); recalculate();
+  showToast('reset to factory defaults');
+}
+
 function getCurrency() { return CURRENCY_DATA[currentCurrency] || CURRENCY_DATA.USD; }
 function usdToLocal(usd) { return usd * getCurrency().rate; }
 function localToUSD(local) { return local / getCurrency().rate; }
@@ -577,7 +610,21 @@ function fmtRate(usd) {
   const c = getCurrency(), val = usdToLocal(usd), dec = c.decimals !== undefined ? c.decimals : 0;
   return c.symbol + val.toFixed(dec) + '/hr';
 }
-function onCurrencyChange() { currentCurrency = document.getElementById('currency').value; renderRoleEditor(); renderAttendees(); recalculate(); }
+function onCurrencyChange() {
+  currentCurrency = document.getElementById('currency').value;
+  saveCurrency();
+  renderRoleEditor(); renderAttendees(); recalculate();
+}
+
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.body.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
+  saveTheme();
+  drawShareCard();
+}
 
 // ── State ────────────────────────────────────────────────
 let customIdCounter = 0, duration = 60, attendees = [], attendeeIdCounter = 0;
@@ -599,20 +646,33 @@ function renderRoleEditor() {
     </div>`
   ).join('');
 }
-function updateRoleName(i, name) { if (i >= 0 && i < roles.length) { roles[i].name = name.trim() || roles[i].name; renderAttendees(); renderRoleEditor(); } }
+function updateRoleName(i, name) {
+  if (i >= 0 && i < roles.length) {
+    roles[i].name = name.trim() || roles[i].name;
+    saveRoles();
+    renderAttendees(); renderRoleEditor();
+  }
+}
 function updateRoleRate(i, localRate) {
   if (i < 0 || i >= roles.length) return;
   roles[i].rateUSD = localToUSD(Math.max(0, parseFloat(localRate) || 0));
   attendees.forEach(a => { if (a.role === roles[i].id) a.rateUSD = roles[i].rateUSD; });
+  saveRoles();
   renderAttendees(); recalculate(); renderRoleEditor();
 }
 function deleteRole(i) {
   if (i < 0 || i >= roles.length) return;
   const id = roles[i].id;
   attendees.forEach(a => { if (a.role === id) { a.role = 'custom'; a.customRate = true; } });
-  roles.splice(i, 1); renderRoleEditor(); renderAttendees(); recalculate();
+  roles.splice(i, 1);
+  saveRoles();
+  renderRoleEditor(); renderAttendees(); recalculate();
 }
-function addCustomRole() { roles.push({ id: 'custom_' + (++customIdCounter), name: 'New Role', rateUSD: localToUSD(75), builtin: false }); renderRoleEditor(); }
+function addCustomRole() {
+  roles.push({ id: 'custom_' + (++customIdCounter), name: 'New Role', rateUSD: localToUSD(75), builtin: false });
+  saveRoles();
+  renderRoleEditor();
+}
 
 // ── Attendees ────────────────────────────────────────────
 const FUNNY_NAMES = [
@@ -624,7 +684,13 @@ const FUNNY_NAMES = [
 function addAttendee(name = '', role = 'mid', rateUSD = null) {
   const id = ++attendeeIdCounter;
   const p = getRoleMap()[role] || getRoleMap()['mid'];
-  attendees.push({ id, name: name || FUNNY_NAMES[Math.floor(Math.random() * FUNNY_NAMES.length)], role, rateUSD: rateUSD !== null ? rateUSD : (p ? p.rateUSD : localToUSD(75)), customRate: role === 'custom' });
+  attendees.push({
+    id,
+    name: name || FUNNY_NAMES[Math.floor(Math.random() * FUNNY_NAMES.length)],
+    role,
+    rateUSD: rateUSD !== null ? rateUSD : (p ? p.rateUSD : localToUSD(75)),
+    customRate: role === 'custom'
+  });
   renderAttendees(); recalculate();
 }
 function removeAttendee(id) { attendees = attendees.filter(a => a.id !== id); renderAttendees(); recalculate(); }
@@ -736,7 +802,7 @@ function updateCarbon() {
   `;
 }
 
-// ── IQ Messages ──────────────────────────────────────────
+// ── Meeting IQ ───────────────────────────────────────────
 const IQ_MSG = {
   g: ["actually decent. maybe this one's justified?","not terrible. the bar is low but you cleared it.","a rare meeting worth having. cherish it."],
   y: ["could be an email. you know it, i know it.","this is a maybe. can it be a Slack thread?","borderline. cut some people or shorten it.","the vibes are off. restructure or cancel."],
@@ -760,7 +826,6 @@ function updateEfficiency(count, mins) {
   el.className = 'iq-score ' + cls;
   bar.style.background = color;
   text.textContent = msg;
-  // Update stats bar
   const scoreEl = document.getElementById('stScore');
   scoreEl.textContent = count === 0 ? '—' : s + '/100';
   scoreEl.style.color = color;
@@ -841,20 +906,15 @@ function drawShareCard() {
   grad.addColorStop(0, d ? 'rgba(255,107,90,0.1)' : 'rgba(255,107,90,0.05)');
   grad.addColorStop(1, 'transparent');
   ctx.fillStyle = grad; ctx.fillRect(0, 0, w, 200);
-  // Border
   ctx.strokeStyle = border; ctx.lineWidth = 1; ctx.beginPath(); ctx.roundRect(20, 20, w-40, h-40, 12); ctx.stroke();
-  // Title
   ctx.fillStyle = coral; ctx.font = 'bold 28px "Space Mono", monospace'; ctx.textAlign = 'center';
   ctx.fillText("IT COULD'VE BEEN", w/2, 72); ctx.fillText('AN EMAIL!', w/2, 106);
   ctx.fillStyle = t2; ctx.font = '11px "Hanken Grotesk", sans-serif';
   ctx.fillText('the meeting cost nobody asked for', w/2, 130);
-  // Divider
   ctx.strokeStyle = border; ctx.beginPath(); ctx.moveTo(60, 155); ctx.lineTo(w-60, 155); ctx.stroke();
-  // Cost
   const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0), tcUSD = trUSD * (duration / 60), count = attendees.length, arUSD = count > 0 ? trUSD / count : 0;
   ctx.fillStyle = coral; ctx.font = 'bold 56px "Space Mono", monospace'; ctx.fillText(fmt(tcUSD), w/2, 225);
   ctx.fillStyle = t2; ctx.font = '12px "Hanken Grotesk", sans-serif'; ctx.fillText('TOTAL DAMAGE', w/2, 250);
-  // Stats
   const stats = [['Duration', `${duration} min`],['Victims', `${count}`],['Avg Rate', `${fmtRate(arUSD)}`],['Burn Rate', `${fmt(trUSD/60)}/min`],['Person-Min', `${(count*duration).toLocaleString()}`],['Yearly', fmt(tcUSD*52)]];
   ctx.textAlign = 'left'; let y = 280; const col1 = 60, col2 = w/2+20, rowH = 36;
   stats.forEach((s, i) => {
@@ -862,9 +922,7 @@ function drawShareCard() {
     ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.textAlign = 'left'; ctx.fillText(s[0].toUpperCase(), col, sy);
     ctx.fillStyle = t1; ctx.font = 'bold 16px "Space Mono", monospace'; ctx.fillText(s[1], col, sy + 18);
   });
-  // Divider
   ctx.strokeStyle = border; ctx.beginPath(); ctx.moveTo(60, y+3*rowH+6); ctx.lineTo(w-60, y+3*rowH+6); ctx.stroke();
-  // Opps
   const coffees = Math.floor(tcUSD/6.5), lunches = Math.floor(tcUSD/18), therapy = Math.floor(tcUSD/150);
   const oppY = y+3*rowH+28; ctx.fillStyle = red; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText('THIS COULD HAVE BOUGHT', w/2, oppY);
   const opps = [{ label: '☕ coffees', val: String(coffees) }, { label: '🍕 lunches', val: String(lunches) }, { label: '🧠 therapy', val: String(therapy) }];
@@ -874,12 +932,10 @@ function drawShareCard() {
     ctx.fillStyle = sky; ctx.font = 'bold 28px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText(o.val, ox+oppW/2, oppY+42);
     ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.fillText(o.label, ox+oppW/2, oppY+60);
   });
-  // Carbon
   const commuteCO2 = count * 8.4, carbonY = oppY + 88;
   ctx.fillStyle = green; ctx.font = 'bold 10px "Space Mono", monospace'; ctx.textAlign = 'center'; ctx.fillText('CARBON GUILT', w/2, carbonY);
   ctx.font = 'bold 24px "Space Mono", monospace'; ctx.fillText(`${commuteCO2.toFixed(1)} kg CO₂`, w/2, carbonY+28);
   ctx.fillStyle = t2; ctx.font = '10px "Hanken Grotesk", sans-serif'; ctx.fillText(`if everyone commuted (${count} people)`, w/2, carbonY+46);
-  // Footer
   ctx.fillStyle = t3; ctx.font = '9px "Hanken Grotesk", sans-serif'; ctx.textAlign = 'center';
   ctx.fillText("generated by It Could've Been an Email!", w/2, h-35);
 }
@@ -961,7 +1017,10 @@ function showToast(msg) { const t = document.getElementById('toast'); t.textCont
 
 // ── Init ─────────────────────────────────────────────────
 if (navigator.share) document.getElementById('nativeShareBtn').style.display = '';
-renderAttendees(); recalculate();
+loadSavedData();
+renderAttendees();
+recalculate();
 </script>
 </body>
 </html>
+```
