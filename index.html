@@ -11,216 +11,219 @@
 :root{
   --bg:#0c0c14;--surface:#12121e;--surface-2:#1a1a2e;
   --pink:#ff2d7b;--blue:#00c8ff;--purple:#a855f7;
-  --accent:#FFD700;--red:#ff3b3b;--green:#00ff88;
+  --red:#ff3b3b;--green:#00ff88;--yellow:#ffd700;
   --text:#e8e4f0;--text-sec:#7a7590;--text-dim:#3a3550;
   --border:#22223a;--border-hi:#33335a;
-  --font-display:'Space Mono',monospace;
-  --font-body:'DM Mono','Courier New',monospace;
-  --font-title:'Permanent Marker',cursive;
+  --input-bg:#0a0a12;
+}
+[data-theme="light"]{
+  --bg:#f4f1ec;--surface:#ffffff;--surface-2:#ede8e0;
+  --pink:#e0165f;--blue:#0088cc;--purple:#8b3fcf;
+  --red:#cc2020;--green:#00994d;--yellow:#cc9900;
+  --text:#1a1a2e;--text-sec:#6a6580;--text-dim:#b0abbe;
+  --border:#ddd8d0;--border-hi:#bbb5aa;
+  --input-bg:#faf8f5;
 }
 html{font-size:16px}
-body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-weight:400;min-height:100vh;line-height:1.6;overflow-x:hidden}
+body{background:var(--bg);color:var(--text);font-family:'DM Mono','Courier New',monospace;font-weight:400;min-height:100vh;line-height:1.6;transition:background .3s,color .3s}
 
-.app{max-width:1140px;margin:0 auto;padding:2.5rem 2rem}
+.app{max-width:1100px;margin:0 auto;padding:2rem 1.5rem 4rem}
 
-.header{margin-bottom:3rem;padding-bottom:2rem;border-bottom:2px solid var(--border);text-align:center}
-.title{font-family:var(--font-title);font-size:clamp(1.8rem,5vw,3.5rem);font-weight:400;letter-spacing:.04em;line-height:1.2;color:var(--pink);margin-bottom:.3rem}
+/* ── Header ── */
+.header{margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:2px solid var(--border);text-align:center;position:relative}
+.title{font-family:'Permanent Marker',cursive;font-size:clamp(1.8rem,5vw,3.2rem);font-weight:400;letter-spacing:.04em;line-height:1.2;color:var(--pink);margin-bottom:.3rem}
 .title .blue{color:var(--blue)}
-.subtitle{font-family:var(--font-display);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--text-sec);margin-top:.8rem}
-.subtitle span{color:var(--pink)}
-.header-row{display:flex;align-items:center;justify-content:space-between;margin-top:1.2rem}
-.currency-select{background:var(--surface-2);border:1px solid var(--border-hi);color:var(--text);font-family:var(--font-body);font-size:.8rem;padding:.4rem .6rem;cursor:pointer;outline:none}
+.subtitle{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-sec);margin-top:.7rem}
+.header-bottom{display:flex;align-items:center;justify-content:center;gap:1rem;margin-top:1rem}
+.currency-select{background:var(--surface-2);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.75rem;padding:.35rem .5rem;cursor:pointer;outline:none}
 .currency-select:focus{border-color:var(--blue)}
 
-.grid{display:grid;grid-template-columns:1.35fr 1fr;gap:2rem}
-@media(max-width:900px){.grid{grid-template-columns:1fr}.cost-panel-wrap{order:-1}}
+.theme-toggle{background:var(--surface-2);border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.75rem;padding:.35rem .7rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;transition:all .2s}
+.theme-toggle:hover{border-color:var(--yellow);color:var(--yellow)}
+.theme-toggle .icon{font-size:1rem}
 
-.section{border:1px solid var(--border);padding:1.5rem;margin-bottom:1.5rem;background:var(--surface)}
-.section-head{font-family:var(--font-display);font-size:.65rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--blue);margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border)}
-.field{margin-bottom:1.2rem}
-.field-label{display:block;font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-sec);margin-bottom:.4rem}
+/* ── Layout ── */
+.grid{display:grid;grid-template-columns:1.3fr 1fr;gap:2rem}
+@media(max-width:880px){.grid{grid-template-columns:1fr}.cost-panel-wrap{order:-1}}
+
+/* ── Sections ── */
+.section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.2rem;background:var(--surface);transition:background .3s,border-color .3s}
+.section-head{font-family:'Space Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--blue);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.section-head span{color:var(--text-dim);font-weight:400;text-transform:none;letter-spacing:0;margin-left:.3rem}
+
+/* ── Inputs ── */
+.field{margin-bottom:1rem}
+.field-label{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-sec);margin-bottom:.35rem}
 .field-row{display:flex;align-items:stretch}
 .field-row input{flex:1}
-.field-row .unit{display:flex;align-items:center;padding:0 .8rem;background:var(--surface-2);border:1px solid var(--border);border-left:none;color:var(--text-sec);font-size:.75rem;white-space:nowrap}
-input[type="number"],input[type="text"]{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:.9rem;padding:.65rem .8rem;width:100%;outline:none;-moz-appearance:textfield}
+.field-row .unit{display:flex;align-items:center;padding:0 .7rem;background:var(--surface-2);border:1px solid var(--border);border-left:none;color:var(--text-sec);font-size:.7rem;white-space:nowrap}
+input[type="number"],input[type="text"]{background:var(--input-bg);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.85rem;padding:.55rem .7rem;width:100%;outline:none;transition:border-color .2s;-moz-appearance:textfield}
 input::-webkit-inner-spin-button,input::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
 input:focus{border-color:var(--blue)}
-select{background:var(--bg);border:1px solid var(--border);color:var(--text);font-family:var(--font-body);font-size:.75rem;padding:.4rem .5rem;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7590'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .5rem center;padding-right:1.6rem}
+select{background:var(--input-bg);border:1px solid var(--border);color:var(--text);font-family:inherit;font-size:.7rem;padding:.35rem .5rem;outline:none;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%237a7590'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right .5rem center;padding-right:1.5rem}
 select:focus{border-color:var(--blue)}
+select option{background:var(--surface-2);color:var(--text)}
 
-.presets{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1rem}
-.preset-btn{background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.7rem;padding:.3rem .6rem;cursor:pointer}
+/* ── Duration Presets ── */
+.presets{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.8rem}
+.preset-btn{background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.65rem;padding:.25rem .5rem;cursor:pointer;transition:all .15s}
 .preset-btn:hover,.preset-btn.active{border-color:var(--pink);color:var(--pink);background:rgba(255,45,123,.06)}
 
-.attendees-list{display:flex;flex-direction:column;gap:4px;margin-bottom:1rem}
-.attendee-row{display:flex;align-items:center;gap:6px;padding:.4rem .5rem;border:1px solid var(--border);background:var(--bg)}
-.att-num{font-family:var(--font-display);font-size:.6rem;color:var(--text-dim);width:1.2rem;flex-shrink:0;text-align:right}
-.att-name{width:85px;flex-shrink:0}
-.att-name input{padding:.35rem .5rem;font-size:.72rem;border-color:transparent;background:transparent}
-.att-name input:focus{border-color:var(--border-hi);background:var(--bg)}
+/* ── Attendees ── */
+.attendees-list{display:flex;flex-direction:column;gap:3px;margin-bottom:.8rem}
+.attendee-row{display:flex;align-items:center;gap:5px;padding:.35rem .45rem;border:1px solid var(--border);background:var(--input-bg);transition:background .15s}
+.attendee-row:hover{background:var(--surface-2)}
+.att-num{font-family:'Space Mono',monospace;font-size:.55rem;color:var(--text-dim);width:1.1rem;flex-shrink:0;text-align:right}
+.att-name{width:75px;flex-shrink:0}
+.att-name input{padding:.3rem .4rem;font-size:.68rem;border-color:transparent;background:transparent}
+.att-name input:focus{border-color:var(--border-hi);background:var(--input-bg)}
 .att-role{flex:1;min-width:0}
-.att-role select{width:100%;font-size:.68rem;padding:.35rem 1.6rem .35rem .5rem;border-color:transparent;background-color:transparent}
-.att-role select:focus{border-color:var(--border-hi);background-color:var(--bg)}
-.att-role select option{background:var(--surface-2);color:var(--text)}
-.att-salary{width:85px;flex-shrink:0}
-.att-salary input{padding:.35rem .5rem;font-size:.72rem;text-align:right}
-.att-salary input[readonly]{opacity:.5;cursor:not-allowed}
-.att-remove{background:transparent;border:1px solid transparent;color:var(--text-dim);font-family:var(--font-display);font-size:.9rem;width:1.8rem;height:1.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
-.att-remove:hover{color:var(--red);border-color:var(--red)}
+.att-role select{width:100%;font-size:.62rem;padding:.3rem 1.5rem .3rem .4rem;border-color:transparent;background-color:transparent}
+.att-role select:focus{border-color:var(--border-hi);background-color:var(--input-bg)}
+.att-rate{width:70px;flex-shrink:0}
+.att-rate input{padding:.3rem .4rem;font-size:.68rem;text-align:right}
+.att-rate input[readonly]{opacity:.4;cursor:not-allowed}
+.att-remove{background:transparent;border:1px solid transparent;color:var(--text-dim);font-family:'Space Mono',monospace;font-size:.85rem;width:1.6rem;height:1.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;border-radius:2px}
+.att-remove:hover{color:var(--red);border-color:var(--red);background:rgba(255,59,59,.08)}
 
-.att-btns{display:flex;gap:6px}
-.add-attendee-btn,.clear-attendees-btn{flex:1;background:transparent;border:1px dashed var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.75rem;padding:.6rem;cursor:pointer}
+.att-btns{display:flex;gap:5px}
+.add-attendee-btn,.clear-attendees-btn{flex:1;background:transparent;border:1px dashed var(--border);color:var(--text-sec);font-family:inherit;font-size:.7rem;padding:.5rem;cursor:pointer;transition:all .15s}
 .add-attendee-btn:hover{border-color:var(--blue);color:var(--blue);border-style:solid}
 .clear-attendees-btn:hover{border-color:var(--red);color:var(--red);border-style:solid}
-.clear-attendees-btn:disabled{opacity:.3;cursor:not-allowed;pointer-events:none}
+.clear-attendees-btn:disabled{opacity:.25;cursor:not-allowed;pointer-events:none}
 
-.role-editor-toggle{width:100%;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.7rem;padding:.5rem;margin-top:.8rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem}
+/* ── Role Editor ── */
+.role-editor-toggle{width:100%;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.65rem;padding:.4rem;margin-top:.6rem;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.3rem;transition:all .15s}
 .role-editor-toggle:hover{border-color:var(--purple);color:var(--purple)}
 .role-editor-toggle .arrow{display:inline-block;transition:transform .2s}
 .role-editor-toggle.open .arrow{transform:rotate(180deg)}
-.role-editor{margin-top:.8rem;overflow:hidden;max-height:0;transition:max-height .3s ease}
+.role-editor{margin-top:.6rem;overflow:hidden;max-height:0;transition:max-height .3s ease}
 .role-editor.open{max-height:2000px}
-.role-editor-inner{border:1px solid var(--border);background:var(--bg);padding:.6rem}
-.role-editor-row{display:flex;align-items:center;gap:4px;padding:.25rem .3rem;border-bottom:1px solid var(--border)}
+.role-editor-inner{border:1px solid var(--border);background:var(--input-bg);padding:.5rem}
+.role-editor-row{display:flex;align-items:center;gap:3px;padding:.2rem .25rem;border-bottom:1px solid var(--border)}
 .role-editor-row:last-child{border-bottom:none}
-.role-editor-row .re-name{flex:1;font-size:.7rem;color:var(--text-sec)}
-.role-editor-row .re-name input{padding:.25rem .4rem;font-size:.7rem;border-color:transparent;background:transparent;width:100%}
-.role-editor-row .re-name input:focus{border-color:var(--border-hi);background:var(--bg)}
-.role-editor-row .re-rate{width:75px;flex-shrink:0}
-.role-editor-row .re-rate input{padding:.25rem .4rem;font-size:.7rem;text-align:right}
-.role-editor-row .re-del{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:.8rem;width:1.5rem;height:1.5rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.role-editor-row .re-name{flex:1;font-size:.65rem;color:var(--text-sec)}
+.role-editor-row .re-name input{padding:.2rem .3rem;font-size:.65rem;border-color:transparent;background:transparent;width:100%}
+.role-editor-row .re-name input:focus{border-color:var(--border-hi);background:var(--input-bg)}
+.role-editor-row .re-rate{width:65px;flex-shrink:0}
+.role-editor-row .re-rate input{padding:.2rem .3rem;font-size:.65rem;text-align:right}
+.role-editor-row .re-del{background:transparent;border:none;color:var(--text-dim);cursor:pointer;font-size:.75rem;width:1.4rem;height:1.4rem;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .role-editor-row .re-del:hover{color:var(--red)}
 .role-editor-row.builtin .re-del{visibility:hidden}
-.add-role-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.65rem;padding:.4rem;margin-top:4px;cursor:pointer}
+.add-role-btn{width:100%;background:transparent;border:1px dashed var(--border);color:var(--text-sec);font-family:inherit;font-size:.6rem;padding:.35rem;margin-top:3px;cursor:pointer}
 .add-role-btn:hover{border-color:var(--blue);color:var(--blue)}
 
-.cost-total-section{border:2px solid var(--pink);padding:1.8rem;margin-bottom:1.5rem;text-align:center;background:rgba(255,45,123,.04)}
-.cost-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-sec);margin-bottom:.6rem}
-.cost-amount{font-family:var(--font-display);font-size:clamp(2.8rem,6vw,4.5rem);font-weight:700;color:var(--pink);line-height:1;letter-spacing:-.03em;margin-bottom:.4rem}
-.cost-per-sec{font-size:.7rem;color:var(--text-sec)}
-.cost-breakdown{margin-bottom:.5rem}
-.cost-line{display:flex;justify-content:space-between;align-items:baseline;padding:.55rem 0;border-bottom:1px solid var(--border)}
-.cost-line:last-child{border-bottom:none}
-.cost-line-label{font-size:.75rem;color:var(--text-sec)}
-.cost-line-val{font-family:var(--font-display);font-size:.9rem;font-weight:700}
-.cost-line-val.accent{color:var(--pink)}
-.cost-line.total-line{border-top:2px solid var(--pink);border-bottom:none;margin-top:.3rem;padding-top:.7rem}
-.cost-line.total-line .cost-line-label{color:var(--text);font-weight:700;text-transform:uppercase;letter-spacing:.1em;font-size:.7rem}
-.cost-line.total-line .cost-line-val{font-size:1.2rem;color:var(--pink)}
+/* ── Preset Cards ── */
+.presets-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px}
+.preset-card{background:var(--input-bg);border:1px solid var(--border);padding:.5rem;cursor:pointer;text-align:left;transition:all .15s}
+.preset-card:hover{border-color:var(--blue);transform:translateY(-1px)}
+.preset-card .pc-title{font-size:.68rem;font-weight:700;margin-bottom:.15rem;color:var(--text)}
+.preset-card .pc-detail{font-size:.55rem;color:var(--text-dim)}
 
-.opportunity-section{margin-bottom:1.5rem}
-.opportunity-header{text-align:center;margin-bottom:1.2rem}
-.opportunity-header h3{font-family:var(--font-display);font-size:.85rem;font-weight:700;color:var(--red);letter-spacing:.1em;text-transform:uppercase;margin-bottom:.3rem}
-.opportunity-header p{font-size:.7rem;color:var(--text-sec)}
-.opportunity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:6px}
-.opp-card{border:1px solid var(--border);padding:1rem .8rem;text-align:center;background:var(--surface)}
-.opp-card:hover{border-color:var(--blue)}
-.opp-card.danger{border-color:rgba(255,45,123,.35)}
+/* ── Cost Display ── */
+.cost-total-section{border:2px solid var(--pink);padding:1.5rem;margin-bottom:1.2rem;text-align:center;background:rgba(255,45,123,.04);transition:background .3s}
+.cost-label{font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-sec);margin-bottom:.5rem}
+.cost-amount{font-family:'Space Mono',monospace;font-size:clamp(2.5rem,6vw,4rem);font-weight:700;color:var(--pink);line-height:1;letter-spacing:-.03em;margin-bottom:.3rem;transition:color .3s}
+.cost-per-sec{font-size:.65rem;color:var(--text-sec)}
+
+.cost-breakdown{}
+.cost-line{display:flex;justify-content:space-between;align-items:baseline;padding:.45rem 0;border-bottom:1px solid var(--border)}
+.cost-line:last-child{border-bottom:none}
+.cost-line-label{font-size:.7rem;color:var(--text-sec)}
+.cost-line-val{font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700}
+.cost-line-val.accent{color:var(--pink)}
+.cost-line.total-line{border-top:2px solid var(--pink);border-bottom:none;margin-top:.2rem;padding-top:.5rem}
+.cost-line.total-line .cost-line-label{color:var(--text);font-weight:700;text-transform:uppercase;letter-spacing:.08em;font-size:.65rem}
+.cost-line.total-line .cost-line-val{font-size:1.1rem;color:var(--pink)}
+
+/* ── Opportunity Costs ── */
+.opportunity-section{margin-bottom:1.2rem}
+.opportunity-header{text-align:center;margin-bottom:1rem}
+.opportunity-header h3{font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;color:var(--red);letter-spacing:.08em;text-transform:uppercase;margin-bottom:.2rem}
+.opportunity-header p{font-size:.65rem;color:var(--text-sec)}
+.opportunity-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:5px}
+.opp-card{border:1px solid var(--border);padding:.8rem .6rem;text-align:center;background:var(--surface);transition:all .15s}
+.opp-card:hover{border-color:var(--blue);transform:translateY(-1px)}
+.opp-card.danger{border-color:rgba(255,45,123,.3)}
 .opp-card.danger .opp-number{color:var(--pink)}
 .opp-card.big{grid-column:span 2}
 @media(max-width:600px){.opp-card.big{grid-column:span 1}}
-.opp-icon{font-size:1.4rem;margin-bottom:.4rem;display:block;filter:grayscale(.3)}
-.opp-number{font-family:var(--font-display);font-size:clamp(1.8rem,3vw,2.4rem);font-weight:700;color:var(--blue);line-height:1;margin-bottom:.2rem}
-.opp-label{font-size:.68rem;color:var(--text-sec);line-height:1.3;margin-bottom:.3rem}
-.opp-sublabel{font-size:.58rem;color:var(--text-dim);font-style:italic}
+.opp-icon{font-size:1.2rem;margin-bottom:.3rem;display:block}
+.opp-number{font-family:'Space Mono',monospace;font-size:clamp(1.5rem,3vw,2rem);font-weight:700;color:var(--blue);line-height:1;margin-bottom:.15rem}
+.opp-label{font-size:.62rem;color:var(--text-sec);line-height:1.3;margin-bottom:.2rem}
+.opp-sublabel{font-size:.52rem;color:var(--text-dim);font-style:italic}
 
-.recurring-banner{border:2px solid var(--red);padding:1rem;margin-bottom:1.5rem;text-align:center;background:rgba(255,59,59,.04)}
-.recurring-banner .rb-label{font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--red);margin-bottom:.3rem}
-.recurring-banner .rb-amount{font-family:var(--font-display);font-size:clamp(1.6rem,3vw,2.2rem);font-weight:700;color:var(--red);margin-bottom:.2rem}
-.recurring-banner .rb-sub{font-size:.65rem;color:var(--text-sec)}
+/* ── Recurring ── */
+.recurring-banner{border:2px solid var(--red);padding:.8rem;margin-bottom:1.2rem;text-align:center;background:rgba(255,59,59,.04)}
+.recurring-banner .rb-label{font-size:.55rem;letter-spacing:.15em;text-transform:uppercase;color:var(--red);margin-bottom:.2rem}
+.recurring-banner .rb-amount{font-family:'Space Mono',monospace;font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:var(--red);margin-bottom:.15rem}
+.recurring-banner .rb-sub{font-size:.6rem;color:var(--text-sec)}
 
-.timer-section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;background:var(--surface)}
-.timer-display{font-family:var(--font-display);font-size:clamp(2rem,4vw,3rem);font-weight:700;color:var(--blue);text-align:center;letter-spacing:.08em;margin-bottom:.3rem}
-.timer-cost{text-align:center;font-size:.85rem;color:var(--text-sec);margin-bottom:1rem}
-.timer-cost strong{color:var(--text)}
-.timer-btns{display:flex;gap:6px}
-.timer-btn{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.75rem;padding:.5rem;cursor:pointer;text-transform:uppercase;letter-spacing:.1em}
-.timer-btn:hover{border-color:var(--blue);color:var(--blue)}
-.timer-btn.start{border-color:var(--green);color:var(--green)}
-.timer-btn.start:hover{background:rgba(0,255,136,.08)}
-.timer-btn.stop{border-color:var(--red);color:var(--red)}
-.timer-btn.stop:hover{background:rgba(255,59,59,.08)}
-
-.eff-section{border:1px solid var(--border);padding:1.2rem;background:var(--surface);margin-bottom:1.5rem}
-.eff-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.8rem}
+/* ── Meeting IQ ── */
+.eff-section{border:1px solid var(--border);padding:1rem;background:var(--surface);margin-bottom:1.2rem}
+.eff-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:.6rem}
 .eff-header .section-head{margin:0;padding:0;border:none}
-.eff-score{font-family:var(--font-display);font-size:1.6rem;font-weight:700}
-.eff-score.g{color:var(--green)}.eff-score.y{color:#ffcc00}.eff-score.r{color:var(--red)}
-.eff-bar-track{height:6px;background:var(--surface-2);margin-bottom:.6rem;overflow:hidden}
-.eff-bar-fill{height:100%}
-.eff-text{font-size:.72rem;color:var(--text-sec);line-height:1.5}
+.eff-score{font-family:'Space Mono',monospace;font-size:1.4rem;font-weight:700}
+.eff-score.g{color:var(--green)}.eff-score.y{color:#cc9900}.eff-score.r{color:var(--red)}
+.eff-bar-track{height:5px;background:var(--surface-2);margin-bottom:.5rem;overflow:hidden}
+.eff-bar-fill{height:100%;transition:width .4s ease,background .3s}
+.eff-text{font-size:.65rem;color:var(--text-sec);line-height:1.5}
 
-.presets-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px}
-.preset-card{background:var(--bg);border:1px solid var(--border);padding:.6rem;cursor:pointer;text-align:left}
-.preset-card:hover{border-color:var(--blue)}
-.preset-card .pc-title{font-size:.72rem;font-weight:700;margin-bottom:.2rem;color:var(--text)}
-.preset-card .pc-detail{font-size:.6rem;color:var(--text-dim)}
-
-/* ── Action Buttons ── */
-.action-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:1.5rem}
-.action-btn{background:var(--surface);border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.7rem;padding:.7rem;cursor:pointer;text-align:center;transition:all .2s ease;display:flex;flex-direction:column;align-items:center;gap:.3rem}
-.action-btn:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-2px)}
-.action-btn .ab-icon{font-size:1.2rem}
-.action-btn.primary{border-color:var(--pink);color:var(--pink)}
-.action-btn.primary:hover{background:rgba(255,45,123,.08)}
-
-/* ── Carbon Section ── */
-.carbon-section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;background:var(--surface)}
-.carbon-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:.8rem}
-.carbon-stat{border:1px solid var(--border);padding:.8rem;text-align:center;background:var(--bg)}
-.carbon-stat .cs-icon{font-size:1.3rem;margin-bottom:.3rem;display:block}
-.carbon-stat .cs-value{font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--green);margin-bottom:.2rem}
-.carbon-stat .cs-label{font-size:.58rem;color:var(--text-sec);line-height:1.3}
+/* ── Carbon ── */
+.carbon-section{border:1px solid var(--border);padding:1rem;background:var(--surface);margin-bottom:1.2rem}
+.carbon-stats{display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-top:.6rem}
+.carbon-stat{border:1px solid var(--border);padding:.6rem;text-align:center;background:var(--input-bg)}
+.carbon-stat .cs-icon{font-size:1.1rem;margin-bottom:.2rem;display:block}
+.carbon-stat .cs-value{font-family:'Space Mono',monospace;font-size:1rem;font-weight:700;color:var(--green);margin-bottom:.15rem;transition:color .3s}
+.carbon-stat .cs-label{font-size:.5rem;color:var(--text-sec);line-height:1.2}
 .carbon-stat.danger .cs-value{color:var(--red)}
-.carbon-note{font-size:.6rem;color:var(--text-dim);margin-top:.8rem;text-align:center;line-height:1.4}
+.carbon-note{font-size:.5rem;color:var(--text-dim);margin-top:.6rem;text-align:center;line-height:1.4}
 
 /* ── Email Generator ── */
-.email-section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;background:var(--surface)}
-.email-tone-row{display:flex;gap:4px;margin-bottom:.8rem;flex-wrap:wrap}
-.email-tone-btn{background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.65rem;padding:.3rem .6rem;cursor:pointer}
+.email-section{border:1px solid var(--border);padding:1rem;background:var(--surface);margin-bottom:1.2rem}
+.email-tone-row{display:flex;gap:3px;margin-bottom:.6rem;flex-wrap:wrap}
+.email-tone-btn{background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.6rem;padding:.25rem .5rem;cursor:pointer;transition:all .15s}
 .email-tone-btn:hover,.email-tone-btn.active{border-color:var(--purple);color:var(--purple);background:rgba(168,85,247,.06)}
-.email-preview{background:var(--bg);border:1px solid var(--border);padding:1rem;font-size:.75rem;line-height:1.6;min-height:180px;white-space:pre-wrap;word-break:break-word;margin-bottom:.8rem;color:var(--text)}
-.email-actions{display:flex;gap:6px}
-.email-copy-btn,.email-plain-btn{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.7rem;padding:.5rem;cursor:pointer}
+.email-preview{background:var(--input-bg);border:1px solid var(--border);padding:.8rem;font-size:.7rem;line-height:1.6;min-height:160px;max-height:300px;overflow-y:auto;white-space:pre-wrap;word-break:break-word;margin-bottom:.6rem;color:var(--text)}
+.email-actions{display:flex;gap:5px}
+.email-copy-btn,.email-plain-btn{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.65rem;padding:.4rem;cursor:pointer;transition:all .15s}
 .email-copy-btn:hover{border-color:var(--blue);color:var(--blue)}
 .email-plain-btn:hover{border-color:var(--purple);color:var(--purple)}
 
-/* ── QR Code ── */
-.qr-section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;background:var(--surface);text-align:center}
-.qr-section .section-head{text-align:left}
-#qrCode{display:inline-block;padding:1rem;background:#fff;border-radius:4px;margin-bottom:.8rem}
-.qr-text{font-size:.65rem;color:var(--text-sec);line-height:1.4;margin-bottom:.8rem}
-.qr-download-btn{background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.7rem;padding:.5rem 1.2rem;cursor:pointer}
-.qr-download-btn:hover{border-color:var(--green);color:var(--green)}
-
-/* ── Share Card Generator ── */
-.share-section{border:1px solid var(--border);padding:1.2rem;margin-bottom:1.5rem;background:var(--surface)}
-.share-section .section-head{margin-bottom:.8rem}
-.share-canvas-wrap{display:flex;justify-content:center;margin-bottom:.8rem;overflow:hidden}
+/* ── Share Image ── */
+.share-section{border:1px solid var(--border);padding:1rem;background:var(--surface);margin-bottom:1.2rem}
+.share-canvas-wrap{display:flex;justify-content:center;margin-bottom:.6rem;overflow:hidden}
 #shareCanvas{max-width:100%;height:auto;border:1px solid var(--border)}
-.share-actions{display:flex;gap:6px}
-.share-download-btn,.share-copy-btn,.share-native-btn{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:var(--font-body);font-size:.65rem;padding:.5rem;cursor:pointer}
+.share-actions{display:flex;gap:5px}
+.share-download-btn,.share-copy-btn,.share-native-btn{flex:1;background:transparent;border:1px solid var(--border);color:var(--text-sec);font-family:inherit;font-size:.6rem;padding:.4rem;cursor:pointer;transition:all .15s}
 .share-download-btn:hover{border-color:var(--green);color:var(--green)}
 .share-copy-btn:hover{border-color:var(--blue);color:var(--blue)}
 .share-native-btn:hover{border-color:var(--pink);color:var(--pink)}
 
-.cta{margin-top:2rem;text-align:center}
-.cta button{background:var(--pink);color:#fff;border:none;font-family:var(--font-display);font-size:.85rem;font-weight:700;padding:.8rem 2.5rem;cursor:pointer;text-transform:uppercase;letter-spacing:.15em}
+/* ── CTA ── */
+.cta{margin-top:1.5rem;text-align:center}
+.cta button{background:var(--pink);color:#fff;border:none;font-family:'Space Mono',monospace;font-size:.8rem;font-weight:700;padding:.7rem 2rem;cursor:pointer;text-transform:uppercase;letter-spacing:.12em;transition:all .2s}
 .cta button:hover{background:#fff;color:var(--pink)}
+[data-theme="light"] .cta button:hover{background:var(--text);color:var(--bg)}
 .cta button:active{transform:scale(.97)}
-.cta-sub{font-size:.65rem;color:var(--text-dim);margin-top:.5rem}
+.cta-sub{font-size:.55rem;color:var(--text-dim);margin-top:.4rem}
 
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--pink);color:#fff;font-family:var(--font-display);font-size:.8rem;font-weight:700;padding:.8rem 2rem;letter-spacing:.1em;z-index:100;transition:transform .3s ease,opacity .3s;opacity:0;white-space:nowrap}
+/* ── Toast ── */
+.toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%) translateY(60px);background:var(--pink);color:#fff;font-family:'Space Mono',monospace;font-size:.75rem;font-weight:700;padding:.6rem 1.5rem;letter-spacing:.08em;z-index:100;transition:transform .3s ease,opacity .3s;opacity:0;white-space:nowrap;pointer-events:none}
 .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
-.empty-state{text-align:center;padding:2rem 1rem;border:1px dashed var(--border);color:var(--text-dim);font-size:.75rem}
 
-@keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
-.anim{animation:fadeInUp .4s ease forwards;opacity:0}
-.anim:nth-child(2){animation-delay:.06s}
-.anim:nth-child(3){animation-delay:.12s}
-.anim:nth-child(4){animation-delay:.18s}
-.anim:nth-child(5){animation-delay:.24s}
-.anim:nth-child(6){animation-delay:.30s}
+.empty-state{text-align:center;padding:1.5rem 1rem;border:1px dashed var(--border);color:var(--text-dim);font-size:.7rem}
+
+/* ── Entrance animations ── */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+.anim{animation:fadeInUp .35s ease forwards;opacity:0}
+.anim:nth-child(2){animation-delay:.04s}
+.anim:nth-child(3){animation-delay:.08s}
+.anim:nth-child(4){animation-delay:.12s}
+.anim:nth-child(5){animation-delay:.16s}
+.anim:nth-child(6){animation-delay:.20s}
+.anim:nth-child(7){animation-delay:.24s}
+.anim:nth-child(8){animation-delay:.28s}
 </style>
 </head>
 <body>
@@ -228,9 +231,8 @@ select:focus{border-color:var(--blue)}
 <div class="app">
   <header class="header anim">
     <div class="title">It Could've Been<br>an <span class="blue">Email!</span></div>
-    <p class="subtitle">The meeting cost calculator <span>no one asked for</span> but everyone needs</p>
-    <div class="header-row">
-      <div></div>
+    <p class="subtitle">the meeting cost calculator nobody asked for</p>
+    <div class="header-bottom">
       <select class="currency-select" id="currency" onchange="onCurrencyChange()">
         <option value="EUR">€ EUR</option>
         <option value="USD">$ USD</option>
@@ -240,13 +242,17 @@ select:focus{border-color:var(--blue)}
         <option value="CAD">CA$ CAD</option>
         <option value="AUD">A$ AUD</option>
       </select>
+      <button class="theme-toggle" onclick="toggleTheme()">
+        <span class="icon" id="themeIcon">☀️</span>
+        <span id="themeLabel">Light</span>
+      </button>
     </div>
   </header>
 
   <div class="grid">
     <div class="left-col">
       <div class="section anim">
-        <div class="section-head">01 — How long is this thing?</div>
+        <div class="section-head">01 — How long? <span>be honest</span></div>
         <div class="presets">
           <button class="preset-btn" onclick="setDuration(15)">15m</button>
           <button class="preset-btn" onclick="setDuration(30)">30m</button>
@@ -265,11 +271,11 @@ select:focus{border-color:var(--blue)}
       </div>
 
       <div class="section anim">
-        <div class="section-head">02 — Who's trapped in this meeting?</div>
+        <div class="section-head">02 — Who's stuck here? <span>add victims</span></div>
         <div class="attendees-list" id="attendeesList"></div>
         <div class="att-btns">
           <button class="add-attendee-btn" onclick="addAttendee()">+ Add Victim</button>
-          <button class="clear-attendees-btn" id="clearBtn" onclick="clearAllAttendees()" disabled>✕ Clear All</button>
+          <button class="clear-attendees-btn" id="clearBtn" onclick="clearAllAttendees()" disabled>✕ Set Them Free</button>
         </div>
         <button class="role-editor-toggle" id="roleEditorToggle" onclick="toggleRoleEditor()">
           <span class="arrow">▾</span> Edit Role Presets
@@ -281,7 +287,7 @@ select:focus{border-color:var(--blue)}
       </div>
 
       <div class="section anim">
-        <div class="section-head">Worst Offenders</div>
+        <div class="section-head">Worst Offenders <span>load a classic</span></div>
         <div class="presets-grid">
           <div class="preset-card" onclick="loadPreset('standup')"><div class="pc-title">Daily Standup</div><div class="pc-detail">8 devs · 15 min</div></div>
           <div class="preset-card" onclick="loadPreset('allhands')"><div class="pc-title">All-Hands</div><div class="pc-detail">25 people · 60 min</div></div>
@@ -295,66 +301,53 @@ select:focus{border-color:var(--blue)}
 
     <div class="right-col cost-panel-wrap">
       <div class="cost-total-section anim">
-        <div class="cost-label">This meeting is burning</div>
+        <div class="cost-label" id="costLabel">this meeting is burning</div>
         <div class="cost-amount" id="totalCost">€0.00</div>
         <div class="cost-per-sec" id="perSec">€0.00 per second of collective suffering</div>
       </div>
 
       <div class="opportunity-section anim" id="oppSection" style="display:none">
         <div class="opportunity-header">
-          <h3>⚠ This could have bought</h3>
-          <p>Instead of a meeting, imagine these.</p>
+          <h3>⚠ this could have bought</h3>
+          <p>instead of death by meetings</p>
         </div>
         <div class="opportunity-grid" id="oppGrid"></div>
       </div>
 
       <div class="recurring-banner anim" id="recurringBanner" style="display:none">
-        <div class="rb-label">If this nightmare repeats weekly, it costs per year</div>
+        <div class="rb-label">if this nightmare repeats weekly</div>
         <div class="rb-amount" id="recurringAmount">€0</div>
-        <div class="rb-sub" id="recurringSub">52 meetings. Every single week. For a whole year.</div>
+        <div class="rb-sub" id="recurringSub">52 meetings. every single week. forever.</div>
       </div>
 
       <div class="section anim">
-        <div class="section-head">The Damage Breakdown</div>
+        <div class="section-head">The Damage Report</div>
         <div class="cost-breakdown">
           <div class="cost-line"><span class="cost-line-label">Duration</span><span class="cost-line-val" id="bkDuration">60 min</span></div>
-          <div class="cost-line"><span class="cost-line-label">Attendees</span><span class="cost-line-val" id="bkAttendees">0</span></div>
-          <div class="cost-line"><span class="cost-line-label">Total person-minutes</span><span class="cost-line-val" id="bkPersonMin">0 min</span></div>
-          <div class="cost-line"><span class="cost-line-label">Average hourly rate</span><span class="cost-line-val accent" id="bkAvgRate">€0.00</span></div>
-          <div class="cost-line"><span class="cost-line-label">Cost per minute</span><span class="cost-line-val" id="bkPerMin">€0.00</span></div>
-          <div class="cost-line"><span class="cost-line-label">Cost per attendee</span><span class="cost-line-val" id="bkPerPerson">€0.00</span></div>
-          <div class="cost-line total-line"><span class="cost-line-label">Total Cost</span><span class="cost-line-val" id="bkTotal">€0.00</span></div>
-        </div>
-      </div>
-
-      <div class="timer-section anim">
-        <div class="section-head">Stopwatch of Suffering</div>
-        <div class="timer-display" id="timerDisplay">00:00:00</div>
-        <div class="timer-cost">Money burned: <strong id="timerCost">€0.00</strong></div>
-        <div class="timer-btns">
-          <button class="timer-btn start" id="timerStartBtn" onclick="startTimer()">Start</button>
-          <button class="timer-btn stop" onclick="stopTimer()">Stop</button>
-          <button class="timer-btn" onclick="resetTimer()">Reset</button>
+          <div class="cost-line"><span class="cost-line-label">Victims</span><span class="cost-line-val" id="bkAttendees">0</span></div>
+          <div class="cost-line"><span class="cost-line-label">Person-minutes wasted</span><span class="cost-line-val" id="bkPersonMin">0</span></div>
+          <div class="cost-line"><span class="cost-line-label">Average burn rate</span><span class="cost-line-val accent" id="bkAvgRate">€0.00</span></div>
+          <div class="cost-line"><span class="cost-line-label">Per minute</span><span class="cost-line-val" id="bkPerMin">€0.00</span></div>
+          <div class="cost-line"><span class="cost-line-label">Per person</span><span class="cost-line-val" id="bkPerPerson">€0.00</span></div>
+          <div class="cost-line total-line"><span class="cost-line-label">Total Damage</span><span class="cost-line-val" id="bkTotal">€0.00</span></div>
         </div>
       </div>
 
       <div class="eff-section anim">
         <div class="eff-header">
-          <div class="section-head">Meeting IQ</div>
+          <div class="section-head">Should You Even Go?</div>
           <div class="eff-score g" id="effScore">—</div>
         </div>
         <div class="eff-bar-track"><div class="eff-bar-fill" id="effBar" style="width:0%;background:var(--text-dim)"></div></div>
-        <div class="eff-text" id="effText">Add people to see how doomed this meeting is.</div>
+        <div class="eff-text" id="effText">add people above to see if this meeting is worth it</div>
       </div>
 
-      <!-- Carbon Footprint -->
       <div class="carbon-section anim" id="carbonSection">
-        <div class="section-head">Carbon Footprint</div>
+        <div class="section-head">Carbon Guilt</div>
         <div class="carbon-stats" id="carbonStats"></div>
-        <div class="carbon-note">Estimates based on EU averages. Video calls add ~0.5 kg CO₂/hour per person. In-person adds ~8.4 kg CO₂ per commute.</div>
+        <div class="carbon-note">estimates based on EU averages. video calls: ~0.5 kg CO₂/hr/person. in-person: ~8.4 kg CO₂ per commute</div>
       </div>
 
-      <!-- Email Generator -->
       <div class="email-section anim">
         <div class="section-head">Draft the Email</div>
         <div class="email-tone-row">
@@ -363,24 +356,15 @@ select:focus{border-color:var(--blue)}
           <button class="email-tone-btn" onclick="generateEmail('funny',this)">Funny</button>
           <button class="email-tone-btn" onclick="generateEmail('data',this)">Just Data</button>
         </div>
-        <div class="email-preview" id="emailPreview">Click a tone above to generate an email with this meeting's cost breakdown.</div>
+        <div class="email-preview" id="emailPreview">pick a tone above and i'll write you the most guilt-inducing email your colleagues have ever seen</div>
         <div class="email-actions">
           <button class="email-copy-btn" onclick="copyEmail()">Copy Email</button>
-          <button class="email-plain-btn" onclick="copyEmailPlain()">Copy Plain Text</button>
+          <button class="email-plain-btn" onclick="copyEmailPlain()">Copy Body Only</button>
         </div>
       </div>
 
-      <!-- QR Code -->
-      <div class="qr-section anim">
-        <div class="section-head">Scan to Share the Shame</div>
-        <div id="qrCode"></div>
-        <div class="qr-text">Point a phone camera at this to share the meeting cost page</div>
-        <button class="qr-download-btn" onclick="downloadQR()">Download QR Code</button>
-      </div>
-
-      <!-- Share Image -->
       <div class="share-section anim">
-        <div class="section-head">Share Card</div>
+        <div class="section-head">Share the Shame</div>
         <div class="share-canvas-wrap">
           <canvas id="shareCanvas" width="600" height="750"></canvas>
         </div>
@@ -393,7 +377,7 @@ select:focus{border-color:var(--blue)}
 
       <div class="cta anim">
         <button onclick="copyReport()">Copy the Receipt</button>
-        <div class="cta-sub">Show your team what this meeting really costs</div>
+        <div class="cta-sub">bring this to the next retro and watch people squirm</div>
       </div>
     </div>
   </div>
@@ -401,11 +385,18 @@ select:focus{border-color:var(--blue)}
 
 <div class="toast" id="toast"></div>
 
-<!-- QR Code library -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-
 <script>
-// ── Currency System ──────────────────────────────────────
+// ── Theme Toggle ─────────────────────────────────────────
+let isDark = true;
+function toggleTheme() {
+  isDark = !isDark;
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  document.getElementById('themeIcon').textContent = isDark ? '☀️' : '🌙';
+  document.getElementById('themeLabel').textContent = isDark ? 'Light' : 'Dark';
+  drawShareCard();
+}
+
+// ── Currency ─────────────────────────────────────────────
 const CURRENCY_DATA = {
   USD: { symbol: '$',  rate: 1,    locale: 'en-US' },
   EUR: { symbol: '€',  rate: 0.92, locale: 'de-DE' },
@@ -417,23 +408,23 @@ const CURRENCY_DATA = {
 };
 
 const DEFAULT_ROLES_USD = [
-  {id:'intern',name:'Intern / Co-op',rateUSD:25,builtin:true},
+  {id:'intern',name:'Intern (free labor)',rateUSD:25,builtin:true},
   {id:'junior',name:'Junior (0-2 yrs)',rateUSD:55,builtin:true},
   {id:'mid',name:'Mid-Level (2-5 yrs)',rateUSD:85,builtin:true},
   {id:'senior',name:'Senior (5-8 yrs)',rateUSD:120,builtin:true},
   {id:'staff',name:'Staff / Principal',rateUSD:160,builtin:true},
-  {id:'eng_manager',name:'Engineering Manager',rateUSD:155,builtin:true},
+  {id:'eng_manager',name:'Eng Manager',rateUSD:155,builtin:true},
   {id:'designer',name:'Designer',rateUSD:95,builtin:true},
   {id:'product',name:'Product Manager',rateUSD:110,builtin:true},
   {id:'data',name:'Data Scientist',rateUSD:115,builtin:true},
   {id:'devops',name:'DevOps / SRE',rateUSD:125,builtin:true},
   {id:'director',name:'Director',rateUSD:200,builtin:true},
   {id:'vp',name:'VP',rateUSD:275,builtin:true},
-  {id:'c_suite',name:'C-Suite (C-level)',rateUSD:450,builtin:true},
-  {id:'legal',name:'Legal / Counsel',rateUSD:300,builtin:true},
+  {id:'c_suite',name:'C-Suite (money printer)',rateUSD:450,builtin:true},
+  {id:'legal',name:'Legal (sue you later)',rateUSD:300,builtin:true},
   {id:'consultant',name:'External Consultant',rateUSD:250,builtin:true},
   {id:'freelancer',name:'Freelancer / Contractor',rateUSD:100,builtin:true},
-  {id:'sales',name:'Sales / Account Mgr',rateUSD:90,builtin:true},
+  {id:'sales',name:'Sales (commission hunter)',rateUSD:90,builtin:true},
   {id:'marketing',name:'Marketing',rateUSD:80,builtin:true},
   {id:'hr',name:'HR / People Ops',rateUSD:75,builtin:true},
   {id:'support',name:'Customer Support',rateUSD:50,builtin:true},
@@ -447,46 +438,30 @@ function usdToLocal(usd) { return usd * getCurrency().rate; }
 function localToUSD(local) { return local / getCurrency().rate; }
 
 function fmt(usd) {
-  const c = getCurrency();
-  const val = usdToLocal(usd);
-  const dec = c.decimals !== undefined ? c.decimals : 2;
+  const c = getCurrency(), val = usdToLocal(usd), dec = c.decimals !== undefined ? c.decimals : 2;
   if (Math.abs(val) >= 10000) return c.symbol + val.toLocaleString(c.locale, { maximumFractionDigits: 0 });
   if (Math.abs(val) >= 100) return c.symbol + val.toFixed(0);
   return c.symbol + val.toFixed(dec);
 }
-
 function fmtRate(usd) {
-  const c = getCurrency();
-  const val = usdToLocal(usd);
-  const dec = c.decimals !== undefined ? c.decimals : 0;
+  const c = getCurrency(), val = usdToLocal(usd), dec = c.decimals !== undefined ? c.decimals : 0;
   return c.symbol + val.toFixed(dec) + '/hr';
-}
-
-function fmtFull(usd) {
-  const c = getCurrency();
-  const val = usdToLocal(usd);
-  const dec = c.decimals !== undefined ? c.decimals : 2;
-  return c.symbol + val.toFixed(dec);
 }
 
 function onCurrencyChange() {
   currentCurrency = document.getElementById('currency').value;
-  renderRoleEditor();
-  renderAttendees();
-  recalculate();
+  renderRoleEditor(); renderAttendees(); recalculate();
 }
 
-// ── Attendees & Roles ────────────────────────────────────
+// ── State ────────────────────────────────────────────────
 let customIdCounter = 0;
 function getRoleMap() { const m = {}; roles.forEach(r => m[r.id] = r); return m; }
 
 let duration = 60;
 let attendees = [];
 let attendeeIdCounter = 0;
-let timerInterval = null;
-let timerSeconds = 0;
-let timerRunning = false;
 
+// ── Roles ────────────────────────────────────────────────
 function toggleRoleEditor() {
   document.getElementById('roleEditor').classList.toggle('open');
   document.getElementById('roleEditorToggle').classList.toggle('open');
@@ -494,12 +469,11 @@ function toggleRoleEditor() {
 }
 
 function renderRoleEditor() {
+  const dec = getCurrency().decimals !== undefined ? getCurrency().decimals : 0;
   document.getElementById('roleEditorInner').innerHTML = roles.map((r, i) => {
-    const displayRate = usdToLocal(r.rateUSD);
-    const dec = getCurrency().decimals !== undefined ? getCurrency().decimals : 0;
     return `<div class="role-editor-row ${r.builtin ? 'builtin' : ''}">
       <div class="re-name"><input type="text" value="${r.name}" onchange="updateRoleName(${i},this.value)"></div>
-      <div class="re-rate"><input type="number" value="${displayRate.toFixed(dec)}" min="0" step="5" onchange="updateRoleRate(${i},this.value)"></div>
+      <div class="re-rate"><input type="number" value="${usdToLocal(r.rateUSD).toFixed(dec)}" min="0" step="5" onchange="updateRoleRate(${i},this.value)"></div>
       <button class="re-del" onclick="deleteRole(${i})">×</button>
     </div>`;
   }).join('');
@@ -520,10 +494,25 @@ function deleteRole(i) {
 }
 function addCustomRole() { roles.push({ id: 'custom_' + (++customIdCounter), name: 'New Role', rateUSD: localToUSD(75), builtin: false }); renderRoleEditor(); }
 
+// ── Attendees ────────────────────────────────────────────
+const FUNNY_NAMES = [
+  'Bob from Accounting','Karen from HR','Mysterious Dave','That One Intern',
+  'The Lurker','Camera-Off Guy','Eating Lunch Girl','Mute Button Steve',
+  'Background Noise Phil','Always Late Sara','Over-Committer Alex',
+  'Just Here For The Snacks','Slides Karen','Asks Obvious Q Todd',
+  'Falls Asleep Mike','Writes Nothing In Notes Jen'
+];
+
 function addAttendee(name = '', role = 'mid', rateUSD = null) {
   const id = ++attendeeIdCounter;
   const p = getRoleMap()[role] || getRoleMap()['mid'];
-  attendees.push({ id, name, role, rateUSD: rateUSD !== null ? rateUSD : (p ? p.rateUSD : localToUSD(75)), customRate: role === 'custom' });
+  attendees.push({
+    id,
+    name: name || FUNNY_NAMES[Math.floor(Math.random() * FUNNY_NAMES.length)],
+    role,
+    rateUSD: rateUSD !== null ? rateUSD : (p ? p.rateUSD : localToUSD(75)),
+    customRate: role === 'custom'
+  });
   renderAttendees(); recalculate();
 }
 
@@ -533,17 +522,21 @@ function clearAllAttendees() { attendees = []; attendeeIdCounter = 0; renderAtte
 function renderAttendees() {
   const list = document.getElementById('attendeesList');
   const rm = getRoleMap();
-  if (!attendees.length) { list.innerHTML = '<div class="empty-state">No one trapped yet. Add someone above.</div>'; document.getElementById('clearBtn').disabled = true; return; }
-  document.getElementById('clearBtn').disabled = false;
   const dec = getCurrency().decimals !== undefined ? getCurrency().decimals : 0;
+  if (!attendees.length) {
+    list.innerHTML = '<div class="empty-state">no victims yet — add someone and watch the money burn 🔥</div>';
+    document.getElementById('clearBtn').disabled = true;
+    return;
+  }
+  document.getElementById('clearBtn').disabled = false;
   list.innerHTML = attendees.map((a, i) => {
     const opts = roles.map(r => `<option value="${r.id}" ${a.role === r.id ? 'selected' : ''}>${r.name} (${getCurrency().symbol}${usdToLocal(r.rateUSD).toFixed(dec)}/hr)</option>`).join('');
     const isCustom = a.role === 'custom' || !rm[a.role];
-    return `<div class="attendee-row" data-id="${a.id}">
+    return `<div class="attendee-row">
       <span class="att-num">${String(i + 1).padStart(2, '0')}</span>
-      <div class="att-name"><input type="text" placeholder="Name" value="${a.name}" oninput="updateAttendee(${a.id},'name',this.value)"></div>
+      <div class="att-name"><input type="text" placeholder="name" value="${a.name}" oninput="updateAttendee(${a.id},'name',this.value)"></div>
       <div class="att-role"><select onchange="onRoleChange(${a.id},this.value)">${opts}</select></div>
-      <div class="att-salary"><input type="number" value="${usdToLocal(a.rateUSD).toFixed(dec)}" min="0" step="5" oninput="updateAttendee(${a.id},'rate',this.value)" ${isCustom ? '' : 'readonly'}></div>
+      <div class="att-rate"><input type="number" value="${usdToLocal(a.rateUSD).toFixed(dec)}" min="0" step="5" oninput="updateAttendee(${a.id},'rate',this.value)" ${isCustom ? '' : 'readonly'}></div>
       <button class="att-remove" onclick="removeAttendee(${a.id})">×</button>
     </div>`;
   }).join('');
@@ -565,6 +558,7 @@ function updateAttendee(id, field, val) {
   recalculate();
 }
 
+// ── Duration ─────────────────────────────────────────────
 function setDuration(m) {
   duration = m;
   document.getElementById('duration').value = m;
@@ -579,18 +573,18 @@ function onDurationChange() { const v = parseInt(document.getElementById('durati
 
 // ── Opportunity Costs ────────────────────────────────────
 const OPP_ITEMS = [
-  { id: 'junior_monthly', icon: '🧑‍💻', label: 'Months of a junior engineer', unitCostUSD: 55 * 160, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'at $55/hr full-time', danger: 1, big: true },
-  { id: 'macbooks', icon: '💻', label: 'MacBook Pro laptops', unitCostUSD: 2499, format: n => n < .5 ? '0' : n.toFixed(0), sublabel: () => 'at $2,499 each', danger: 5 },
-  { id: 'monitors', icon: '🖥️', label: '4K monitors', unitCostUSD: 450, format: n => n.toFixed(0), sublabel: () => 'at $450 each', danger: 10 },
-  { id: 'team_lunches', icon: '🍕', label: 'Team lunches', unitCostUSD: 18, format: n => n.toFixed(0), sublabel: () => 'at $18/person', danger: 50 },
-  { id: 'aws_monthly', icon: '☁️', label: 'Months of cloud hosting', unitCostUSD: 5000, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'AWS / cloud infra', danger: 1 },
-  { id: 'saas_licenses', icon: '📦', label: 'Months of SaaS tools', unitCostUSD: 25 * 15, format: n => n.toFixed(1), sublabel: () => 'Slack, Figma, GitHub', danger: 6 },
-  { id: 'recruit', icon: '🎯', label: "of a new hire's recruiting cost", unitCostUSD: 15000, format: n => (n * 100).toFixed(0) + '%', sublabel: () => 'avg. ~$15k per hire', danger: .5, big: true },
-  { id: 'office_days', icon: '🏢', label: 'Days of office space', unitCostUSD: 150, format: n => n.toFixed(0), sublabel: () => 'rent, utilities, snacks', danger: 20 },
-  { id: 'retreat', icon: '🏖️', label: 'Company retreat days', unitCostUSD: 300, format: n => n.toFixed(0), sublabel: () => 'at $300/person offsite', danger: 15 },
-  { id: 'courses', icon: '📚', label: 'Annual course subscriptions', unitCostUSD: 399, format: n => n.toFixed(0), sublabel: () => "Coursera, Udemy, O'Reilly", danger: 5 },
-  { id: 'coffee', icon: '☕', label: 'Premium coffees', unitCostUSD: 6.5, format: n => n.toFixed(0), sublabel: () => 'at $6.50 each', danger: 100 },
-  { id: 'charity', icon: '❤️', label: 'Charity meals funded', unitCostUSD: 3.5, format: n => n.toFixed(0), sublabel: () => 'at $3.50/meal', danger: 200 },
+  { id: 'junior_monthly', icon: '🧑‍💻', label: 'months of a junior dev', unitCostUSD: 55 * 160, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'at $55/hr full-time', danger: 1, big: true },
+  { id: 'macbooks', icon: '💻', label: 'MacBook Pros', unitCostUSD: 2499, format: n => n < .5 ? '0' : n.toFixed(0), sublabel: () => '$2,499 each', danger: 5 },
+  { id: 'monitors', icon: '🖥️', label: '4K monitors', unitCostUSD: 450, format: n => n.toFixed(0), sublabel: () => '$450 each', danger: 10 },
+  { id: 'team_lunches', icon: '🍕', label: 'team lunches', unitCostUSD: 18, format: n => n.toFixed(0), sublabel: () => '$18/person', danger: 50 },
+  { id: 'aws_monthly', icon: '☁️', label: 'months of cloud hosting', unitCostUSD: 5000, format: n => n >= 1 ? n.toFixed(1) : (n * 30).toFixed(0) + ' days', sublabel: () => 'AWS infrastructure', danger: 1 },
+  { id: 'saas_licenses', icon: '📦', label: 'months of SaaS tools', unitCostUSD: 375, format: n => n.toFixed(1), sublabel: () => 'Slack, Figma, GitHub', danger: 6 },
+  { id: 'office_days', icon: '🏢', label: 'days of office rent', unitCostUSD: 150, format: n => n.toFixed(0), sublabel: () => 'rent, utilities, snacks', danger: 20 },
+  { id: 'retreat', icon: '🏖️', label: 'company retreat days', unitCostUSD: 300, format: n => n.toFixed(0), sublabel: () => '$300/person offsite', danger: 15 },
+  { id: 'coffee', icon: '☕', label: 'fancy coffees', unitCostUSD: 6.5, format: n => n.toFixed(0), sublabel: () => '$6.50 each', danger: 100 },
+  { id: 'charity', icon: '❤️', label: 'charity meals funded', unitCostUSD: 3.5, format: n => n.toFixed(0), sublabel: () => '$3.50/meal', danger: 200 },
+  { id: 'spotify', icon: '🎵', label: 'years of Spotify Premium', unitCostUSD: 120, format: n => n.toFixed(1), sublabel: () => '$10/month', danger: 10 },
+  { id: 'therapy', icon: '🧠', label: 'therapy sessions', unitCostUSD: 150, format: n => n.toFixed(0), sublabel: () => 'you probably need these', danger: 5 },
 ];
 
 function updateOpportunityCost(totalCostUSD) {
@@ -599,16 +593,15 @@ function updateOpportunityCost(totalCostUSD) {
   if (totalCostUSD < 10) { section.style.display = 'none'; return; }
   section.style.display = 'block';
   let items;
-  if (totalCostUSD < 200) items = ['coffee', 'team_lunches', 'charity', 'courses'];
-  else if (totalCostUSD < 1000) items = ['team_lunches', 'monitors', 'coffee', 'office_days', 'courses', 'charity'];
-  else if (totalCostUSD < 5000) items = ['junior_monthly', 'macbooks', 'monitors', 'team_lunches', 'saas_licenses', 'office_days', 'courses', 'charity'];
-  else items = ['junior_monthly', 'recruit', 'macbooks', 'aws_monthly', 'monitors', 'retreat', 'saas_licenses', 'office_days', 'team_lunches', 'charity'];
+  if (totalCostUSD < 200) items = ['coffee', 'team_lunches', 'spotify', 'charity'];
+  else if (totalCostUSD < 1000) items = ['team_lunches', 'monitors', 'coffee', 'therapy', 'spotify', 'charity'];
+  else if (totalCostUSD < 5000) items = ['junior_monthly', 'macbooks', 'monitors', 'team_lunches', 'saas_licenses', 'therapy', 'coffee', 'charity'];
+  else items = ['junior_monthly', 'macbooks', 'aws_monthly', 'monitors', 'retreat', 'saas_licenses', 'office_days', 'therapy', 'team_lunches', 'charity'];
   grid.innerHTML = items.map(id => {
     const item = OPP_ITEMS.find(o => o.id === id);
     if (!item) return '';
     const qty = totalCostUSD / item.unitCostUSD;
-    const isDanger = qty >= item.danger;
-    return `<div class="opp-card ${isDanger ? 'danger' : ''} ${item.big ? 'big' : ''}"><span class="opp-icon">${item.icon}</span><div class="opp-number">${item.format(qty)}</div><div class="opp-label">${item.label}</div><div class="opp-sublabel">${item.sublabel(qty)}</div></div>`;
+    return `<div class="opp-card ${qty >= item.danger ? 'danger' : ''} ${item.big ? 'big' : ''}"><span class="opp-icon">${item.icon}</span><div class="opp-number">${item.format(qty)}</div><div class="opp-label">${item.label}</div><div class="opp-sublabel">${item.sublabel(qty)}</div></div>`;
   }).join('');
 }
 
@@ -617,378 +610,62 @@ function updateRecurring(totalCostUSD) {
   if (totalCostUSD < 20 || !attendees.length) { banner.style.display = 'none'; return; }
   banner.style.display = 'block';
   document.getElementById('recurringAmount').textContent = fmt(totalCostUSD * 52);
-  document.getElementById('recurringSub').textContent = `52 meetings × ${fmt(totalCostUSD)}/meeting = ${fmt(totalCostUSD * 52)}/year. Still want to keep it?`;
+  document.getElementById('recurringSub').textContent = `that's ${fmt(totalCostUSD)}/week × 52 = ${fmt(totalCostUSD * 52)}/year. still worth it?`;
 }
 
-// ── Carbon Footprint ─────────────────────────────────────
+// ── Carbon ───────────────────────────────────────────────
 function updateCarbon() {
-  const count = attendees.length;
-  const hours = duration / 60;
+  const count = attendees.length, hours = duration / 60;
   const cSection = document.getElementById('carbonSection');
-  if (!count) {
-    cSection.style.display = 'none';
-    return;
-  }
+  if (!count) { cSection.style.display = 'none'; return; }
   cSection.style.display = 'block';
 
-  // Video call: ~0.5 kg CO2 per person per hour (electricity, data centers, network)
   const videoCO2 = count * hours * 0.5;
-
-  // In-person commute: ~8.4 kg CO2 per person round trip (avg 25km each way, 0.168 kg/km)
   const commuteCO2 = count * 8.4;
-
-  // Equivalents
-  const treesNeeded = (commuteCO2 / 21.7).toFixed(1); // avg tree absorbs ~21.7 kg/year
-  const flightsShort = (commuteCO2 / 255).toFixed(2); // short flight ~255 kg
-  const drivingKm = (commuteCO2 / 0.21).toFixed(0); // avg car ~0.21 kg/km
-  const steakDinners = (commuteCO2 / 6.6).toFixed(0); // avg steak ~6.6 kg CO2
+  const treesNeeded = (commuteCO2 / 21.7).toFixed(1);
+  const drivingKm = (commuteCO2 / 0.21).toFixed(0);
+  const steakDinners = (commuteCO2 / 6.6).toFixed(0);
+  const flights = (commuteCO2 / 255).toFixed(2);
 
   document.getElementById('carbonStats').innerHTML = `
     <div class="carbon-stat"><span class="cs-icon">📹</span><div class="cs-value">${videoCO2.toFixed(1)} kg</div><div class="cs-label">CO₂ if video call</div></div>
-    <div class="carbon-stat danger"><span class="cs-icon">🚗</span><div class="cs-value">${commuteCO2.toFixed(1)} kg</div><div class="cs-label">CO₂ if in-person<br>(commute)</div></div>
-    <div class="carbon-stat"><span class="cs-icon">🌳</span><div class="cs-value">${treesNeeded}</div><div class="cs-label">Trees needed to<br>offset (1 year)</div></div>
-    <div class="carbon-stat"><span class="cs-icon">✈️</span><div class="cs-value">${flightsShort}</div><div class="cs-label">Short-haul flights<br>worth of CO₂</div></div>
-    <div class="carbon-stat"><span class="cs-icon">🛣️</span><div class="cs-value">${Number(drivingKm).toLocaleString()} km</div><div class="cs-label">Equivalent<br>driving distance</div></div>
-    <div class="carbon-stat danger"><span class="cs-icon">🥩</span><div class="cs-value">${steakDinners}</div><div class="cs-label">Steak dinners<br>worth of CO₂</div></div>
+    <div class="carbon-stat danger"><span class="cs-icon">🚗</span><div class="cs-value">${commuteCO2.toFixed(1)} kg</div><div class="cs-label">CO₂ if in-person</div></div>
+    <div class="carbon-stat"><span class="cs-icon">🌳</span><div class="cs-value">${treesNeeded}</div><div class="cs-label">trees to offset (1 yr)</div></div>
+    <div class="carbon-stat"><span class="cs-icon">✈️</span><div class="cs-value">${flights}</div><div class="cs-label">short flights worth</div></div>
+    <div class="carbon-stat"><span class="cs-icon">🛣️</span><div class="cs-value">${Number(drivingKm).toLocaleString()} km</div><div class="cs-label">equivalent driving</div></div>
+    <div class="carbon-stat danger"><span class="cs-icon">🥩</span><div class="cs-value">${steakDinners}</div><div class="cs-label">steak dinners CO₂</div></div>
   `;
 }
 
-// ── Email Generator ──────────────────────────────────────
-let currentEmailTone = 'passive-aggressive';
+// ── Meeting IQ ───────────────────────────────────────────
+const IQ_MESSAGES = {
+  g: [
+    "actually decent. maybe this one's justified?",
+    "not terrible. the bar is low but you cleared it.",
+    "a rare meeting worth having. cherish it.",
+  ],
+  y: [
+    "could be an email. you know it, i know it.",
+    "this is a maybe. can it be a Slack thread?",
+    "borderline. cut some people or shorten it.",
+    "the vibes are off. restructure or cancel.",
+  ],
+  r: [
+    "this is a crime against productivity. call the police.",
+    "abort mission. send a message instead.",
+    "your future self is screaming right now.",
+    "this meeting should be illegal in 47 countries.",
+    "the opportunity cost just filed a restraining order.",
+    "i've seen better meeting invites on prank shows.",
+  ],
+  empty: [
+    "add people above to witness the carnage",
+    "waiting for victims... i mean, attendees",
+    "nobody here yet. blissful silence.",
+  ],
+};
 
-function generateEmail(tone, btnEl) {
-  currentEmailTone = tone;
-  document.querySelectorAll('.email-tone-btn').forEach(b => b.classList.remove('active'));
-  if (btnEl) btnEl.classList.add('active');
-
-  const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
-  const tcUSD = trUSD * (duration / 60);
-  const arUSD = attendees.length > 0 ? trUSD / attendees.length : 0;
-  const rm = getRoleMap();
-  const count = attendees.length;
-
-  let subject, body;
-
-  if (tone === 'passive-aggressive') {
-    subject = `Re: Quick sync — cost analysis attached`;
-    body = `Hi team,\n\nJust wanted to share a quick thought on our ${duration}-minute meeting earlier.\n\n`;
-    body += `With ${count} attendee${count !== 1 ? 's' : ''} and an average rate of ${fmtRate(arUSD)}, this meeting cost us ${fmt(tcUSD)}.\n\n`;
-    body += `For reference, that's roughly:\n`;
-    const coffees = Math.floor(tcUSD / 6.5);
-    const lunch = Math.floor(tcUSD / 18);
-    if (coffees > 0) body += `— ${coffees} fancy coffees\n`;
-    if (lunch > 0) body += `— ${lunch} team lunches\n`;
-    body += `\nI'm not saying we should never meet, but perhaps a quick Slack message or a 2-minute Loom would've achieved the same result?`;
-    body += `\n\nJust something to think about for next time.\n\nBest,\n[Your name]\n\nP.S. If we did this weekly, it would cost ${fmt(tcUSD * 52)} per year. Just saying.`;
-  } else if (tone === 'formal') {
-    subject = `Meeting Cost Summary — ${duration} min, ${count} attendees`;
-    body = `Dear Team,\n\nPlease find below the cost summary for our recent meeting:\n\n`;
-    body += `Meeting Details:\n`;
-    body += `• Duration: ${duration} minutes\n`;
-    body += `• Attendees: ${count}\n`;
-    body += `• Average hourly rate: ${fmtRate(arUSD)}\n`;
-    body += `• Total estimated cost: ${fmt(tcUSD)}\n\n`;
-    if (attendees.length <= 10) {
-      body += `Breakdown by attendee:\n`;
-      attendees.forEach((a, i) => {
-        const role = rm[a.role] || { name: a.role };
-        body += `${i + 1}. ${a.name || 'Unnamed'} — ${role.name} — ${fmtRate(a.rateUSD)}\n`;
-      });
-      body += `\n`;
-    }
-    body += `Annual projection (if weekly): ${fmt(tcUSD * 52)}\n\n`;
-    body += `We recommend reviewing whether recurring meetings of this duration and attendance are necessary, or if alternative communication methods could be employed.\n\n`;
-    body += `Kind regards,\n[Your name]`;
-  } else if (tone === 'funny') {
-    subject = `🚨 Emergency Alert: Our meeting just burned ${fmt(tcUSD)}`;
-    body = `Ladies and gentlemen,\n\n`;
-    body += `We gather here today not to mourn a meeting, but to calculate the damage.\n\n`;
-    body += `THE NUMBERS DON'T LIE:\n`;
-    body += `• ${count} brave souls sat through a ${duration}-minute meeting\n`;
-    body += `• Total cost: ${fmt(tcUSD)}\n`;
-    body += `• That's ${fmt(tcUSD / duration)} per minute. Per. Minute.\n\n`;
-    const coffees = Math.floor(tcUSD / 6.5);
-    const lunches = Math.floor(tcUSD / 18);
-    body += `WHAT WE COULD'VE BOUGHT INSTEAD:\n`;
-    body += `• ${coffees} fancy coffees (${Math.floor(coffees / 30)} months of daily coffee)\n`;
-    body += `• ${lunches} team lunches (actual bonding time!)\n`;
-    body += `• A MacBook Pro ${tcUSD > 2499 ? '🎉' : '...we\'re almost there'}\n\n`;
-    body += `NEXT STEPS:\n`;
-    body += `1. Question every meeting invite you receive\n`;
-    body += `2. If it can be a message, make it a message\n`;
-    body += `3. Bookmark this email for your next "quick sync"\n\n`;
-    body += `Yours in financial devastation,\n[Your name]\n\nP.S. The irony of spending 5 minutes writing this email to save 60-minute meetings is not lost on me.`;
-  } else if (tone === 'data') {
-    subject = `Meeting Cost Data — ${fmt(tcUSD)} total`;
-    body = `MEETING COST REPORT\n`;
-    body += `${'='.repeat(40)}\n\n`;
-    body += `Duration:       ${duration} minutes\n`;
-    body += `Attendees:      ${count}\n`;
-    body += `Person-minutes: ${count * duration}\n`;
-    body += `Avg rate:       ${fmtRate(arUSD)}\n`;
-    body += `Total cost:     ${fmt(tcUSD)}\n`;
-    body += `Cost/minute:    ${fmt(trUSD / 60)}/min\n`;
-    body += `Cost/person:    ${count > 0 ? fmt(tcUSD / count) : fmt(0)}\n\n`;
-    body += `ATTENDEES:\n`;
-    attendees.forEach((a, i) => {
-      const role = rm[a.role] || { name: a.role };
-      body += `${String(i + 1).padStart(2, ' ')}. ${(a.name || 'Unnamed').padEnd(20)} ${role.name.padEnd(25)} ${fmtRate(a.rateUSD)}\n`;
-    });
-    body += `\nPROJECTIONS:\n`;
-    body += `Weekly:   ${fmt(tcUSD)} × 52 = ${fmt(tcUSD * 52)}\n`;
-    body += `Monthly:  ${fmt(tcUSD)} × 12 = ${fmt(tcUSD * 12)}\n`;
-    body += `Daily:    ${fmt(tcUSD)} × 260 = ${fmt(tcUSD * 260)}\n`;
-  }
-
-  document.getElementById('emailPreview').textContent = `Subject: ${subject}\n\n${body}`;
-}
-
-function copyEmail() {
-  const text = document.getElementById('emailPreview').textContent;
-  if (!text.includes('Subject:')) { showToast('Generate an email first'); return; }
-  navigator.clipboard.writeText(text).then(() => showToast('Email copied')).catch(() => showToast('Could not copy'));
-}
-
-function copyEmailPlain() {
-  const text = document.getElementById('emailPreview').textContent;
-  if (!text.includes('Subject:')) { showToast('Generate an email first'); return; }
-  // Extract just the body (after double newline following Subject)
-  const parts = text.split('\n\n');
-  parts.shift(); // remove subject
-  const body = parts.join('\n\n');
-  navigator.clipboard.writeText(body).then(() => showToast('Body copied')).catch(() => showToast('Could not copy'));
-}
-
-// ── QR Code ──────────────────────────────────────────────
-let qrInstance = null;
-
-function generateQR() {
-  const container = document.getElementById('qrCode');
-  container.innerHTML = '';
-  const url = window.location.href.split('?')[0];
-  try {
-    qrInstance = new QRCode(container, {
-      text: url,
-      width: 160,
-      height: 160,
-      colorDark: '#0c0c14',
-      colorLight: '#ffffff',
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  } catch (e) {
-    container.innerHTML = '<div style="padding:2rem;color:#7a7590;font-size:.7rem">QR library failed to load</div>';
-  }
-}
-
-function downloadQR() {
-  const canvas = document.querySelector('#qrCode canvas');
-  if (!canvas) { showToast('QR not generated yet'); return; }
-  const link = document.createElement('a');
-  link.download = 'meeting-cost-qr.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-  showToast('QR downloaded');
-}
-
-// ── Share Image ──────────────────────────────────────────
-function drawShareCard() {
-  const canvas = document.getElementById('shareCanvas');
-  const ctx = canvas.getContext('2d');
-  const w = canvas.width, h = canvas.height;
-
-  // Background
-  ctx.fillStyle = '#0c0c14';
-  ctx.fillRect(0, 0, w, h);
-
-  // Gradient accent at top
-  const grad = ctx.createLinearGradient(0, 0, w, 200);
-  grad.addColorStop(0, 'rgba(255,45,123,0.15)');
-  grad.addColorStop(1, 'rgba(0,200,255,0.05)');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, 200);
-
-  // Border
-  ctx.strokeStyle = '#22223a';
-  ctx.lineWidth = 1;
-  ctx.strokeRect(20, 20, w - 40, h - 40);
-
-  // Title
-  ctx.fillStyle = '#ff2d7b';
-  ctx.font = 'bold 32px "Space Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText("IT COULD'VE BEEN", w / 2, 80);
-  ctx.fillText('AN EMAIL!', w / 2, 118);
-
-  // Divider
-  ctx.strokeStyle = '#22223a';
-  ctx.beginPath();
-  ctx.moveTo(60, 145);
-  ctx.lineTo(w - 60, 145);
-  ctx.stroke();
-
-  // Cost
-  const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
-  const tcUSD = trUSD * (duration / 60);
-  const count = attendees.length;
-  const arUSD = count > 0 ? trUSD / count : 0;
-
-  ctx.fillStyle = '#ff2d7b';
-  ctx.font = 'bold 64px "Space Mono", monospace';
-  ctx.fillText(fmt(tcUSD), w / 2, 240);
-
-  ctx.fillStyle = '#7a7590';
-  ctx.font = '14px "DM Mono", monospace';
-  ctx.fillText('TOTAL MEETING COST', w / 2, 270);
-
-  // Stats
-  const stats = [
-    ['Duration', `${duration} min`],
-    ['Attendees', `${count}`],
-    ['Avg Rate', `${fmtRate(arUSD)}`],
-    ['Cost/Min', `${fmt(trUSD / 60)}`],
-    ['Person-Min', `${(count * duration).toLocaleString()}`],
-    ['Yearly (if weekly)', fmt(tcUSD * 52)],
-  ];
-
-  ctx.textAlign = 'left';
-  let y = 310;
-  const col1 = 60, col2 = w / 2 + 20;
-  const rowH = 42;
-
-  stats.forEach((s, i) => {
-    const col = i < 3 ? col1 : col2;
-    const row = i < 3 ? i : i - 3;
-    const sy = y + row * rowH;
-
-    ctx.fillStyle = '#7a7590';
-    ctx.font = '11px "DM Mono", monospace';
-    ctx.textAlign = 'left';
-    ctx.fillText(s[0].toUpperCase(), col, sy);
-
-    ctx.fillStyle = '#e8e4f0';
-    ctx.font = 'bold 18px "Space Mono", monospace';
-    ctx.fillText(s[1], col, sy + 22);
-  });
-
-  // Divider
-  ctx.strokeStyle = '#22223a';
-  ctx.beginPath();
-  ctx.moveTo(60, y + 3 * rowH + 10);
-  ctx.lineTo(w - 60, y + 3 * rowH + 10);
-  ctx.stroke();
-
-  // Opportunity costs (top 3)
-  const opps = [
-    { label: '☕ Fancy coffees', val: Math.floor(tcUSD / 6.5) },
-    { label: '🍕 Team lunches', val: Math.floor(tcUSD / 18) },
-    { label: '💻 MacBook Pros', val: (tcUSD / 2499).toFixed(1) },
-  ];
-
-  const oppY = y + 3 * rowH + 35;
-  ctx.fillStyle = '#ff3b3b';
-  ctx.font = 'bold 11px "Space Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('THIS COULD HAVE BOUGHT', w / 2, oppY);
-
-  const oppW = (w - 120) / 3;
-  opps.forEach((o, i) => {
-    const ox = 60 + i * oppW;
-    ctx.fillStyle = '#00c8ff';
-    ctx.font = 'bold 32px "Space Mono", monospace';
-    ctx.textAlign = 'center';
-    ctx.fillText(String(o.val), ox + oppW / 2, oppY + 50);
-    ctx.fillStyle = '#7a7590';
-    ctx.font = '11px "DM Mono", monospace';
-    ctx.fillText(o.label, ox + oppW / 2, oppY + 72);
-  });
-
-  // Carbon
-  const videoCO2 = count * (duration / 60) * 0.5;
-  const commuteCO2 = count * 8.4;
-  const carbonY = oppY + 105;
-  ctx.fillStyle = '#00ff88';
-  ctx.font = 'bold 11px "Space Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('CARBON FOOTPRINT', w / 2, carbonY);
-
-  ctx.fillStyle = '#00ff88';
-  ctx.font = 'bold 28px "Space Mono", monospace';
-  ctx.fillText(`${commuteCO2.toFixed(1)} kg CO₂`, w / 2, carbonY + 35);
-  ctx.fillStyle = '#7a7590';
-  ctx.font = '11px "DM Mono", monospace';
-  ctx.fillText(`if in-person (${count} people commuting)`, w / 2, carbonY + 55);
-
-  // Footer
-  ctx.fillStyle = '#3a3550';
-  ctx.font = '10px "DM Mono", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('Generated by "It Could\'ve Been an Email!" — meetingcost.app', w / 2, h - 35);
-}
-
-function downloadShareImage() {
-  drawShareCard();
-  const canvas = document.getElementById('shareCanvas');
-  const link = document.createElement('a');
-  link.download = 'meeting-cost-card.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-  showToast('Image downloaded');
-}
-
-async function copyShareImage() {
-  drawShareCard();
-  const canvas = document.getElementById('shareCanvas');
-  try {
-    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
-    showToast('Image copied to clipboard');
-  } catch (e) {
-    showToast('Could not copy image — try Download instead');
-  }
-}
-
-async function nativeShare() {
-  drawShareCard();
-  const canvas = document.getElementById('shareCanvas');
-  try {
-    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
-    const file = new File([blob], 'meeting-cost.png', { type: 'image/png' });
-    if (navigator.canShare && navigator.canShare({ files: [file] })) {
-      await navigator.share({ files: [file], title: 'Meeting Cost', text: `This meeting cost ${fmt(attendees.reduce((s, a) => s + a.rateUSD, 0) * (duration / 60))}!` });
-    } else {
-      showToast('Native sharing not available');
-    }
-  } catch (e) {
-    if (e.name !== 'AbortError') showToast('Share cancelled');
-  }
-}
-
-// ── Recalculate ──────────────────────────────────────────
-function recalculate() {
-  const hours = duration / 60;
-  const count = attendees.length;
-  const totalRateUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
-  const avgRateUSD = count > 0 ? totalRateUSD / count : 0;
-  const totalCostUSD = totalRateUSD * hours;
-
-  document.getElementById('totalCost').textContent = fmt(totalCostUSD);
-  document.getElementById('perSec').textContent = fmt(totalRateUSD / 3600) + ' per second of collective suffering';
-  document.getElementById('bkDuration').textContent = duration + ' min';
-  document.getElementById('bkAttendees').textContent = count;
-  document.getElementById('bkPersonMin').textContent = (count * duration).toLocaleString() + ' min';
-  document.getElementById('bkAvgRate').textContent = fmtRate(avgRateUSD);
-  document.getElementById('bkPerMin').textContent = fmt(totalRateUSD / 60) + '/min';
-  document.getElementById('bkPerPerson').textContent = count > 0 ? fmt(totalCostUSD / count) : fmt(0);
-  document.getElementById('bkTotal').textContent = fmt(totalCostUSD);
-
-  updateOpportunityCost(totalCostUSD);
-  updateRecurring(totalCostUSD);
-  updateTimerCost();
-  updateEfficiency(count, duration);
-  updateCarbon();
-  generateEmail(currentEmailTone, null);
-  drawShareCard();
-}
+function pickRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 
 function updateEfficiency(count, mins) {
   let s = 100;
@@ -1001,32 +678,364 @@ function updateEfficiency(count, mins) {
   el.textContent = count === 0 ? '—' : s;
   bar.style.width = (count === 0 ? 0 : s) + '%';
   let color, cls, msg;
-  if (count === 0) { color = 'var(--text-dim)'; cls = 'g'; msg = 'Add people to see how doomed this meeting is.'; }
-  else if (s >= 70) { color = 'var(--green)'; cls = 'g'; msg = 'Actually not terrible. Maybe this meeting is justified?'; }
-  else if (s >= 40) { color = '#ffcc00'; cls = 'y'; msg = 'Could be an email. Cut people or time.'; }
-  else { color = 'var(--red)'; cls = 'r'; msg = 'This meeting is a crime against productivity. Cancel it.'; }
+  if (count === 0) { color = 'var(--text-dim)'; cls = 'g'; msg = pickRandom(IQ_MESSAGES.empty); }
+  else if (s >= 70) { color = 'var(--green)'; cls = 'g'; msg = pickRandom(IQ_MESSAGES.g); }
+  else if (s >= 40) { color = '#cc9900'; cls = 'y'; msg = pickRandom(IQ_MESSAGES.y); }
+  else { color = 'var(--red)'; cls = 'r'; msg = pickRandom(IQ_MESSAGES.r); }
   el.className = 'eff-score ' + cls;
   bar.style.background = color;
   text.textContent = msg;
 }
 
-function startTimer() {
-  if (timerRunning) return;
-  timerRunning = true;
-  document.getElementById('timerStartBtn').textContent = 'Burning…';
-  timerInterval = setInterval(() => { timerSeconds++; updateTimerDisplay(); updateTimerCost(); }, 1000);
-}
-function stopTimer() { timerRunning = false; clearInterval(timerInterval); document.getElementById('timerStartBtn').textContent = 'Resume'; }
-function resetTimer() { stopTimer(); timerSeconds = 0; updateTimerDisplay(); updateTimerCost(); document.getElementById('timerStartBtn').textContent = 'Start'; }
-function updateTimerDisplay() {
-  const h = Math.floor(timerSeconds / 3600), m = Math.floor((timerSeconds % 3600) / 60), s = timerSeconds % 60;
-  document.getElementById('timerDisplay').textContent = String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0') + ':' + String(s).padStart(2, '0');
-}
-function updateTimerCost() {
+// ── Email Generator ──────────────────────────────────────
+let currentEmailTone = 'passive-aggressive';
+
+const FUNNY_PSS = [
+  "P.S. The irony of writing a long email to avoid meetings is not lost on me.",
+  "P.S. If we did this weekly, that's $COST/year. Just something to cry about.",
+  "P.S. I calculated this while pretending to listen in the meeting. Multitasking!",
+  "P.S. This email cost me 5 minutes and $0. Still cheaper than the meeting.",
+  "P.S. Forward this to anyone who schedules 'quick syncs'.",
+  "P.S. My therapist said I should express my meeting-related frustrations. Here we are.",
+];
+
+function generateEmail(tone, btnEl) {
+  currentEmailTone = tone;
+  document.querySelectorAll('.email-tone-btn').forEach(b => b.classList.remove('active'));
+  if (btnEl) btnEl.classList.add('active');
+
   const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
-  document.getElementById('timerCost').textContent = fmt((trUSD / 3600) * timerSeconds);
+  const tcUSD = trUSD * (duration / 60);
+  const arUSD = attendees.length > 0 ? trUSD / attendees.length : 0;
+  const rm = getRoleMap();
+  const count = attendees.length;
+
+  if (!count) {
+    document.getElementById('emailPreview').textContent = "add some attendees first, then i'll write you a masterpiece of passive aggression";
+    return;
+  }
+
+  const yearly = fmt(tcUSD * 52);
+  const coffees = Math.floor(tcUSD / 6.5);
+  const lunches = Math.floor(tcUSD / 18);
+  const therapy = Math.floor(tcUSD / 150);
+  const ps = pickRandom(FUNNY_PSS).replace('$COST', yearly);
+
+  let subject, body;
+
+  if (tone === 'passive-aggressive') {
+    subject = `Re: Quick sync — totally not a waste of time`;
+    body = `Hi team,\n\n`;
+    body += `Just wanted to share some fun facts about our ${duration}-minute meeting today.\n\n`;
+    body += `With ${count} people at an average rate of ${fmtRate(arUSD)}, this little gathering cost us ${fmt(tcUSD)}.\n\n`;
+    body += `To put that in perspective:\n`;
+    if (coffees > 0) body += `• We could have bought ${coffees} fancy coffees\n`;
+    if (lunches > 0) body += `• We could have treated ${lunches} people to lunch\n`;
+    if (therapy > 0) body += `• We could have paid for ${therapy} therapy sessions (which we'll need after this meeting schedule)\n`;
+    body += `\nI'm not saying we shouldn't meet, but maybe... a Slack message? A Loom video? A carrier pigeon? All options worth exploring.\n\n`;
+    body += `Best regards,\n[Your name]\n\n${ps}`;
+  } else if (tone === 'formal') {
+    subject = `Meeting Cost Analysis — ${duration} min, ${count} attendees`;
+    body = `Dear Team,\n\nPlease find below the cost analysis for our recent meeting:\n\n`;
+    body += `MEETING SUMMARY\n`;
+    body += `Duration: ${duration} minutes\n`;
+    body += `Attendees: ${count}\n`;
+    body += `Average hourly rate: ${fmtRate(arUSD)}\n`;
+    body += `Estimated total cost: ${fmt(tcUSD)}\n\n`;
+    if (count <= 12) {
+      body += `ATTENDEE BREAKDOWN\n`;
+      attendees.forEach((a, i) => {
+        const role = rm[a.role] || { name: a.role };
+        body += `${i + 1}. ${a.name || 'Unnamed'} — ${role.name} — ${fmtRate(a.rateUSD)}\n`;
+      });
+      body += `\n`;
+    }
+    body += `ANNUAL PROJECTION (if weekly)\n`;
+    body += `Total: ${yearly}\n\n`;
+    body += `RECOMMENDATION\n`;
+    body += `Review whether recurring meetings of this duration and attendance are necessary. Consider asynchronous alternatives where possible.\n\n`;
+    body += `Regards,\n[Your name]`;
+  } else if (tone === 'funny') {
+    subject = `🚨 FINANCIAL CRIME REPORT: Our meeting cost ${fmt(tcUSD)}`;
+    body = `Ladies, gentlemen, and people who were clearly on mute the whole time,\n\n`;
+    body += `I regret to inform you that our recent ${duration}-minute meeting has been classified as a Level 4 Financial Incident.\n\n`;
+    body += `THE EVIDENCE:\n`;
+    body += `• ${count} people × ${duration} minutes = ${count * duration} person-minutes of... something\n`;
+    body += `• Total cost: ${fmt(tcUSD)}\n`;
+    body += `• Cost per minute: ${fmt(trUSD / 60)} (yes, every 60 seconds)\n\n`;
+    body += `WHAT WE COULD'VE BOUGHT:\n`;
+    if (coffees > 0) body += `• ${coffees} coffees (roughly ${Math.floor(coffees/30)} months of daily caffeine)\n`;
+    if (lunches > 0) body += `• ${lunches} team lunches (better bonding than staring at slides)\n`;
+    if (therapy > 0) body += `• ${therapy} therapy sessions (for meeting-induced trauma)\n`;
+    body += `\nRECOMMENDED ACTIONS:\n`;
+    body += `1. Question every calendar invite like it owes you money\n`;
+    body += `2. If it can be a message, it should be a message\n`;
+    body += `3. If it can be an email, it should definitely be an email\n`;
+    body += `4. If it can be nothing, perfection has been achieved\n\n`;
+    body += `Yours in financial devastation,\n[Your name]\n\n${ps}`;
+  } else if (tone === 'data') {
+    subject = `Meeting Cost Data — ${fmt(tcUSD)}`;
+    body = `MEETING COST REPORT\n`;
+    body += `${'═'.repeat(36)}\n\n`;
+    body += `Duration:        ${duration} minutes\n`;
+    body += `Attendees:       ${count}\n`;
+    body += `Person-minutes:  ${(count * duration).toLocaleString()}\n`;
+    body += `Avg rate:        ${fmtRate(arUSD)}\n`;
+    body += `Total cost:      ${fmt(tcUSD)}\n`;
+    body += `Cost/minute:     ${fmt(trUSD / 60)}\n`;
+    body += `Cost/person:     ${count > 0 ? fmt(tcUSD / count) : 'N/A'}\n\n`;
+    body += `ATTENDEES:\n`;
+    attendees.forEach((a, i) => {
+      const role = rm[a.role] || { name: a.role };
+      body += `${String(i + 1).padStart(2, ' ')}. ${(a.name || 'Unnamed').padEnd(22)} ${role.name.padEnd(22)} ${fmtRate(a.rateUSD)}\n`;
+    });
+    body += `\nPROJECTIONS:\n`;
+    body += `Weekly:   ${fmt(tcUSD)} × 52   = ${fmt(tcUSD * 52)}\n`;
+    body += `Monthly:  ${fmt(tcUSD)} × 12   = ${fmt(tcUSD * 12)}\n`;
+    body += `Annually: ${fmt(tcUSD)} × 260  = ${fmt(tcUSD * 260)}\n`;
+  }
+
+  document.getElementById('emailPreview').textContent = `Subject: ${subject}\n\n${body}`;
 }
 
+function copyEmail() {
+  const text = document.getElementById('emailPreview').textContent;
+  if (!text.startsWith('Subject:')) { showToast('pick a tone first'); return; }
+  navigator.clipboard.writeText(text).then(() => showToast('email copied — go spread the truth')).catch(() => showToast('could not copy'));
+}
+
+function copyEmailPlain() {
+  const text = document.getElementById('emailPreview').textContent;
+  if (!text.startsWith('Subject:')) { showToast('pick a tone first'); return; }
+  const parts = text.split('\n\n');
+  parts.shift();
+  navigator.clipboard.writeText(parts.join('\n\n')).then(() => showToast('body copied')).catch(() => showToast('could not copy'));
+}
+
+// ── Share Image ──────────────────────────────────────────
+function drawShareCard() {
+  const canvas = document.getElementById('shareCanvas');
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const dark = isDark;
+
+  const bgColor = dark ? '#0c0c14' : '#f4f1ec';
+  const surfaceColor = dark ? '#12121e' : '#ffffff';
+  const borderColor = dark ? '#22223a' : '#ddd8d0';
+  const textPrimary = dark ? '#e8e4f0' : '#1a1a2e';
+  const textSec = dark ? '#7a7590' : '#6a6580';
+  const textDim = dark ? '#3a3550' : '#b0abbe';
+  const pinkColor = '#ff2d7b';
+  const blueColor = dark ? '#00c8ff' : '#0088cc';
+  const greenColor = dark ? '#00ff88' : '#00994d';
+  const redColor = '#ff3b3b';
+
+  // Background
+  ctx.fillStyle = bgColor;
+  ctx.fillRect(0, 0, w, h);
+
+  // Gradient accent
+  const grad = ctx.createLinearGradient(0, 0, w, 180);
+  grad.addColorStop(0, dark ? 'rgba(255,45,123,0.12)' : 'rgba(255,45,123,0.06)');
+  grad.addColorStop(1, dark ? 'rgba(0,200,255,0.04)' : 'rgba(0,136,204,0.03)');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, 180);
+
+  // Border
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = 1;
+  ctx.strokeRect(20, 20, w - 40, h - 40);
+
+  // Title
+  ctx.fillStyle = pinkColor;
+  ctx.font = 'bold 30px "Space Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText("IT COULD'VE BEEN", w / 2, 75);
+  ctx.fillText('AN EMAIL!', w / 2, 112);
+
+  // Subtitle
+  ctx.fillStyle = textSec;
+  ctx.font = '11px "DM Mono", monospace';
+  ctx.fillText('the meeting cost nobody asked for', w / 2, 138);
+
+  // Divider
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(60, 160);
+  ctx.lineTo(w - 60, 160);
+  ctx.stroke();
+
+  // Cost
+  const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
+  const tcUSD = trUSD * (duration / 60);
+  const count = attendees.length;
+  const arUSD = count > 0 ? trUSD / count : 0;
+
+  ctx.fillStyle = pinkColor;
+  ctx.font = 'bold 58px "Space Mono", monospace';
+  ctx.fillText(fmt(tcUSD), w / 2, 230);
+
+  ctx.fillStyle = textSec;
+  ctx.font = '12px "DM Mono", monospace';
+  ctx.fillText('TOTAL DAMAGE', w / 2, 255);
+
+  // Stats
+  const stats = [
+    ['Duration', `${duration} min`],
+    ['Victims', `${count}`],
+    ['Avg Rate', `${fmtRate(arUSD)}`],
+    ['Burn Rate', `${fmt(trUSD / 60)}/min`],
+    ['Person-Min', `${(count * duration).toLocaleString()}`],
+    ['Yearly', fmt(tcUSD * 52)],
+  ];
+
+  ctx.textAlign = 'left';
+  let y = 285;
+  const col1 = 60, col2 = w / 2 + 20, rowH = 38;
+
+  stats.forEach((s, i) => {
+    const col = i < 3 ? col1 : col2;
+    const row = i < 3 ? i : i - 3;
+    const sy = y + row * rowH;
+
+    ctx.fillStyle = textSec;
+    ctx.font = '10px "DM Mono", monospace';
+    ctx.textAlign = 'left';
+    ctx.fillText(s[0].toUpperCase(), col, sy);
+
+    ctx.fillStyle = textPrimary;
+    ctx.font = 'bold 16px "Space Mono", monospace';
+    ctx.fillText(s[1], col, sy + 20);
+  });
+
+  // Divider
+  ctx.strokeStyle = borderColor;
+  ctx.beginPath();
+  ctx.moveTo(60, y + 3 * rowH + 8);
+  ctx.lineTo(w - 60, y + 3 * rowH + 8);
+  ctx.stroke();
+
+  // Opportunity costs
+  const coffees = Math.floor(tcUSD / 6.5);
+  const lunches = Math.floor(tcUSD / 18);
+  const therapy = Math.floor(tcUSD / 150);
+
+  const oppY = y + 3 * rowH + 30;
+  ctx.fillStyle = redColor;
+  ctx.font = 'bold 10px "Space Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('THIS COULD HAVE BOUGHT', w / 2, oppY);
+
+  const opps = [
+    { label: '☕ coffees', val: String(coffees) },
+    { label: '🍕 team lunches', val: String(lunches) },
+    { label: '🧠 therapy sessions', val: String(therapy) },
+  ];
+  const oppW = (w - 120) / 3;
+  opps.forEach((o, i) => {
+    const ox = 60 + i * oppW;
+    ctx.fillStyle = blueColor;
+    ctx.font = 'bold 30px "Space Mono", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText(o.val, ox + oppW / 2, oppY + 45);
+    ctx.fillStyle = textSec;
+    ctx.font = '10px "DM Mono", monospace';
+    ctx.fillText(o.label, ox + oppW / 2, oppY + 65);
+  });
+
+  // Carbon
+  const commuteCO2 = count * 8.4;
+  const carbonY = oppY + 95;
+  ctx.fillStyle = greenColor;
+  ctx.font = 'bold 10px "Space Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('CARBON GUILT', w / 2, carbonY);
+  ctx.font = 'bold 26px "Space Mono", monospace';
+  ctx.fillText(`${commuteCO2.toFixed(1)} kg CO₂`, w / 2, carbonY + 32);
+  ctx.fillStyle = textSec;
+  ctx.font = '10px "DM Mono", monospace';
+  ctx.fillText(`if everyone commuted (${count} people)`, w / 2, carbonY + 50);
+
+  // Footer
+  ctx.fillStyle = textDim;
+  ctx.font = '9px "DM Mono", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText("generated by It Could've Been an Email!", w / 2, h - 35);
+}
+
+function downloadShareImage() {
+  drawShareCard();
+  const canvas = document.getElementById('shareCanvas');
+  const link = document.createElement('a');
+  link.download = 'meeting-cost-shame.png';
+  link.href = canvas.toDataURL('image/png');
+  link.click();
+  showToast('image downloaded — use it wisely');
+}
+
+async function copyShareImage() {
+  drawShareCard();
+  const canvas = document.getElementById('shareCanvas');
+  try {
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    await navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]);
+    showToast('image copied — paste it everywhere');
+  } catch (e) {
+    showToast('could not copy — try download instead');
+  }
+}
+
+async function nativeShare() {
+  drawShareCard();
+  const canvas = document.getElementById('shareCanvas');
+  try {
+    const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+    const file = new File([blob], 'meeting-cost.png', { type: 'image/png' });
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({ files: [file], title: 'Meeting Cost', text: `This meeting cost ${fmt(attendees.reduce((s, a) => s + a.rateUSD, 0) * (duration / 60))}!` });
+    } else { showToast('native sharing not available'); }
+  } catch (e) { if (e.name !== 'AbortError') showToast('share cancelled'); }
+}
+
+// ── Recalculate ──────────────────────────────────────────
+const COST_LABELS = [
+  'this meeting is burning',
+  'your budget is crying',
+  'money on fire right now',
+  'the damage so far',
+  'opportunities vaporized',
+  'your salary at work',
+  'peak productivity waste',
+];
+
+function recalculate() {
+  const hours = duration / 60;
+  const count = attendees.length;
+  const totalRateUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
+  const avgRateUSD = count > 0 ? totalRateUSD / count : 0;
+  const totalCostUSD = totalRateUSD * hours;
+
+  document.getElementById('costLabel').textContent = pickRandom(COST_LABELS);
+  document.getElementById('totalCost').textContent = fmt(totalCostUSD);
+  document.getElementById('perSec').textContent = fmt(totalRateUSD / 3600) + ' per second of collective suffering';
+  document.getElementById('bkDuration').textContent = duration + ' min';
+  document.getElementById('bkAttendees').textContent = count;
+  document.getElementById('bkPersonMin').textContent = (count * duration).toLocaleString();
+  document.getElementById('bkAvgRate').textContent = fmtRate(avgRateUSD);
+  document.getElementById('bkPerMin').textContent = fmt(totalRateUSD / 60);
+  document.getElementById('bkPerPerson').textContent = count > 0 ? fmt(totalCostUSD / count) : fmt(0);
+  document.getElementById('bkTotal').textContent = fmt(totalCostUSD);
+
+  updateOpportunityCost(totalCostUSD);
+  updateRecurring(totalCostUSD);
+  updateEfficiency(count, duration);
+  updateCarbon();
+  generateEmail(currentEmailTone, null);
+  drawShareCard();
+}
+
+// ── Presets ──────────────────────────────────────────────
 function loadPreset(key) {
   const p = {
     standup: { dur: 15, people: [{ n: 'Alice', r: 'senior' }, { n: 'Bob', r: 'mid' }, { n: 'Carol', r: 'mid' }, { n: 'Dave', r: 'senior' }, { n: 'Eve', r: 'junior' }, { n: 'Frank', r: 'mid' }, { n: 'Grace', r: 'eng_manager' }, { n: 'Hank', r: 'designer' }] },
@@ -1053,32 +1062,44 @@ function loadPreset(key) {
   renderAttendees(); recalculate();
 }
 
+// ── Copy Receipt ─────────────────────────────────────────
 function copyReport() {
   const trUSD = attendees.reduce((s, a) => s + a.rateUSD, 0);
   const tcUSD = trUSD * (duration / 60);
   const arUSD = attendees.length > 0 ? trUSD / attendees.length : 0;
   const rm = getRoleMap();
+
   let r = `━━━ IT COULD'VE BEEN AN EMAIL ━━━\n\n`;
-  r += `Duration: ${duration} minutes\n`;
-  r += `Attendees: ${attendees.length}\n`;
-  r += `Average rate: ${fmtRate(arUSD)}\n`;
-  r += `Total: ${fmt(tcUSD)}\n\n`;
-  r += `Attendees:\n`;
-  attendees.forEach((a, i) => { const rn = (rm[a.role] || {}).name || a.role; r += `  ${String(i + 1).padStart(2, '0')}. ${a.name || '(unnamed)'} — ${rn} — ${fmtRate(a.rateUSD)}\n`; });
-  r += `\n─── THIS COULD HAVE BOUGHT ───\n`;
-  OPP_ITEMS.slice(0, 6).forEach(item => { const qty = tcUSD / item.unitCostUSD; r += `  ${item.icon} ${item.format(qty)} ${item.label}\n`; });
-  r += `\nWeekly recurring: ${fmt(tcUSD * 52)}/year\n`;
-  if (timerSeconds > 0) { const h = Math.floor(timerSeconds / 3600), m = Math.floor((timerSeconds % 3600) / 60), s = timerSeconds % 60; r += `\nActual time: ${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}\n`; r += `Actual cost: ${fmt((trUSD / 3600) * timerSeconds)}\n`; }
-  r += `\nGenerated by "It Could've Been an Email!"`;
-  navigator.clipboard.writeText(r).then(() => showToast('Receipt copied — go shame that meeting')).catch(() => showToast('Could not copy'));
+  r += `Duration: ${duration} min\n`;
+  r += `Victims: ${attendees.length}\n`;
+  r += `Avg rate: ${fmtRate(arUSD)}\n`;
+  r += `Total damage: ${fmt(tcUSD)}\n\n`;
+  if (attendees.length) {
+    r += `Who was there:\n`;
+    attendees.forEach((a, i) => { const rn = (rm[a.role] || {}).name || a.role; r += `  ${String(i + 1).padStart(2, '0')}. ${a.name || '(unnamed)'} — ${rn} — ${fmtRate(a.rateUSD)}\n`; });
+  }
+  r += `\nWhat this could've bought:\n`;
+  const coffees = Math.floor(tcUSD / 6.5);
+  const lunches = Math.floor(tcUSD / 18);
+  const therapy = Math.floor(tcUSD / 150);
+  if (coffees > 0) r += `  ☕ ${coffees} fancy coffees\n`;
+  if (lunches > 0) r += `  🍕 ${lunches} team lunches\n`;
+  if (therapy > 0) r += `  🧠 ${therapy} therapy sessions\n`;
+  r += `\nYearly (if weekly): ${fmt(tcUSD * 52)}\n`;
+  r += `\n— Generated by "It Could've Been an Email!"`;
+  navigator.clipboard.writeText(r).then(() => showToast('receipt copied — go shame that meeting')).catch(() => showToast('could not copy'));
 }
 
-function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 2500); }
+// ── Toast ────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 
 // ── Init ─────────────────────────────────────────────────
-// Show native share button on mobile
 if (navigator.share) document.getElementById('nativeShareBtn').style.display = '';
-generateQR();
 renderAttendees();
 recalculate();
 </script>
